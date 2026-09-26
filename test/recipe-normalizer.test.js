@@ -1,6 +1,7 @@
-import { describe, it } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeRecipe } from '../src/recipe-normalizer.js';
+import http from 'node:http';
 
 describe('Recipe Normalizer', () => {
   describe('text parsing', () => {
@@ -104,5 +105,43 @@ olive oil
       assert.equal(result.preparationSteps.length, 4);
       assert.equal(result.servings, '4');
     });
+  });
+});
+
+describe('Recipe Normalizer URL fetch limits', () => {
+  let server;
+  let base;
+
+  before(async () => {
+    server = http.createServer((req, res) => {
+      if (req.url === '/loop') {
+        res.writeHead(302, { Location: '/loop' });
+        res.end();
+      } else if (req.url === '/huge') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        const chunk = 'x'.repeat(1024 * 1024);
+        for (let i = 0; i < 6; i++) res.write(chunk);
+        res.end();
+      } else {
+        res.writeHead(404);
+        res.end();
+      }
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    base = `http://127.0.0.1:${server.address().port}`;
+  });
+
+  after(() => server.close());
+
+  it('rejects non-http(s) schemes', async () => {
+    await assert.rejects(normalizeRecipe({ url: 'file:///etc/passwd' }), /Unsupported URL scheme/);
+  });
+
+  it('stops following redirect loops', async () => {
+    await assert.rejects(normalizeRecipe({ url: `${base}/loop` }), /Too many redirects/);
+  });
+
+  it('rejects oversized responses', async () => {
+    await assert.rejects(normalizeRecipe({ url: `${base}/huge` }), /Response too large/);
   });
 });

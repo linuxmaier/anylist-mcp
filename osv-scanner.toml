@@ -1,0 +1,67 @@
+# Accepted risks for osv-scanner. Each entry expires so it gets re-reviewed.
+# Do not add entries without a written reason; prefer fixing the dependency.
+
+[[IgnoredVulns]]
+id = "GHSA-xq3m-2v4x-88gg"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-66ff-xgx4-vchm"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-75px-5xx7-5xc7"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-fx83-v9x8-x52w"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-f38q-mgvj-vph7"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-2pr8-phx7-x9h3"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-jggg-4jg4-v7c6"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-jvwf-75h9-cwgg"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-wcpc-wj8m-hjx6"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Needs an attacker-controlled schema/descriptor; ours is the bundled anylist-js/lib/definitions.json. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-685m-2w69-288q"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Decoding DoS/UTF-8 issue; only data from www.anylist.com over TLS is decoded. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-q6x5-8v7m-xcrf"
+ignoreUntil = 2026-12-31
+reason = "protobufjs@5.0.3 (anylist-js). Decoding DoS/UTF-8 issue; only data from www.anylist.com over TLS is decoded. Fix = port anylist-js to protobufjs 7."
+
+[[IgnoredVulns]]
+id = "GHSA-52f5-9888-hmc6"
+ignoreUntil = 2026-12-31
+reason = "tmp@0.0.33, dev-only via @anthropic-ai/mcpb -> @inquirer/editor; only used by interactive mcpb prompts, never by 'mcpb pack' or the server."
+
+[[IgnoredVulns]]
+id = "GHSA-ph9p-34f9-6g65"
+ignoreUntil = 2026-12-31
+reason = "tmp@0.0.33, dev-only via @anthropic-ai/mcpb -> @inquirer/editor; only used by interactive mcpb prompts, never by 'mcpb pack' or the server."

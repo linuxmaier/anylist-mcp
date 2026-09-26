@@ -24,9 +24,17 @@ export async function normalizeRecipe(input) {
 
 // ===== URL Parsing =====
 
-async function fetchHtml(url) {
+const MAX_REDIRECTS = 5;
+const MAX_HTML_BYTES = 5 * 1024 * 1024;
+
+async function fetchHtml(url, redirectsLeft = MAX_REDIRECTS) {
   return new Promise((resolve, reject) => {
-    const client = url.startsWith('https') ? https : http;
+    const { protocol } = new URL(url);
+    if (protocol !== 'https:' && protocol !== 'http:') {
+      reject(new Error(`Unsupported URL scheme: ${protocol}`));
+      return;
+    }
+    const client = protocol === 'https:' ? https : http;
     const req = client.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -37,8 +45,13 @@ async function fetchHtml(url) {
     }, (res) => {
       // Follow redirects
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        res.resume();
+        if (redirectsLeft <= 0) {
+          reject(new Error(`Too many redirects fetching ${url}`));
+          return;
+        }
         const redirectUrl = new URL(res.headers.location, url).href;
-        fetchHtml(redirectUrl).then(resolve).catch(reject);
+        fetchHtml(redirectUrl, redirectsLeft - 1).then(resolve).catch(reject);
         return;
       }
       if (res.statusCode !== 200) {
@@ -47,7 +60,13 @@ async function fetchHtml(url) {
       }
       let data = '';
       res.setEncoding('utf8');
-      res.on('data', chunk => data += chunk);
+      res.on('data', chunk => {
+        data += chunk;
+        if (data.length > MAX_HTML_BYTES) {
+          req.destroy();
+          reject(new Error(`Response too large fetching ${url}`));
+        }
+      });
       res.on('end', () => resolve(data));
       res.on('error', reject);
     });

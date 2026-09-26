@@ -1,12 +1,15 @@
-.PHONY: help install test test-integration inspect pack up dev prod down logs create-client
+.PHONY: help install install-http security test test-integration inspect pack up dev prod down logs create-client
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 
 # ── Local / stdio mode ────────────────────────────────────────────────────────
 
-install: ## Install dependencies
-	npm install
+install: ## Install dependencies for stdio mode (skips optional HTTP-server packages)
+	npm ci --omit=optional
+
+install-http: ## Install dependencies including the optional HTTP-server packages
+	npm ci
 
 test: ## Run unit tests (no credentials needed)
 	npm test
@@ -16,6 +19,9 @@ test-integration: ## Run integration tests (requires .env with real credentials)
 
 inspect: ## Launch the MCP inspector
 	npx @modelcontextprotocol/inspector node src/server.js
+
+security: ## Run all security scanners (same as CI); see [tasks.security] in mise.toml
+	mise run security
 
 pack: ## Build the Claude Desktop extension (.mcpb)
 	npm run pack

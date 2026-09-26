@@ -1,0 +1,23 @@
+[tools]
+actionlint = "1"
+gitleaks = "8"
+node = "24"
+osv-scanner = "2"
+semgrep = "1"
+uv = "0"
+zizmor = "1"
+
+[tasks.security]
+description = "Run all security scanners (same as CI)"
+run = [
+  "gitleaks git --no-banner --redact .",
+  "gitleaks git --no-banner --redact anylist-js",
+  "osv-scanner scan source --config osv-scanner.toml --lockfile package-lock.json",
+  "semgrep scan --config p/javascript --config p/nodejs --config p/expressjs --metrics off --error --quiet src anylist-js/lib scripts",
+  "zizmor --offline .github",
+  "actionlint",
+]
+
+[tasks.upstream-sync]
+description = "Merge bobby060 upstream into upstream-sync/<date> branches for review (--push to open PRs in our forks)"
+run = "bash scripts/upstream-sync.sh"
