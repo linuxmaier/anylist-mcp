@@ -34,6 +34,7 @@
     </div>
 
     <form method="POST" action="/oauth/consent">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <div class="actions">
         <button type="submit" name="approve" value="yes" class="btn btn-primary">Allow</button>
         <button type="submit" name="approve" value="no" class="btn btn-deny">Deny</button>
