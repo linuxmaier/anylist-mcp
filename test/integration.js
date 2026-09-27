@@ -3,7 +3,11 @@
 import { fileURLToPath } from 'url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { isDeepStrictEqual } from 'node:util';
+import FormData from 'form-data';
 import AnyListClient from '../src/anylist-client.js';
+import uuid from '../anylist-js/lib/uuid.js';
+import fixture from './fixtures/recipe-list-items.json' with { type: 'json' };
 
 const transport = new StdioClientTransport({
   command: process.execPath,
@@ -705,6 +709,158 @@ try {
       if (r.isError) throw new Error(r.content[0].text);
       return r.content[0].text;
     });
+  }
+
+  // Shopping: add_recipe. Test List also holds 37 items the AnyList app added from
+  // two recipes (test/fixtures/recipe-list-items.json). They must come through
+  // byte-for-byte unchanged, and cleanup removes only the item IDs this run created.
+  {
+    const tag = `zz-mcp-test ${Date.now()}`;
+    const recipeA = `${tag} A`;
+    const recipeB = `${tag} B`;
+    const direct = new AnyListClient();
+    const raw = item => {
+      const r = item._pb.toRaw(false, true);
+      delete r.serverModTime;
+      return JSON.parse(JSON.stringify(r));
+    };
+    const readList = async () => {
+      await direct.client.getLists();
+      return direct.client.lists.find(l => l.identifier === direct.targetList.identifier);
+    };
+    const created = async () => (await readList()).items.filter(i => !beforeIds.has(i.identifier));
+    const byName = async name => (await created()).find(i => i.name === name);
+    const addRecipe = async (recipe, extra = {}) => {
+      const r = await client.callTool({ name: 'shopping', arguments: { action: 'add_recipe', name: recipe, list_name: LIST_NAME, ...extra } });
+      if (r.isError) throw new Error(r.content[0].text);
+      return r.content[0].text;
+    };
+    const recipeIds = [];
+    let beforeIds = new Set();
+    const snapshot = new Map();
+    let safe = false;
+
+    try {
+      await direct.connect(LIST_NAME);
+      await test('add_recipe → snapshot the app-created fixture items', async () => {
+        const list = await readList();
+        beforeIds = new Set(list.items.map(i => i.identifier));
+        for (const { identifier } of fixture.items) {
+          const item = list.getItemById(identifier);
+          if (item) snapshot.set(identifier, raw(item));
+        }
+        if (snapshot.size !== fixture.items.length) {
+          throw new Error(`only ${snapshot.size} of ${fixture.items.length} fixture items are on "${LIST_NAME}"; not writing`);
+        }
+        safe = true;
+        return `${snapshot.size} fixture items`;
+      });
+
+      if (safe) {
+        for (const [name, ingredients] of [
+          [recipeA, [
+            { name: 'zz-mcp-test onions', quantity: '1 cup' },
+            { name: 'zz-mcp-test beans', quantity: '2 (15-oz.) cans' },
+            { name: 'zz-mcp-test salt', quantity: '' },
+          ]],
+          [recipeB, [
+            { name: 'zz-mcp-test onion', quantity: '2 cups' },
+            { name: 'zz-mcp-test lime', quantity: '1' },
+          ]],
+        ]) {
+          const r = await direct.createRecipe({ name, ingredients });
+          recipeIds.push(r.identifier);
+        }
+
+        await test('shopping → add_recipe (recipe A, excluding salt)', async () => {
+          const text = await addRecipe(recipeA, { exclude: ['ZZ-MCP-TEST salt'] });
+          if (!text.includes('2 added, 1 skipped')) throw new Error(text);
+          const items = await created();
+          if (items.length !== 2) throw new Error(`expected 2 new items, got ${items.length}`);
+          if (!items.every(i => i.ingredients.length === 1 && i.ingredients[0].recipeId === recipeIds[0])) {
+            throw new Error('items are not linked to recipe A');
+          }
+          const beans = await byName('zz-mcp-test beans');
+          if (beans._pb.packageSizePb?.rawPackageSize !== '15 oz. can') throw new Error('beans lost their package size');
+          return text.split('\n')[0];
+        });
+
+        await test('shopping → add_recipe (recipe B merges the shared onion)', async () => {
+          const text = await addRecipe(recipeB);
+          if (!text.includes('1 merged') || !text.includes('1 added')) throw new Error(text);
+          const onions = await byName('zz-mcp-test onions');
+          const links = onions.ingredients.map(i => i.recipeId).sort();
+          if (JSON.stringify(links) !== JSON.stringify([...recipeIds].sort())) throw new Error(`onion links: ${links}`);
+          if ((await created()).length !== 3) throw new Error('expected 3 new items');
+          return text.split('\n')[0];
+        });
+
+        await test('shopping → add_recipe (re-adding A revives a checked item, no duplicates)', async () => {
+          const check = await client.callTool({ name: 'shopping', arguments: { action: 'check_item', name: 'zz-mcp-test onions', list_name: LIST_NAME } });
+          if (check.isError) throw new Error(check.content[0].text);
+          const text = await addRecipe(recipeA, { exclude: ['zz-mcp-test salt'] });
+          if (!text.includes('revived: zz-mcp-test onions') || !text.includes('already linked: zz-mcp-test beans')) throw new Error(text);
+          const onions = await byName('zz-mcp-test onions');
+          if (onions.checked) throw new Error('onions are still checked');
+          if (onions.ingredients.length !== 2) throw new Error(`onions have ${onions.ingredients.length} links`);
+          if ((await created()).length !== 3) throw new Error('re-adding duplicated items');
+          return text.split('\n')[0];
+        });
+
+        // Phase 1 of #6: a full update-list-item must keep recipe links. Send the item
+        // back unchanged through Item._encode() and compare what the server stores.
+        await test('update-list-item round-trip keeps recipe links', async () => {
+          const onions = await byName('zz-mcp-test onions');
+          const before = raw(onions);
+          const { PBListOperation, PBListOperationList } = direct.client.protobuf;
+          const op = new PBListOperation();
+          op.setMetadata({ operationId: uuid(), handlerId: 'update-list-item', userId: direct.client.uid });
+          op.setListId(onions.listId);
+          op.setListItemId(onions.identifier);
+          op.setListItem(onions._encode());
+          const ops = new PBListOperationList();
+          ops.setOperations([op]);
+          const form = new FormData();
+          form.append('operations', ops.toBuffer());
+          await direct.client.client.post('data/shopping-lists/update', { body: form });
+          const after = raw(await byName('zz-mcp-test onions'));
+          if (!isDeepStrictEqual(after, before)) throw new Error(`item changed: ${JSON.stringify(before)} → ${JSON.stringify(after)}`);
+          return `${before.ingredients.length} recipe links unchanged`;
+        });
+      }
+    } finally {
+      // Remove only what this run created: new item IDs, then the two test recipes.
+      try {
+        const list = await readList();
+        for (const item of list.items.filter(i => !beforeIds.has(i.identifier))) {
+          if (!item.name.startsWith('zz-mcp-test')) {
+            console.error(`   ⚠️ leaving unexpected new item "${item.name}" alone`);
+            continue;
+          }
+          await list.removeItem(item);
+        }
+        for (const id of recipeIds) await direct.deleteRecipe({ id });
+      } catch (e) {
+        console.error(`   ⚠️ add_recipe cleanup failed: ${e.message}`);
+      }
+    }
+
+    if (safe) {
+      await test('add_recipe → fixture items unchanged, nothing left behind', async () => {
+        const list = await readList();
+        const changed = [...snapshot].filter(([id, before]) => {
+          const item = list.getItemById(id);
+          return !item || !isDeepStrictEqual(raw(item), before);
+        });
+        if (changed.length > 0) {
+          throw new Error(`FIXTURE ITEMS CHANGED OR MISSING: ${changed.map(([id, b]) => `${b.name} (${id})`).join(', ')}`);
+        }
+        const leftover = list.items.filter(i => !beforeIds.has(i.identifier));
+        if (leftover.length > 0) throw new Error(`left behind: ${leftover.map(i => i.name).join(', ')}`);
+        return `${snapshot.size} fixture items unchanged`;
+      });
+    }
+    await direct.disconnect();
   }
 
   // Invalid action test — older SDKs throw at the protocol level; newer ones (>= ~1.2x)

@@ -58,6 +58,47 @@ export function sameItemIngredient(a, b) {
     && (a.eventId || '') === (b.eventId || '');
 }
 
+// Normalized units whose price is per unit rather than per item (aioanylist
+// services/shopping.py _PRICE_QUANTITY_UNITS).
+const PRICE_QUANTITY_UNITS = new Set(['cup', 'fl oz', 'oz', 'tbsp', 'tsp', 'g', 'mg', 'l', 'dl', 'ml',
+  'slice', 'clove', 'pinch', 'drop', 'dash', 'inch']);
+
+/**
+ * The full ListItem (as a plain object) the app sends for an ingredient that
+ * isn't on the list yet. Quantity lives in `ingredients`, not on the item.
+ */
+export function newListItem(itemIngredient, { identifier, listId, userId }) {
+  const item = {
+    identifier,
+    listId,
+    name: itemIngredient.ingredient?.name || '-',
+    userId,
+    ingredients: [itemIngredient],
+  };
+  if (itemIngredient.packageSizePb) item.packageSizePb = itemIngredient.packageSizePb;
+  const unit = itemIngredient.quantityPb?.unit;
+  if (unit && PRICE_QUANTITY_UNITS.has(normalizeUnit(unit).toLowerCase())) {
+    item.priceQuantityShouldOverrideItemQuantity = true;
+  }
+  return item;
+}
+
+/**
+ * The favorite or recent item the app would copy properties from onto a new
+ * recipe item: same stemmed name and package size. Favorites win; the most
+ * recent item wins among recents (aioanylist _saved_item_for_recipe_ingredient).
+ * @param {object} itemIngredient
+ * @param {Array<{ name: string, packageSizePb?: object }>} favorites
+ * @param {Array<{ name: string, packageSizePb?: object }>} recents - oldest first
+ */
+export function findSavedItem(itemIngredient, favorites, recents) {
+  const words = name => stemWords((name || '').toLowerCase().split(' ')).join(' ');
+  const wantedName = words(itemIngredient.ingredient?.name);
+  const wantedPackage = normalizedRawPackageSize(itemIngredient.packageSizePb);
+  return [...favorites, ...[...recents].reverse()].find(c =>
+    words(c.name) === wantedName && normalizedRawPackageSize(c.packageSizePb) === wantedPackage);
+}
+
 /**
  * PBIngredient.toItemIngredientWithRecipeAndEvent, for an unscaled recipe.
  * Returns a plain PBItemIngredient object.

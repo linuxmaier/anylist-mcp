@@ -2,6 +2,7 @@ import AnyList from '../anylist-js/lib/index.js';
 import uuid from '../anylist-js/lib/uuid.js';
 import FormData from 'form-data';
 import { normalizeRecipe } from './recipe-normalizer.js';
+import { findSavedItem, itemIdentifier, newListItem, sameItemIngredient, toItemIngredient } from './recipe-to-list/index.js';
 
 /**
  * Pick exactly one item (anything with `identifier` and `name`) by id or name.
@@ -880,6 +881,147 @@ class AnyListClient {
       }));
     } catch (error) {
       throw new Error(`Failed to get recent items: ${error.message}`);
+    }
+  }
+
+  /**
+   * Add a recipe's ingredients to the connected list as recipe-linked items, the
+   * way the AnyList app does. Each ingredient maps to a deterministic item ID
+   * (stemmed name + unit + package size), so an ingredient already on the list,
+   * from this or another recipe, gains a recipe link instead of a duplicate, and
+   * a checked-off one is unchecked. Headings are skipped, as are ingredients
+   * whose name matches an `exclude` entry (case-insensitive).
+   * @param {{ id?: string, name?: string }} recipeRef - recipe id or name (id wins);
+   *   may be empty when `eventId` is given, to use the event's recipe
+   * @param {{ eventId?: string, exclude?: string[] }} [options] - `eventId` links
+   *   the items to that meal-plan event too
+   * @returns {Promise<{ recipe: string, list: string, results: Array<{ name: string, outcome: string, item?: string }>, unmatchedExcludes: string[] }>}
+   *   outcome is one of added, merged, revived, already linked, skipped
+   */
+  async addRecipeToList(recipeRef = {}, { eventId = null, exclude = [] } = {}) {
+    if (!this.targetList) {
+      throw new Error('Not connected to any list. Call connect() first.');
+    }
+    try {
+      // Fresh state, so merge/revive decisions see the list as it is now.
+      const userData = await this.client._getUserData(true);
+      await this.client.getLists(false);
+      const list = this.client.lists.find(l => l.identifier === this.targetList.identifier);
+      if (!list) throw new Error(`List "${this.targetList.name}" no longer exists`);
+      this.targetList = list;
+
+      let event = null;
+      if (eventId) {
+        event = userData.mealPlanningCalendarResponse.events.find(e => e.identifier === eventId);
+        if (!event) throw new Error(`Meal plan event "${eventId}" not found`);
+        if (!event.recipeId) throw new Error(`Meal plan event "${eventId}" has no recipe`);
+        if (!recipeRef.id && !recipeRef.name) recipeRef = { id: event.recipeId };
+      }
+      const recipe = resolveOne(userData.recipeDataResponse.recipes, recipeRef, 'Recipe', describeRecipe);
+      if (event && event.recipeId !== recipe.identifier) {
+        throw new Error(`Meal plan event "${eventId}" is for a different recipe`);
+      }
+      // The app scales by the event's factor when there is an event, else the recipe's.
+      const scale = (event ? event.recipeScaleFactor : recipe.scaleFactor) || 1;
+      if (scale !== 1) {
+        throw new Error(`"${recipe.name}" is scaled ×${scale}${event ? ' on this meal plan event' : ''}; adding scaled recipes isn't supported yet`);
+      }
+
+      const excludes = new Map(exclude.map(e => [e.trim().toLowerCase(), e]));
+      const usedExcludes = new Set();
+      const { ListItem, PBListOperation, PBListOperationList } = this.client.protobuf;
+      const ops = [];
+      const addOp = (handlerId, itemId, { listItem, updatedValue } = {}) => {
+        const op = new PBListOperation();
+        op.setMetadata({ operationId: uuid(), handlerId, userId: this.client.uid });
+        op.setListId(list.identifier);
+        op.setListItemId(itemId);
+        if (listItem) op.setListItem(new ListItem(listItem));
+        if (updatedValue) op.setUpdatedValue(updatedValue);
+        ops.push(op);
+      };
+
+      const saved = items => (items || []).map(i => ({
+        name: i.name,
+        packageSizePb: i._pb?.packageSizePb,
+        categoryMatchId: i._pb?.categoryMatchId,
+        categoryAssignments: i.categoryAssignments,
+      }));
+      const favorites = saved(this.client.getFavoriteItemsByListId(list.identifier)?.items);
+      const recents = saved(this.client.getRecentItemsByListId(list.identifier));
+
+      const results = [];
+      const touched = new Map(); // item id -> item name, for items this call adds or changes
+      for (const ingredient of recipe.ingredients || []) {
+        const name = (ingredient.name || '').trim();
+        if (ingredient.isHeading || !name) continue;
+        if (excludes.has(name.toLowerCase())) {
+          usedExcludes.add(name.toLowerCase());
+          results.push({ name, outcome: 'skipped' });
+          continue;
+        }
+        const itemIngredient = toItemIngredient(ingredient, recipe, event);
+        const id = itemIdentifier(itemIngredient, list.identifier);
+        const existing = list.getItemById(id);
+        if (!existing && !touched.has(id)) {
+          const item = newListItem(itemIngredient, { identifier: id, listId: list.identifier, userId: this.client.uid });
+          // The server doesn't categorize these; the app copies the category of a
+          // favorite or recent item with the same name.
+          const match = findSavedItem(itemIngredient, favorites, recents);
+          if (match?.categoryMatchId) {
+            item.categoryMatchId = match.categoryMatchId;
+            item.categoryAssignments = match.categoryAssignments;
+          }
+          addOp('add-item-ingredient-to-list-item', id, { listItem: item });
+          touched.set(id, name);
+          results.push({ name, outcome: 'added' });
+          continue;
+        }
+        let outcome = 'merged';
+        if (existing && existing.checked && !touched.has(id)) {
+          // Reviving also drops quantity/package overrides, as the app does.
+          addOp('set-list-item-checked', id, { updatedValue: 'n' });
+          const pb = existing._pb || {};
+          if (pb.itemQuantityShouldOverrideIngredientQuantity) {
+            addOp('set-item-quantity-should-override-ingredient-quantity', id, {
+              listItem: { identifier: id, listId: list.identifier, itemQuantityShouldOverrideIngredientQuantity: false },
+            });
+          }
+          if (pb.itemPackageSizeShouldOverrideIngredientPackageSize) {
+            addOp('set-item-package-size-should-override-ingredient-package-size', id, {
+              listItem: { identifier: id, listId: list.identifier, itemPackageSizeShouldOverrideIngredientPackageSize: false },
+            });
+          }
+          outcome = 'revived';
+        } else if (existing && (existing.ingredients || []).some(i => sameItemIngredient(i, itemIngredient))) {
+          outcome = 'already linked';
+        }
+        addOp('add-item-ingredient-to-list-item', id, {
+          listItem: { identifier: id, listId: list.identifier, ingredients: [itemIngredient] },
+        });
+        const itemName = existing ? existing.name : touched.get(id);
+        touched.set(id, itemName);
+        results.push({ name, outcome, ...(itemName && itemName !== name ? { item: itemName } : {}) });
+      }
+
+      if (ops.length > 0) {
+        const opList = new PBListOperationList();
+        opList.setOperations(ops);
+        const form = new FormData();
+        form.append('operations', opList.toBuffer());
+        await this.client.client.post('data/shopping-lists/update', { body: form });
+        await this.client.getLists();
+        this.targetList = this.client.lists.find(l => l.identifier === list.identifier) || list;
+      }
+      console.error(`Added recipe "${recipe.name}" to list "${list.name}" (${ops.length} operations)`);
+      return {
+        recipe: recipe.name,
+        list: list.name,
+        results,
+        unmatchedExcludes: [...excludes].filter(([key]) => !usedExcludes.has(key)).map(([, raw]) => raw),
+      };
+    } catch (error) {
+      throw new Error(`Failed to add recipe to list: ${error.message}`);
     }
   }
 

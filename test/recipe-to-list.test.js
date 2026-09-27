@@ -18,6 +18,7 @@ import {
 } from '../src/recipe-to-list/quantity.js';
 import {
   itemIdentifier,
+  newListItem,
   normalizedRawPackageSize,
   sameItemIngredient,
   toItemIngredient,
@@ -207,6 +208,11 @@ describe('golden fixture: items the AnyList app added from two recipes', () => {
       assert.equal(ours.recipeId, appIngredient.recipeId);
       assert.equal(ours.recipeName, appIngredient.recipeName);
       assert.equal(itemIdentifier(ours, fixture.listId), item.identifier);
+      // The new item carries the same name, package and price flag as the app's.
+      const built = newListItem(ours, { identifier: item.identifier, listId: fixture.listId, userId: 'u' });
+      assert.equal(built.name, item.name);
+      assert.deepEqual(clean(built.packageSizePb), clean(item.packageSizePb));
+      assert.equal(Boolean(built.priceQuantityShouldOverrideItemQuantity), Boolean(item.priceQuantityShouldOverrideItemQuantity));
     });
   }
 });
