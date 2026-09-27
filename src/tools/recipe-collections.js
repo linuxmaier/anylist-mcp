@@ -11,13 +11,15 @@ export function register(server, getClient) {
 - list: Show all collections with ids, recipe counts and names
 - create: Create a new collection, optionally with recipes (by recipe_ids or recipe_names)
 - delete: Delete a collection by collection_id or name
+- add_recipes: Add existing recipes (recipe_ids and/or recipe_names) to a collection (collection_id or name). Recipes already in it are skipped.
+- remove_recipes: Take recipes (recipe_ids and/or recipe_names) out of a collection (collection_id or name). The recipes themselves are not deleted.
 If a name matches more than one collection or recipe, the action fails and lists each match's id; retry with the id.`,
     inputSchema: {
-      action: z.enum(["list", "create", "delete"]).describe("The collection action to perform"),
-      name: z.string().optional().describe("Collection name (required for create; delete takes this or collection_id)"),
-      collection_id: z.string().optional().describe("Collection ID (delete). Takes precedence over name."),
-      recipe_names: z.array(z.string()).optional().describe("Recipe names to include (create only). Each must match exactly one recipe."),
-      recipe_ids: z.array(z.string()).optional().describe("Recipe IDs to include (create only)"),
+      action: z.enum(["list", "create", "delete", "add_recipes", "remove_recipes"]).describe("The collection action to perform"),
+      name: z.string().optional().describe("Collection name (required for create; delete, add_recipes and remove_recipes take this or collection_id)"),
+      collection_id: z.string().optional().describe("Collection ID (delete, add_recipes, remove_recipes). Takes precedence over name."),
+      recipe_names: z.array(z.string()).optional().describe("Recipe names (create, add_recipes, remove_recipes). Each must match exactly one recipe."),
+      recipe_ids: z.array(z.string()).optional().describe("Recipe IDs (create, add_recipes, remove_recipes)"),
     }
   }, async (params) => {
     const { action, name, collection_id, recipe_names, recipe_ids } = params;
@@ -42,6 +44,18 @@ If a name matches more than one collection or recipe, the action fails and lists
           if (!collection_id && !deleteCollectionName) deleteCollectionName = await elicitRequiredField("name", "Which collection would you like to delete?");
           const deleted = await client.deleteRecipeCollection({ id: collection_id, name: deleteCollectionName });
           return textResponse(`Deleted recipe collection "${deleted.name}" (id: ${deleted.identifier})`);
+        }
+        case "add_recipes":
+        case "remove_recipes": {
+          const recipeRefs = [...(recipe_ids || []).map(id => ({ id })), ...(recipe_names || []).map(n => ({ name: n }))];
+          const adding = action === "add_recipes";
+          const result = adding
+            ? await client.addRecipesToCollection({ id: collection_id, name }, recipeRefs)
+            : await client.removeRecipesFromCollection({ id: collection_id, name }, recipeRefs);
+          const lines = [];
+          if (result.changed.length > 0) lines.push(`${adding ? "Added to" : "Removed from"} "${result.name}" (id: ${result.identifier}): ${result.changed.join(', ')}`);
+          if (result.skipped.length > 0) lines.push(`${adding ? "Already in" : "Not in"} "${result.name}", skipped: ${result.skipped.join(', ')}`);
+          return textResponse(lines.join("\n"));
         }
       }
     } catch (error) {

@@ -186,9 +186,13 @@ Organize recipes into named collections.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | enum | Yes | `list` or `create` |
-| `name` | string | For create | Collection name |
-| `recipe_names` | string[] | No | Recipes to include on creation |
+| `action` | enum | Yes | `list`, `create`, `delete`, `add_recipes`, or `remove_recipes` |
+| `name` | string | For create | Collection name. `delete`, `add_recipes` and `remove_recipes` take this or `collection_id` |
+| `collection_id` | string | No | Collection ID; takes precedence over `name` |
+| `recipe_names` | string[] | No | Recipes by name (`create`, `add_recipes`, `remove_recipes`) |
+| `recipe_ids` | string[] | No | Recipes by ID (`create`, `add_recipes`, `remove_recipes`) |
+
+A name that matches more than one collection or recipe makes the action fail and list each match's ID. `add_recipes` skips recipes already in the collection. `remove_recipes` only takes recipes out of the collection and never deletes them.
 
 **Actions:**
 
@@ -201,6 +205,20 @@ Organize recipes into named collections.
     "action": "create",
     "name": "Weeknight Dinners",
     "recipe_names": ["Simple Pasta", "Chicken Tikka Masala"]
+} }
+
+// Add recipes to an existing collection
+{ "name": "recipe_collections", "arguments": {
+    "action": "add_recipes",
+    "collection_id": "<collection id from list>",
+    "recipe_names": ["Lemon Chicken"]
+} }
+
+// Take a recipe out of a collection (the recipe itself is kept)
+{ "name": "recipe_collections", "arguments": {
+    "action": "remove_recipes",
+    "name": "Weeknight Dinners",
+    "recipe_names": ["Simple Pasta"]
 } }
 ```
 
