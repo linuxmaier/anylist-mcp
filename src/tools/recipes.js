@@ -3,6 +3,10 @@ import { textResponse, errorResponse } from "./helpers.js";
 import { createElicitationHelpers } from "./elicitation.js";
 import { normalizeRecipe } from "../recipe-normalizer.js";
 
+// AnyList stores prepTime/cookTime in seconds; the tool speaks minutes.
+const formatMinutes = (seconds) => `${Math.round(seconds / 60)} min`;
+const toSeconds = (minutes) => Math.round(minutes * 60);
+
 export function register(server, getClient) {
   const { elicitRequiredField, elicitConfirmation } = createElicitationHelpers(server);
 
@@ -47,8 +51,8 @@ export function register(server, getClient) {
           const list = recipes.map(r => {
             const parts = [`- **${r.name}**`];
             if (r.rating) parts.push(`⭐${r.rating}`);
-            if (r.prepTime) parts.push(`prep: ${r.prepTime}min`);
-            if (r.cookTime) parts.push(`cook: ${r.cookTime}min`);
+            if (r.prepTime) parts.push(`prep: ${formatMinutes(r.prepTime)}`);
+            if (r.cookTime) parts.push(`cook: ${formatMinutes(r.cookTime)}`);
             if (r.servings) parts.push(`serves: ${r.servings}`);
             parts.push(`(id: ${r.identifier})`);
             return parts.join(' | ');
@@ -63,8 +67,8 @@ export function register(server, getClient) {
           if (recipe.sourceName) text += `Source: ${recipe.sourceName}\n`;
           if (recipe.sourceUrl) text += `URL: ${recipe.sourceUrl}\n`;
           if (recipe.rating) text += `Rating: ${'⭐'.repeat(recipe.rating)}\n`;
-          if (recipe.prepTime) text += `Prep: ${recipe.prepTime} min\n`;
-          if (recipe.cookTime) text += `Cook: ${recipe.cookTime} min\n`;
+          if (recipe.prepTime) text += `Prep: ${formatMinutes(recipe.prepTime)}\n`;
+          if (recipe.cookTime) text += `Cook: ${formatMinutes(recipe.cookTime)}\n`;
           if (recipe.servings) text += `Servings: ${recipe.servings}\n`;
           if (recipe.createdAt) text += `Created: ${recipe.createdAt}\n`;
           if (recipe.note) text += `\nNotes: ${recipe.note}\n`;
@@ -101,8 +105,8 @@ export function register(server, getClient) {
             note: note || null,
             sourceName: source_name || null,
             sourceUrl: source_url || null,
-            prepTime: prep_time || null,
-            cookTime: cook_time || null,
+            prepTime: prep_time ? toSeconds(prep_time) : null,
+            cookTime: cook_time ? toSeconds(cook_time) : null,
             servings: servings || null,
           });
           return textResponse(`Created recipe "${result.name}"`);
@@ -124,8 +128,8 @@ export function register(server, getClient) {
           if (note !== undefined) fields.note = note;
           if (source_name !== undefined) fields.sourceName = source_name;
           if (source_url !== undefined) fields.sourceUrl = source_url;
-          if (prep_time !== undefined) fields.prepTime = prep_time;
-          if (cook_time !== undefined) fields.cookTime = cook_time;
+          if (prep_time !== undefined) fields.prepTime = toSeconds(prep_time);
+          if (cook_time !== undefined) fields.cookTime = toSeconds(cook_time);
           if (servings !== undefined) fields.servings = servings;
           if (Object.keys(fields).length === 0) {
             return errorResponse('Action "update" requires at least one field to change (ingredients, steps, note, source_name, source_url, prep_time, cook_time, or servings).');
@@ -162,8 +166,8 @@ export function register(server, getClient) {
           let output = `# ${normalized.name}\n\n`;
           if (normalized.sourceName) output += `Source: ${normalized.sourceName}\n`;
           if (normalized.sourceUrl) output += `URL: ${normalized.sourceUrl}\n`;
-          if (normalized.prepTime) output += `Prep: ${normalized.prepTime}\n`;
-          if (normalized.cookTime) output += `Cook: ${normalized.cookTime}\n`;
+          if (normalized.prepTime) output += `Prep: ${formatMinutes(normalized.prepTime)}\n`;
+          if (normalized.cookTime) output += `Cook: ${formatMinutes(normalized.cookTime)}\n`;
           if (normalized.servings) output += `Servings: ${normalized.servings}\n`;
           if (normalized.note) output += `Note: ${normalized.note}\n`;
           output += `\n## Ingredients (${normalized.ingredients.length})\n`;
