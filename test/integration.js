@@ -428,7 +428,7 @@ try {
     const direct = new AnyListClient();
     try {
       await direct.connect(LIST_NAME);
-      const recipe = await direct.getRecipeDetails(testRecipe);
+      const recipe = await direct.getRecipeDetails({ name: testRecipe });
       if (recipe.prepTime !== 900) throw new Error(`stored prepTime is ${recipe.prepTime}, expected 900`);
     } finally {
       await direct.disconnect();
