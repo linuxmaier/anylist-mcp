@@ -145,7 +145,9 @@ Manage the AnyList meal planning calendar.
 | `recipe_id` | string | No | Link an existing recipe by ID |
 | `label_id` | string | No | Meal type label ID (get from `list_labels`) |
 | `details` | string | No | Additional notes |
-| `event_id` | string | For delete | Event ID to delete |
+| `event_id` | string | For update/delete | Event ID (from `list_events`) |
+
+`update_event` changes only the fields you pass and keeps the event's ID. Pass `""` to clear `title`, `recipe_id`, `label_id` or `details`; an event must keep a title or a recipe.
 
 **Actions:**
 
@@ -161,6 +163,14 @@ Manage the AnyList meal planning calendar.
     "action": "create_event",
     "date": "2025-02-15",
     "title": "Pizza Night",
+    "label_id": "<id from list_labels>"
+} }
+
+// Move an event to another day and change its label (other fields unchanged)
+{ "name": "meal_plan", "arguments": {
+    "action": "update_event",
+    "event_id": "<id>",
+    "date": "2025-02-17",
     "label_id": "<id from list_labels>"
 } }
 

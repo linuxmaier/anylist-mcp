@@ -703,6 +703,43 @@ class AnyListClient {
     }
   }
 
+  /**
+   * Update an existing meal plan event in place (keeps its identifier).
+   * Only fields that are not undefined are changed; an empty string clears a field.
+   */
+  async updateMealPlanEvent(eventId, { date, title, recipeId, labelId, details } = {}) {
+    if (!this.client) {
+      throw new Error('Not connected. Call connect() first.');
+    }
+    try {
+      const events = await this.client.getMealPlanningCalendarEvents();
+      const event = events.find(e => e.identifier === eventId);
+      if (!event) {
+        throw new Error(`Meal plan event "${eventId}" not found`);
+      }
+      const clearable = v => (v === '' ? null : v);
+      if (title !== undefined) event.title = clearable(title);
+      if (recipeId !== undefined) event.recipeId = clearable(recipeId);
+      if (labelId !== undefined) event.labelId = clearable(labelId);
+      if (details !== undefined) event.details = clearable(details);
+      if (!event.title && !event.recipeId) {
+        throw new Error('Event must keep a title or a recipe');
+      }
+      // anylist-js parses the stored "YYYY-MM-DD" as UTC midnight but saves the
+      // local date, which shifts west-of-UTC events back a day. Always re-set the
+      // date to local noon, as createMealPlanEvent does.
+      const newDate = date ?? event.date.toISOString().slice(0, 10);
+      event.date = new Date(`${newDate}T12:00:00`);
+      // event.save() sends 'set-event-details', which only updates the details
+      // field. 'update-event' replaces the whole event (date, title, label, recipe).
+      await event.performOperation('update-event');
+      console.error(`Updated meal plan event: ${eventId}`);
+      return { identifier: event.identifier, date: newDate };
+    } catch (error) {
+      throw new Error(`Failed to update meal plan event: ${error.message}`);
+    }
+  }
+
   async deleteMealPlanEvent(eventId) {
     if (!this.client) {
       throw new Error('Not connected. Call connect() first.');

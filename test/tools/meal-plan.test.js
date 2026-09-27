@@ -104,6 +104,42 @@ describe('meal_plan tool', () => {
     });
   });
 
+  describe('update_event', () => {
+    it('updates only the given fields and keeps the ID', async () => {
+      client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos', labelId: 'l1', details: 'spicy' });
+      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1', date: '2099-06-17' });
+      assert.ok(!result.isError, result.content[0].text);
+      assert.ok(result.content[0].text.includes('Updated meal plan event e1'));
+      assert.deepEqual(client._events[0], { identifier: 'e1', date: '2099-06-17', title: 'Tacos', labelId: 'l1', details: 'spicy' });
+    });
+
+    it('passes "" through so the client can clear a field', async () => {
+      client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos', labelId: 'l1' });
+      await handlers.meal_plan({ action: 'update_event', event_id: 'e1', label_id: '' });
+      assert.equal(client._events[0].labelId, null);
+      assert.equal(client._events[0].title, 'Tacos');
+    });
+
+    it('returns error when no fields are given', async () => {
+      client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos' });
+      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1' });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('Nothing to update'));
+    });
+
+    it('returns error for a malformed date', async () => {
+      client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos' });
+      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1', date: '6/17/2099' });
+      assert.equal(result.isError, true);
+      assert.equal(client._events[0].date, '2099-06-15');
+    });
+
+    it('returns error for non-existent event', async () => {
+      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'bad', title: 'x' });
+      assert.equal(result.isError, true);
+    });
+  });
+
   describe('delete_event', () => {
     it('deletes an existing event', async () => {
       client._events.push({ identifier: 'e1', date: '2025-03-01' });
