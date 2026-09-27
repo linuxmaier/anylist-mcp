@@ -617,10 +617,14 @@ try {
     return 'Collection absent from list after deletion';
   });
 
-  // Invalid action test — SDK validates enum at protocol level, so expect a thrown error
+  // Invalid action test — older SDKs throw at the protocol level; newer ones (>= ~1.2x)
+  // return the input-validation failure as an isError tool result
   await test('shopping → invalid action returns error', async () => {
     try {
-      await client.callTool({ name: 'shopping', arguments: { action: 'nonexistent' } });
+      const r = await client.callTool({ name: 'shopping', arguments: { action: 'nonexistent' } });
+      if (r.isError && /validation/i.test(r.content?.[0]?.text ?? '')) {
+        return 'Correctly rejected invalid action as a tool error';
+      }
       throw new Error('Expected error for invalid action');
     } catch (e) {
       if (e.message.includes('Expected error')) throw e;

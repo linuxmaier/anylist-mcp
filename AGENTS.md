@@ -20,6 +20,9 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
 ## Install modes
 
 - **stdio (default, local):** `npm ci --omit=optional`. It runs `src/server.js`.
+  - Locally, the owner starts it through `scripts/with-anylist-creds.sh`, which reads the AnyList credentials from the GNOME keyring (`secret-tool`).
+  - Pass a command to run it with other commands, e.g. `scripts/with-anylist-creds.sh npm run test:integration`.
+  - Never ask for credentials or store them another way. The owner adds them to the keyring outside agent sessions.
 - **HTTP (optional):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README).
 - The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio code path (`src/server.js`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this.
 
