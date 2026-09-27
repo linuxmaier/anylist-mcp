@@ -77,7 +77,11 @@ Manage AnyList recipes, including URL import and text parsing.
 |-----------|------|----------|-------------|
 | `action` | enum | Yes | See actions below |
 | `name` | string | For most actions | Recipe name |
-| `search` | string | No | Filter recipes by name (list only) |
+| `search` | string | No | Filter recipes by name (list, index) |
+| `ingredient` | string | No | Keep recipes with an ingredient whose name contains this (index only) |
+| `collection` | string | No | Keep recipes in a collection whose name contains this (index only) |
+| `max_total_minutes` | number | No | Prep + cook at most this; recipes without times are excluded (index only) |
+| `not_planned_since` | string | No | `YYYY-MM-DD`; keep recipes with no meal-plan event on or after this date, future ones included (index only) |
 | `ingredients` | array | No | `[{ name, quantity }]` (create, update — replaces list on update) |
 | `steps` | string[] | No | Preparation steps (create, update — replaces list on update) |
 | `note` | string | No | Recipe notes (create, update) |
@@ -98,6 +102,12 @@ Manage AnyList recipes, including URL import and text parsing.
 
 // Search recipes
 { "name": "recipes", "arguments": { "action": "list", "search": "chicken" } }
+
+// Planning index — one line per recipe: times (prep+cook), servings, collections,
+// last (latest event up to today) / next (earliest future event), up to 8 main
+// ingredients (pantry staples like salt, pepper, water and oil left out), id
+{ "name": "recipes", "arguments": { "action": "index" } }
+{ "name": "recipes", "arguments": { "action": "index", "ingredient": "chicken", "max_total_minutes": 45, "not_planned_since": "2026-08-01" } }
 
 // Get full details — ingredients and steps
 { "name": "recipes", "arguments": { "action": "get", "name": "Chicken Tikka Masala" } }

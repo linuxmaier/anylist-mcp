@@ -192,3 +192,37 @@ describe('AnyListClient collection membership', () => {
     ]);
   });
 });
+
+describe('AnyListClient recipe index', () => {
+  let client;
+  beforeEach(() => {
+    const collections = [
+      { identifier: 'c-1', name: 'Main Dishes', recipeIds: ['r-1'] },
+      { identifier: 'c-2', name: 'Main Dishes', recipeIds: ['r-1'] },
+      { identifier: 'c-3', name: 'Quick', recipeIds: ['r-1', 'r-2'] },
+    ];
+    const recipes = [
+      { identifier: 'r-1', name: 'Pizza', prepTime: 600, servings: '4', ingredients: [
+        { rawIngredient: null, name: 'Dough' },
+        { rawIngredient: '2 cups bread flour', name: 'bread flour' },
+        { rawIngredient: '1 cup mozzarella' },
+      ] },
+      { identifier: 'r-2', name: 'Rice' },
+    ];
+    client = new AnyListClient();
+    client.client = {
+      async getRecipes() { return recipes; },
+      async _getUserData() { return { recipeDataResponse: { recipeCollections: collections } }; },
+    };
+  });
+
+  it('skips heading ingredients, falls back to rawIngredient, and lists each collection name once', async () => {
+    const [pizza, rice] = await client.getRecipeIndex();
+    assert.deepEqual(pizza.ingredientNames, ['bread flour', '1 cup mozzarella']);
+    assert.deepEqual(pizza.collections, ['Main Dishes', 'Quick']);
+    assert.equal(pizza.prepTime, 600);
+    assert.equal(pizza.cookTime, null);
+    assert.deepEqual(rice.ingredientNames, []);
+    assert.deepEqual(rice.collections, ['Quick']);
+  });
+});
