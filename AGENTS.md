@@ -24,7 +24,36 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - Pass a command to run it with other commands, e.g. `scripts/with-anylist-creds.sh npm run test:integration`.
   - Never ask for credentials or store them another way. The owner adds them to the keyring outside agent sessions.
 - **HTTP (optional):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README).
-- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio code path (`src/server.js`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this.
+- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio code path (`src/server.js`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this.
+
+## How the code talks to AnyList
+
+- **anylist-js is a partial model of the protocol, and sometimes loses data.** Where it's wrong, `src/anylist-client.js` builds the protocol operations itself, using anylist-js internals (`_getUserData`, `protobuf`, `uid`, `client.post`). Currently that's:
+  - `updateMealPlanEvent`: clones the full stored event and sends `update-event` (anylist-js's event model is lossy, linuxmaier/anylist-js#4)
+  - collection add/remove: sends only the change, one op per removed recipe (anylist-js sends the full list and would empty the collection, linuxmaier/anylist-js#5)
+  - `addRecipeToList`
+- **Prefer a wrapper fix to an anylist-js change.** Every anylist-js change widens the gap with upstream. Change anylist-js only when the wrapper can't avoid the bug; `Item._encode` dropping fields (anylist-js#3) was such a case.
+- **Protocol reference:** [aioanylist](https://github.com/BookCatKid/aioanylist) (MIT) mirrors AnyList's web client. Check handler names and payload shapes there before inventing them, then confirm live on disposable objects. It isn't always right: `src/recipe-to-list/` documents 4 places where the real app differs.
+- **Pitfalls that already bit us:**
+  - **Units:** recipe `prepTime`/`cookTime` are stored in **seconds**. The tools speak minutes and convert only at the tool boundary.
+  - **Dates:** meal-plan dates are stored as `YYYY-MM-DD` strings. Don't round-trip them through `new Date()`, which shifts them a day west of UTC. The owner is on CDT. Compute "today" in local time.
+  - **Names:** look up recipes and collections with `resolveOne` (by ID, with an error on ambiguous names), never `Array.find` by name. The account has duplicate names.
+  - **Stale list:** `this.targetList` can go stale after AnyList pushes a list refresh (#19). Anything that reads and then writes a list should refresh it first, as `addRecipeToList` does.
+- **`src/recipe-to-list/`:** a Porter2 stemmer, a quantity/package parser, and deterministic item IDs matching the app's. The golden test (`test/fixtures/recipe-list-items.json`) must stay at 37/37. If a change breaks it, the app's behaviour wins.
+
+## Live testing
+
+- Run live tests only through `scripts/with-anylist-creds.sh`:
+  - `npm run test:integration`: the MCP end to end
+  - `npm run test:client`: the client directly
+  - `npm run test:http` also runs offline, but needs the full `npm ci`
+- **Test List** is the only list tests may write to.
+  - It holds exactly the **37 golden fixture items**, which the AnyList app created from White Chicken Chili and Black Bean Chili.
+  - Never modify or delete them. The integration test refuses to write unless all 37 are present, and checks they're unchanged afterwards.
+  - Other items on Test List may be created and removed. Delete them **by ID**, never by name.
+- **Throwaway data:** name it `zz-mcp-test…` or `🧪 …`, date meal-plan events in 2099, and clean up in the same run.
+- **Real data:** never write to "929 Grocery List" (the real list), the real meal plan, or the owner's real recipes/collections without the owner's go-ahead.
+- `anylist-js` has offline unit tests: `npm run test:unit` in the submodule. Its mocha integration tests need credentials.
 
 ## Security rules
 
@@ -59,9 +88,23 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
 
 ## Before proposing a commit
 
-1. `npm test`, which needs no credentials. Also run `node scripts/smoke-stdio.mjs` if you touched startup, tools, or dependencies.
+1. `npm test`, which needs no credentials. Also:
+   - `node scripts/smoke-stdio.mjs` if you touched startup, tools, or dependencies
+   - `npm run test:http` if you touched `src/http/`
+   - the live suite (see "Live testing") if you changed how anything is written to AnyList
 2. `mise run security` runs the same scanners as CI: gitleaks (this repo and the submodule), osv-scanner, semgrep, zizmor and actionlint.
 3. Only commit or push when the owner asks.
+
+## Pull requests and merging
+
+- Work each issue on its own branch in a worktree; the owner uses `/gh-issue`. Open PRs in the linuxmaier fork, always with `--repo`.
+- **Merge method:**
+  - **anylist-mcp:** squash.
+  - **anylist-js:** "Create a merge commit". anylist-mcp pins the submodule to a specific anylist-js commit, and squashing would orphan it.
+- **Changes spanning both repos:**
+  1. merge the anylist-js PR
+  2. then open a separate anylist-mcp PR that bumps the submodule
+- **Stacked PRs:** merge the base PR and wait for GitHub to retarget the next one to `main` before merging it. Otherwise the stacked PR merges into the base branch, not `main`.
 
 ## Syncing from upstream (the trust boundary)
 
@@ -110,7 +153,13 @@ General fixes accepted upstream shrink this fork's diff and future merge conflic
 
 - **protobufjs 5:** anylist-js pins `protobufjs@5.0.3`. Its advisories are accepted until 2026-12-31 (see `osv-scanner.toml`). The fix is to port anylist-js to protobufjs 7.
 - **Recipe import in HTTP mode:** the importer blocks non-HTTP(S) schemes and limits redirects and response size. It does not block private or internal IP addresses, which matters if HTTP mode is exposed to others.
-- **Shared token cache in HTTP mode:** every user shares the default token cache path (`~/.anylist_credentials`). Each user's tokens are encrypted with their own password, so this causes re-logins, not leaks.
+- **Shared token cache in HTTP mode:** every user shares the default token cache path (`~/.anylist_credentials`). Each user's tokens are encrypted with their own password, so this causes re-logins, not leaks. The cache key is also weak (linuxmaier/anylist-js#2).
+- **Open issues that affect behaviour** (roadmap: #11):
+  - **#19, stale list data:** `list_items`, `check_item` and `delete_item` can miss items added in the app since the server connected. Fix it before switching the default list to "929 Grocery List".
+  - **#20, no categorizer:** `add_recipe` copies categories only from favorite or recent items, so new ingredients land in "other".
+  - **#21:** MCP-created recipes' ingredients have no identifiers.
+  - **#22:** a moved meal-plan event keeps its old sort position.
+  - `add_recipe` refuses scaled recipes.
 
 # Part 2: General coding guidelines (from upstream)
 
