@@ -304,7 +304,7 @@ describe('shopping tool', () => {
         'Added recipe "Chili" to list "Test List": 1 added, 1 merged, 1 skipped',
         '  added: onions',
         '  merged: yellow onion → "onions"',
-        '  skipped: salt',
+        '  skipped (exclude: salt): Kosher salt',
         'Exclude entries that matched no ingredient: butter',
       ].join('\n'));
     });

@@ -83,6 +83,26 @@ export function newListItem(itemIngredient, { identifier, listId, userId }) {
   return item;
 }
 
+const stemmedTokens = text => stemWords((text || '').toLowerCase().split(/[^\p{L}]+/u));
+
+/**
+ * Build a matcher for `exclude` entries: an ingredient name is excluded by the
+ * first entry whose stemmed words all appear among the name's stemmed words, so
+ * "salt" matches "Kosher salt" and "black pepper" matches "Freshly ground black
+ * pepper". Entries with no words match nothing.
+ * @param {string[]} excludes
+ * @returns {(name: string) => string | undefined} the matching entry, if any
+ */
+export function excludeMatcher(excludes) {
+  const entries = excludes
+    .map(entry => ({ entry, tokens: stemmedTokens(entry) }))
+    .filter(e => e.tokens.length > 0);
+  return name => {
+    const have = new Set(stemmedTokens(name));
+    return entries.find(e => e.tokens.every(t => have.has(t)))?.entry;
+  };
+}
+
 /**
  * The favorite or recent item the app would copy properties from onto a new
  * recipe item: same stemmed name and package size. Favorites win; the most

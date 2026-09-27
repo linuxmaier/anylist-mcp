@@ -85,11 +85,11 @@ describe('AnyListClient.addRecipeToList', () => {
   });
 
   it('adds each ingredient as a recipe-linked item, skipping headings and exclusions', async () => {
-    const result = await client.addRecipeToList({ name: 'chili' }, { exclude: ['kosher SALT', 'butter'] });
+    const result = await client.addRecipeToList({ name: 'chili' }, { exclude: ['SALT', 'butter'] });
     assert.deepEqual(result.results, [
       { name: 'yellow onions', outcome: 'added' },
       { name: 'black beans', outcome: 'added' },
-      { name: 'Kosher salt', outcome: 'skipped' },
+      { name: 'Kosher salt', outcome: 'skipped', exclude: 'SALT' },
     ]);
     assert.deepEqual(result.unmatchedExcludes, ['butter']);
 

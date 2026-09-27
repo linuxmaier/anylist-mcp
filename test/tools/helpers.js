@@ -233,7 +233,7 @@ export class MockAnyListClient {
       results: [
         { name: 'onions', outcome: 'added' },
         { name: 'yellow onion', outcome: 'merged', item: 'onions' },
-        { name: 'salt', outcome: 'skipped' },
+        { name: 'Kosher salt', outcome: 'skipped', exclude: 'salt' },
       ],
       unmatchedExcludes: (options.exclude || []).filter(e => e !== 'salt'),
     };

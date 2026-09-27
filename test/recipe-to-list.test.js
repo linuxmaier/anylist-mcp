@@ -17,6 +17,7 @@ import {
   splitQuantityPrefix,
 } from '../src/recipe-to-list/quantity.js';
 import {
+  excludeMatcher,
   itemIdentifier,
   newListItem,
   normalizedRawPackageSize,
@@ -230,5 +231,25 @@ describe('toItemIngredient', () => {
     const out = toItemIngredient({ identifier: 'i', name: 'Kosher salt', quantity: '' }, { identifier: 'r', name: 'R' });
     assert.equal(out.quantityPb, undefined);
     assert.equal(out.packageSizePb, undefined);
+  });
+});
+
+describe('excludeMatcher', () => {
+  const match = excludeMatcher(['salt', 'black pepper', 'oil', 'pepper', 'saffron', ' ', '--']);
+
+  it('matches when every stemmed word of an entry is in the ingredient name', () => {
+    assert.equal(match('Kosher salt'), 'salt');
+    assert.equal(match('Salt and ground black pepper'), 'salt');
+    assert.equal(match('Freshly ground black pepper'), 'black pepper');
+    assert.equal(match('neutral oil'), 'oil');
+    // Broad on purpose: outcomes are reported, and the tool description says so.
+    assert.equal(match('red bell peppers'), 'pepper');
+  });
+
+  it('matches nothing when a word is missing, and ignores entries with no words', () => {
+    assert.equal(match('yellow onion'), undefined);
+    assert.equal(match('peppercorns'), undefined);
+    assert.equal(excludeMatcher(['black pepper'])('red bell peppers'), undefined);
+    assert.equal(excludeMatcher([' ', '--'])('anything'), undefined);
   });
 });

@@ -22,7 +22,7 @@ function buildDescription(stores) {
 - get_favorites: Get favorite items for a list
 - get_recents: Get recently added items for a list
 - list_stores: list stores available for the list (if any)
-- add_recipe: Add a recipe's ingredients as recipe-linked items, like the AnyList app does. Items show their recipe, an ingredient already on the list gains a link instead of a duplicate, and checked-off ones are unchecked. Pass recipe_id (or name), optionally meal_plan_event_id, and exclude for pantry staples to skip`;
+- add_recipe: Add a recipe's ingredients as recipe-linked items, like the AnyList app does. Items show their recipe, an ingredient already on the list gains a link instead of a duplicate, and checked-off ones are unchecked. Pass recipe_id (or name), optionally meal_plan_event_id, and exclude for pantry staples to skip. An exclude entry skips every ingredient whose name contains all of its words, ignoring case and plurals: "salt" skips "Kosher salt", "black pepper" skips "Freshly ground black pepper", but "pepper" also skips "red bell peppers". Check the skipped lines in the result`;
   if (!stores || stores.length === 0) return base;
   const storeList = stores.map(s => s.name).join(', ');
   return `${base}\n\nAvailable stores: ${storeList}`;
@@ -83,7 +83,7 @@ export function register(server, getClient) {
       name: z.string().optional().describe("Item name (required for add_item, set_item_store, check_item, uncheck_item, delete_item); recipe name for add_recipe"),
       recipe_id: z.string().optional().describe("Recipe ID (add_recipe). Takes precedence over name."),
       meal_plan_event_id: z.string().optional().describe("Meal plan event ID to link the items to (add_recipe). Without recipe_id or name, adds the event's recipe."),
-      exclude: z.array(z.string()).optional().describe("Ingredient names to skip, case-insensitive exact match (add_recipe), e.g. pantry staples"),
+      exclude: z.array(z.string()).optional().describe("Pantry staples to skip (add_recipe). An entry skips every ingredient whose name contains all its words, ignoring case and plurals: \"salt\" skips \"Kosher salt\"; \"pepper\" also skips \"red bell peppers\""),
       items: z.array(z.union([
         z.string(),
         z.object({
@@ -249,7 +249,7 @@ export function register(server, getClient) {
           const counts = {};
           results.forEach(r => { counts[r.outcome] = (counts[r.outcome] || 0) + 1; });
           const lines = [`Added recipe "${recipe}" to list "${list}": ${Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(", ") || "no ingredients"}`];
-          results.forEach(r => lines.push(`  ${r.outcome}: ${r.name}${r.item ? ` → "${r.item}"` : ""}`));
+          results.forEach(r => lines.push(`  ${r.outcome}${r.exclude ? ` (exclude: ${r.exclude})` : ""}: ${r.name}${r.item ? ` → "${r.item}"` : ""}`));
           if (unmatchedExcludes.length > 0) lines.push(`Exclude entries that matched no ingredient: ${unmatchedExcludes.join(", ")}`);
           return textResponse(lines.join("\n"));
         }

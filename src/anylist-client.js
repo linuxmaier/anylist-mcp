@@ -2,7 +2,7 @@ import AnyList from '../anylist-js/lib/index.js';
 import uuid from '../anylist-js/lib/uuid.js';
 import FormData from 'form-data';
 import { normalizeRecipe } from './recipe-normalizer.js';
-import { findSavedItem, itemIdentifier, newListItem, sameItemIngredient, toItemIngredient } from './recipe-to-list/index.js';
+import { excludeMatcher, findSavedItem, itemIdentifier, newListItem, sameItemIngredient, toItemIngredient } from './recipe-to-list/index.js';
 
 /**
  * Pick exactly one item (anything with `identifier` and `name`) by id or name.
@@ -890,13 +890,14 @@ class AnyListClient {
    * (stemmed name + unit + package size), so an ingredient already on the list,
    * from this or another recipe, gains a recipe link instead of a duplicate, and
    * a checked-off one is unchecked. Headings are skipped, as are ingredients
-   * whose name matches an `exclude` entry (case-insensitive).
+   * whose name contains every (stemmed) word of an `exclude` entry.
    * @param {{ id?: string, name?: string }} recipeRef - recipe id or name (id wins);
    *   may be empty when `eventId` is given, to use the event's recipe
    * @param {{ eventId?: string, exclude?: string[] }} [options] - `eventId` links
    *   the items to that meal-plan event too
-   * @returns {Promise<{ recipe: string, list: string, results: Array<{ name: string, outcome: string, item?: string }>, unmatchedExcludes: string[] }>}
-   *   outcome is one of added, merged, revived, already linked, skipped
+   * @returns {Promise<{ recipe: string, list: string, results: Array<{ name: string, outcome: string, item?: string, exclude?: string }>, unmatchedExcludes: string[] }>}
+   *   outcome is one of added, merged, revived, already linked, skipped (with the
+   *   `exclude` entry that matched)
    */
   async addRecipeToList(recipeRef = {}, { eventId = null, exclude = [] } = {}) {
     if (!this.targetList) {
@@ -927,7 +928,7 @@ class AnyListClient {
         throw new Error(`"${recipe.name}" is scaled ×${scale}${event ? ' on this meal plan event' : ''}; adding scaled recipes isn't supported yet`);
       }
 
-      const excludes = new Map(exclude.map(e => [e.trim().toLowerCase(), e]));
+      const matchExclude = excludeMatcher(exclude);
       const usedExcludes = new Set();
       const { ListItem, PBListOperation, PBListOperationList } = this.client.protobuf;
       const ops = [];
@@ -955,9 +956,10 @@ class AnyListClient {
       for (const ingredient of recipe.ingredients || []) {
         const name = (ingredient.name || '').trim();
         if (ingredient.isHeading || !name) continue;
-        if (excludes.has(name.toLowerCase())) {
-          usedExcludes.add(name.toLowerCase());
-          results.push({ name, outcome: 'skipped' });
+        const excludedBy = matchExclude(name);
+        if (excludedBy) {
+          usedExcludes.add(excludedBy);
+          results.push({ name, outcome: 'skipped', exclude: excludedBy });
           continue;
         }
         const itemIngredient = toItemIngredient(ingredient, recipe, event);
@@ -1018,7 +1020,7 @@ class AnyListClient {
         recipe: recipe.name,
         list: list.name,
         results,
-        unmatchedExcludes: [...excludes].filter(([key]) => !usedExcludes.has(key)).map(([, raw]) => raw),
+        unmatchedExcludes: exclude.filter(e => !usedExcludes.has(e)),
       };
     } catch (error) {
       throw new Error(`Failed to add recipe to list: ${error.message}`);
