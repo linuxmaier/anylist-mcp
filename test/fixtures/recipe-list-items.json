@@ -1,0 +1,2637 @@
+{
+  "_source": "Test List after the owner added White Chicken Chili and Black Bean Chili from the AnyList app (2026-09-27). Raw ListItems with userId removed; recipes trimmed to identifier/name/scaleFactor/ingredients.",
+  "listId": "23b32271ec5a4498b933af9489ba562a",
+  "recipes": [
+    {
+      "identifier": "49b4aafc0d734973bb8ae8a24eed2a5e",
+      "name": "Black Bean Chili",
+      "scaleFactor": null,
+      "ingredients": [
+        {
+          "identifier": "fb5c43c929ca45229dfdd4d619d9ceab",
+          "rawIngredient": "1 pound white mushrooms, wiped clean, trimmed, and broken into rough pieces",
+          "name": "white mushrooms",
+          "quantity": "1 pound",
+          "note": "wiped clean, trimmed, and broken into rough pieces",
+          "isHeading": null
+        },
+        {
+          "identifier": "12abe0018d7a4379ad3496b9127aedee",
+          "rawIngredient": "1 tablespoon mustard seeds, (see note)",
+          "name": "mustard seeds",
+          "quantity": "1 tablespoon",
+          "note": "(see note)",
+          "isHeading": null
+        },
+        {
+          "identifier": "d9eacf7b0eb9426d95f1ed6af813cd93",
+          "rawIngredient": "2 teaspoons cumin seeds, (see note)",
+          "name": "cumin seeds",
+          "quantity": "2 teaspoons",
+          "note": "(see note)",
+          "isHeading": null
+        },
+        {
+          "identifier": "9f41670c0fbf421c9ba6cbb9f6ba580f",
+          "rawIngredient": "3 tablespoons vegetable oil",
+          "name": "vegetable oil",
+          "quantity": "3 tablespoons",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "2dec2210b4054bbd9f4dfbf104374b53",
+          "rawIngredient": "1 medium onion, chopped medium",
+          "name": "medium onion",
+          "quantity": "1",
+          "note": "chopped medium",
+          "isHeading": null
+        },
+        {
+          "identifier": "8a0a4f37dc734ef5b44fe4ce5914eb5f",
+          "rawIngredient": "9 medium garlic cloves, minced",
+          "name": "medium garlic cloves",
+          "quantity": "9",
+          "note": "minced",
+          "isHeading": null
+        },
+        {
+          "identifier": "c20775d07f2b40dd8ea0eca30d9a50d3",
+          "rawIngredient": "1 tablespoon chipotle chile in adobo sauce, minced",
+          "name": "chipotle chile in adobo sauce",
+          "quantity": "1 tablespoon",
+          "note": "minced",
+          "isHeading": null
+        },
+        {
+          "identifier": "c2ace94378b64bad9d1e43e98ba06806",
+          "rawIngredient": "3 tablespoons chili powder",
+          "name": "chili powder",
+          "quantity": "3 tablespoons",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "15444109fb7b416eaec2793709369e9a",
+          "rawIngredient": "2 ½ cups vegetable broth",
+          "name": "vegetable broth",
+          "quantity": "2 ½ cups",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "5e3d76db14034879b8002ba42aff418d",
+          "rawIngredient": "2 ½ cups water, plus extra as needed",
+          "name": "water",
+          "quantity": "2 ½ cups",
+          "note": "plus extra as needed",
+          "isHeading": null
+        },
+        {
+          "identifier": "a8d0532a0d5540a39395654ce790f5f7",
+          "rawIngredient": "1 pound dried black beans, picked over and rinsed",
+          "name": "dried black beans",
+          "quantity": "1 pound",
+          "note": "picked over and rinsed",
+          "isHeading": null
+        },
+        {
+          "identifier": "348693c42d5b4c8595907eff99500ec6",
+          "rawIngredient": "1 tablespoon light brown sugar",
+          "name": "light brown sugar",
+          "quantity": "1 tablespoon",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "37990da2567547c6bfa7054b3cc97550",
+          "rawIngredient": "⅛ teaspoon baking soda",
+          "name": "baking soda",
+          "quantity": "⅛ teaspoon",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "26d57015c5bc431b950835f883544f28",
+          "rawIngredient": "2 bay leaves",
+          "name": "bay leaves",
+          "quantity": "2",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "6909faf223c745df84bfc47420c94257",
+          "rawIngredient": "1 (28-ounce) can crushed tomatoes",
+          "name": "crushed tomatoes",
+          "quantity": "1 (28-ounce) can",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "41dd562d4e2a4bbe883bd312654f5f05",
+          "rawIngredient": "2 red bell peppers, stemmed, seeded, and cut into 1/2-inch pieces (see illustrations below)",
+          "name": "red bell peppers",
+          "quantity": "2",
+          "note": "stemmed, seeded, and cut into 1/2-inch pieces (see illustrations below)",
+          "isHeading": null
+        },
+        {
+          "identifier": "19da72474a034f2f8265ca55413cf525",
+          "rawIngredient": "½ cup fresh cilantro leaves, minced",
+          "name": "fresh cilantro leaves",
+          "quantity": "½ cup",
+          "note": "minced",
+          "isHeading": null
+        },
+        {
+          "identifier": "e43e3885729b4c19846d2b4fba4d5972",
+          "rawIngredient": "Salt and ground black pepper",
+          "name": "Salt and ground black pepper",
+          "quantity": null,
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "16876701427f430895c42526b72e8eb4",
+          "rawIngredient": "1 Lime wedge, for serving",
+          "name": "Lime wedge",
+          "quantity": "1",
+          "note": "for serving",
+          "isHeading": null
+        }
+      ]
+    },
+    {
+      "identifier": "d9b05093be274f7ea1222912ebb1dd84",
+      "name": "White Chicken Chili",
+      "scaleFactor": null,
+      "ingredients": [
+        {
+          "identifier": "fe74e1e1e9914772a682c308fa82df2d",
+          "rawIngredient": "1 tbsp. neutral oil",
+          "name": "neutral oil",
+          "quantity": "1 tbsp.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "3eb9d0e591e34714ac120a9f67351e9b",
+          "rawIngredient": "1 medium yellow onion, chopped",
+          "name": "yellow onion",
+          "quantity": "1 medium",
+          "note": "chopped",
+          "isHeading": null
+        },
+        {
+          "identifier": "a88eacf3d2dc4ec4a1be54d1413c5e36",
+          "rawIngredient": "1 jalapeño, seeded, finely chopped",
+          "name": "jalapeño, seeded",
+          "quantity": "1",
+          "note": "finely chopped",
+          "isHeading": null
+        },
+        {
+          "identifier": "be6c44c0c9854c93b6c984b2e0c7d017",
+          "rawIngredient": "2 cloves garlic, finely chopped",
+          "name": "garlic",
+          "quantity": "2 cloves",
+          "note": "finely chopped",
+          "isHeading": null
+        },
+        {
+          "identifier": "f4edc7c477c141478f540f80d1fce1ef",
+          "rawIngredient": "1 tsp. dried oregano",
+          "name": "dried oregano",
+          "quantity": "1 tsp.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "eb105ef8ce9f4f71a8f5ebd78f089881",
+          "rawIngredient": "1 tsp. ground cumin",
+          "name": "ground cumin",
+          "quantity": "1 tsp.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "9b9f1bf6f0424649aabd1300d009e702",
+          "rawIngredient": "3 boneless, skinless chicken breasts, cut into thirds",
+          "name": "boneless, skinless chicken breasts",
+          "quantity": "3",
+          "note": "cut into thirds",
+          "isHeading": null
+        },
+        {
+          "identifier": "35d1952fba924235aac72a7bda28a30a",
+          "rawIngredient": "5 c. low-sodium chicken broth",
+          "name": "low-sodium chicken broth",
+          "quantity": "5 c.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "149af40837ee46778cf64e404fa12e7c",
+          "rawIngredient": "2 (4.5-oz.) cans green chiles",
+          "name": "green chiles",
+          "quantity": "2 (4.5-oz.) cans",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "1f380ed1c4094d1d9d162242f1f55dc9",
+          "rawIngredient": "Kosher salt",
+          "name": "Kosher salt",
+          "quantity": "",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "6040b6a0baaa4b689904dd2cb2c28b05",
+          "rawIngredient": "Freshly ground black pepper",
+          "name": "Freshly ground black pepper",
+          "quantity": "",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "7f7f6ed494f44ca3bee3ef2580c3d9ce",
+          "rawIngredient": "2 (15-oz.) cans white beans, drained, rinsed",
+          "name": "white beans, drained",
+          "quantity": "2 (15-oz.) cans",
+          "note": "rinsed",
+          "isHeading": null
+        },
+        {
+          "identifier": "05caf7d9b1b54debbdb769ccab50f657",
+          "rawIngredient": "1 1/2 c. frozen corn",
+          "name": "frozen corn",
+          "quantity": "1 1/2 c.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "9bf7edd8501e4b6dbbae3bc2aabf80d7",
+          "rawIngredient": "1/2 c. sour cream",
+          "name": "sour cream",
+          "quantity": "1/2 c.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "dccc49f288094df7aee8375d37d78ab2",
+          "rawIngredient": "1 avocado, thinly sliced, for serving",
+          "name": "avocado, thinly sliced, for serving",
+          "quantity": "1",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "436c0bbe21f14c2a86fc84aa0d3cd489",
+          "rawIngredient": "1/4 c. chopped fresh cilantro, for serving",
+          "name": "chopped fresh cilantro, for serving",
+          "quantity": "1/4 c.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "60fc90c1d169498da54b7866f9a3d991",
+          "rawIngredient": "1/4 c. crushed tortilla chips, for serving",
+          "name": "crushed tortilla chips, for serving",
+          "quantity": "1/4 c.",
+          "note": "",
+          "isHeading": null
+        },
+        {
+          "identifier": "6ed59f49ef294f5e8dea6d0c1cbbf90f",
+          "rawIngredient": "1/4 c. shredded Monterey Jack, for serving",
+          "name": "shredded Monterey Jack, for serving",
+          "quantity": "1/4 c.",
+          "note": "",
+          "isHeading": null
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "identifier": "f3bd5b5823855b80810fc2214b2aa167",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "neutral oil",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "oil",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "condiments-oils-and-salad-dressings",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "50f101cd135843a99eeab875ed0c4dee"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "fe74e1e1e9914772a682c308fa82df2d",
+            "rawIngredient": "1 tbsp. neutral oil",
+            "name": "neutral oil",
+            "quantity": "1 tbsp.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tbsp.",
+            "rawQuantity": "1 tbsp."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "2c56750e31a258079e619ac41ef8300b",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "yellow onion",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "yellow-onions",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "3eb9d0e591e34714ac120a9f67351e9b",
+            "rawIngredient": "1 medium yellow onion, chopped",
+            "name": "yellow onion",
+            "quantity": "1 medium",
+            "note": "chopped",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "medium",
+            "rawQuantity": "1 medium"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "c000e464665e5cbdb361cfb08b436f26",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "jalapeño, seeded",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "jalapeno-peppers",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "a88eacf3d2dc4ec4a1be54d1413c5e36",
+            "rawIngredient": "1 jalapeño, seeded, finely chopped",
+            "name": "jalapeño, seeded",
+            "quantity": "1",
+            "note": "finely chopped",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": null,
+            "rawQuantity": "1"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "b2cd109585505266b8acedb0c3c7d7ec",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "garlic",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "garlic",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "be6c44c0c9854c93b6c984b2e0c7d017",
+            "rawIngredient": "2 cloves garlic, finely chopped",
+            "name": "garlic",
+            "quantity": "2 cloves",
+            "note": "finely chopped",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": "cloves",
+            "rawQuantity": "2 cloves"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "0c64919a904e5745a6cf5275dc936171",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "dried oregano",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "oregano",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "f4edc7c477c141478f540f80d1fce1ef",
+            "rawIngredient": "1 tsp. dried oregano",
+            "name": "dried oregano",
+            "quantity": "1 tsp.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tsp.",
+            "rawQuantity": "1 tsp."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "e9350b8f91d25f27ad0a0f6d53ddb16b",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "ground cumin",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "cumin",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "eb105ef8ce9f4f71a8f5ebd78f089881",
+            "rawIngredient": "1 tsp. ground cumin",
+            "name": "ground cumin",
+            "quantity": "1 tsp.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tsp.",
+            "rawQuantity": "1 tsp."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "86e7a5dd347857b19aab764aca224051",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "boneless, skinless chicken breasts",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "boneless-skinless-chicken-breast",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "meat",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "29ac49d19e9f43ff955d934b60f24ccd"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "9b9f1bf6f0424649aabd1300d009e702",
+            "rawIngredient": "3 boneless, skinless chicken breasts, cut into thirds",
+            "name": "boneless, skinless chicken breasts",
+            "quantity": "3",
+            "note": "cut into thirds",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "3",
+            "unit": null,
+            "rawQuantity": "3"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "d5943a9c59065e52b61e8363f3b734cc",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "low-sodium chicken broth",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "chicken-broth",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "soups-and-canned-goods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a92817459661433aaf3cfa9bfca11c11"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "35d1952fba924235aac72a7bda28a30a",
+            "rawIngredient": "5 c. low-sodium chicken broth",
+            "name": "low-sodium chicken broth",
+            "quantity": "5 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "5",
+            "unit": "c.",
+            "rawQuantity": "5 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "51485fc6797056398c30c5034f732cc9",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "green chiles",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "green-chili-peppers",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": {
+        "size": "4.5",
+        "unit": "oz.",
+        "packageType": "can",
+        "rawPackageSize": "4.5 oz. can"
+      },
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "149af40837ee46778cf64e404fa12e7c",
+            "rawIngredient": "2 (4.5-oz.) cans green chiles",
+            "name": "green chiles",
+            "quantity": "2 (4.5-oz.) cans",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": null,
+            "rawQuantity": "2"
+          },
+          "packageSizePb": {
+            "size": "4.5",
+            "unit": "oz.",
+            "packageType": "can",
+            "rawPackageSize": "4.5 oz. can"
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "9863d333b1d75481b8319d391da709e0",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "Kosher salt",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "kosher-salt",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "1f380ed1c4094d1d9d162242f1f55dc9",
+            "rawIngredient": "Kosher salt",
+            "name": "Kosher salt",
+            "quantity": "",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": null,
+          "packageSizePb": null,
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "e29daeb1e26f59979ca994d223fc0a91",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "Freshly ground black pepper",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "black-pepper",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "6040b6a0baaa4b689904dd2cb2c28b05",
+            "rawIngredient": "Freshly ground black pepper",
+            "name": "Freshly ground black pepper",
+            "quantity": "",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": null,
+          "packageSizePb": null,
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "b8c1e3d10c485cee810b30963ba0f6cd",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "white beans, drained",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "beans",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": {
+        "size": "15",
+        "unit": "oz.",
+        "packageType": "can",
+        "rawPackageSize": "15 oz. can"
+      },
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "7f7f6ed494f44ca3bee3ef2580c3d9ce",
+            "rawIngredient": "2 (15-oz.) cans white beans, drained, rinsed",
+            "name": "white beans, drained",
+            "quantity": "2 (15-oz.) cans",
+            "note": "rinsed",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": null,
+            "rawQuantity": "2"
+          },
+          "packageSizePb": {
+            "size": "15",
+            "unit": "oz.",
+            "packageType": "can",
+            "rawPackageSize": "15 oz. can"
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "a8d0aa21e8905ef88c5e7dd912138d1b",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "frozen corn",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "frozen-corn",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "frozen-foods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "0ad4a34d214847a383b6b35e65c2acc4"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "05caf7d9b1b54debbdb769ccab50f657",
+            "rawIngredient": "1 1/2 c. frozen corn",
+            "name": "frozen corn",
+            "quantity": "1 1/2 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1 1/2",
+            "unit": "c.",
+            "rawQuantity": "1 1/2 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "608b2fbe45f75ff7b8766cbdb9b82400",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "sour cream",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "sour-cream",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "dairy",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "05e01b96345647dab8761e131f5f8739"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "9bf7edd8501e4b6dbbae3bc2aabf80d7",
+            "rawIngredient": "1/2 c. sour cream",
+            "name": "sour cream",
+            "quantity": "1/2 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1/2",
+            "unit": "c.",
+            "rawQuantity": "1/2 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "c107af44c66b57acb5be913e50c3ff5b",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "avocado, thinly sliced, for serving",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "avocados",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "dccc49f288094df7aee8375d37d78ab2",
+            "rawIngredient": "1 avocado, thinly sliced, for serving",
+            "name": "avocado, thinly sliced, for serving",
+            "quantity": "1",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": null,
+            "rawQuantity": "1"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "8086fea8df295a948dc5b28728d0d6b4",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "chopped fresh cilantro, for serving",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "cilantro",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "436c0bbe21f14c2a86fc84aa0d3cd489",
+            "rawIngredient": "1/4 c. chopped fresh cilantro, for serving",
+            "name": "chopped fresh cilantro, for serving",
+            "quantity": "1/4 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1/4",
+            "unit": "c.",
+            "rawQuantity": "1/4 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "f46787b4fb995cce91275236d3565134",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "crushed tortilla chips, for serving",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "tortilla-chips",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "snacks-cookies-and-candy",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "059050592c3543e4bcc6d371864fda29"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "60fc90c1d169498da54b7866f9a3d991",
+            "rawIngredient": "1/4 c. crushed tortilla chips, for serving",
+            "name": "crushed tortilla chips, for serving",
+            "quantity": "1/4 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1/4",
+            "unit": "c.",
+            "rawQuantity": "1/4 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "55dd8bdf56e056f7808506424737e1ee",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "shredded Monterey Jack, for serving",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": null,
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "other",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "405ebfa8104d4ae8a577a55bd9a5be83"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "6ed59f49ef294f5e8dea6d0c1cbbf90f",
+            "rawIngredient": "1/4 c. shredded Monterey Jack, for serving",
+            "name": "shredded Monterey Jack, for serving",
+            "quantity": "1/4 c.",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1/4",
+            "unit": "c.",
+            "rawQuantity": "1/4 c."
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "d9b05093be274f7ea1222912ebb1dd84",
+          "eventId": null,
+          "recipeName": "White Chicken Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "67a52fe1e6c254b295935c068cff09a8",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "white mushrooms",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "mushrooms",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "fb5c43c929ca45229dfdd4d619d9ceab",
+            "rawIngredient": "1 pound white mushrooms, wiped clean, trimmed, and broken into rough pieces",
+            "name": "white mushrooms",
+            "quantity": "1 pound",
+            "note": "wiped clean, trimmed, and broken into rough pieces",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "pound",
+            "rawQuantity": "1 pound"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "99f89adfbb8d50d2853c34d2edf9ff04",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "mustard seeds",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "mustard-seed",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "12abe0018d7a4379ad3496b9127aedee",
+            "rawIngredient": "1 tablespoon mustard seeds, (see note)",
+            "name": "mustard seeds",
+            "quantity": "1 tablespoon",
+            "note": "(see note)",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tablespoon",
+            "rawQuantity": "1 tablespoon"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "d5242d4a8a7b5e0a9de345d621fd06b6",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "cumin seeds",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "whole-cumin-seed",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "d9eacf7b0eb9426d95f1ed6af813cd93",
+            "rawIngredient": "2 teaspoons cumin seeds, (see note)",
+            "name": "cumin seeds",
+            "quantity": "2 teaspoons",
+            "note": "(see note)",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": "teaspoons",
+            "rawQuantity": "2 teaspoons"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "34846fb50df95b159d4e35c65b8a6901",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "vegetable oil",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "vegetable-oil",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "9f41670c0fbf421c9ba6cbb9f6ba580f",
+            "rawIngredient": "3 tablespoons vegetable oil",
+            "name": "vegetable oil",
+            "quantity": "3 tablespoons",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "3",
+            "unit": "tablespoons",
+            "rawQuantity": "3 tablespoons"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "5679f0ff0b30578ba8446237458e5434",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "medium onion",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "onions",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "2dec2210b4054bbd9f4dfbf104374b53",
+            "rawIngredient": "1 medium onion, chopped medium",
+            "name": "medium onion",
+            "quantity": "1",
+            "note": "chopped medium",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": null,
+            "rawQuantity": "1"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "5034c56942ad5cab9135752dbaa24e89",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "medium garlic cloves",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "garlic-cloves",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "8a0a4f37dc734ef5b44fe4ce5914eb5f",
+            "rawIngredient": "9 medium garlic cloves, minced",
+            "name": "medium garlic cloves",
+            "quantity": "9",
+            "note": "minced",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "9",
+            "unit": null,
+            "rawQuantity": "9"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "0b5b58f14927561190d59ea007dd069d",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "chipotle chile in adobo sauce",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "chipotle-peppers-in-adobo-sauce",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "soups-and-canned-goods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a92817459661433aaf3cfa9bfca11c11"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "c20775d07f2b40dd8ea0eca30d9a50d3",
+            "rawIngredient": "1 tablespoon chipotle chile in adobo sauce, minced",
+            "name": "chipotle chile in adobo sauce",
+            "quantity": "1 tablespoon",
+            "note": "minced",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tablespoon",
+            "rawQuantity": "1 tablespoon"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "579a95cf77365ec9af721c72c8a4659e",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "chili powder",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "chili-powder",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "c2ace94378b64bad9d1e43e98ba06806",
+            "rawIngredient": "3 tablespoons chili powder",
+            "name": "chili powder",
+            "quantity": "3 tablespoons",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "3",
+            "unit": "tablespoons",
+            "rawQuantity": "3 tablespoons"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "1cd94508b08e55538c61f9eaf5d77d17",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "vegetable broth",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "vegetable-broth",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "soups-and-canned-goods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a92817459661433aaf3cfa9bfca11c11"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "15444109fb7b416eaec2793709369e9a",
+            "rawIngredient": "2 ½ cups vegetable broth",
+            "name": "vegetable broth",
+            "quantity": "2 ½ cups",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2 ½",
+            "unit": "cups",
+            "rawQuantity": "2 ½ cups"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "9a3342bf6b2452c289c3f68bc5ea2484",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "water",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "water",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "beverages",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a5f939f517d04907b86f0dbab3478ca5"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "5e3d76db14034879b8002ba42aff418d",
+            "rawIngredient": "2 ½ cups water, plus extra as needed",
+            "name": "water",
+            "quantity": "2 ½ cups",
+            "note": "plus extra as needed",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2 ½",
+            "unit": "cups",
+            "rawQuantity": "2 ½ cups"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "e70b4595529752ebb3a531eedd465814",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "dried black beans",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "dried-black-beans",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "soups-and-canned-goods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a92817459661433aaf3cfa9bfca11c11"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "a8d0532a0d5540a39395654ce790f5f7",
+            "rawIngredient": "1 pound dried black beans, picked over and rinsed",
+            "name": "dried black beans",
+            "quantity": "1 pound",
+            "note": "picked over and rinsed",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "pound",
+            "rawQuantity": "1 pound"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "4e8672ed45ff5fb7816e6316fd8d79f4",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "light brown sugar",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "brown-sugar",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "348693c42d5b4c8595907eff99500ec6",
+            "rawIngredient": "1 tablespoon light brown sugar",
+            "name": "light brown sugar",
+            "quantity": "1 tablespoon",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": "tablespoon",
+            "rawQuantity": "1 tablespoon"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "c19fba561ef15ecaab61cc5c70bb7133",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "baking soda",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "baking-soda",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "37990da2567547c6bfa7054b3cc97550",
+            "rawIngredient": "⅛ teaspoon baking soda",
+            "name": "baking soda",
+            "quantity": "⅛ teaspoon",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "⅛",
+            "unit": "teaspoon",
+            "rawQuantity": "⅛ teaspoon"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "e07a6ef5022358f7815cf1deea971b7b",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "bay leaves",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "bay-leaves",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "26d57015c5bc431b950835f883544f28",
+            "rawIngredient": "2 bay leaves",
+            "name": "bay leaves",
+            "quantity": "2",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": null,
+            "rawQuantity": "2"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "14eeea65d15752c9a2a1ab9110f3254c",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "crushed tomatoes",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "crushed-tomatoes",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "soups-and-canned-goods",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "a92817459661433aaf3cfa9bfca11c11"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": {
+        "size": "28",
+        "unit": "ounce",
+        "packageType": "can",
+        "rawPackageSize": "28 ounce can"
+      },
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "6909faf223c745df84bfc47420c94257",
+            "rawIngredient": "1 (28-ounce) can crushed tomatoes",
+            "name": "crushed tomatoes",
+            "quantity": "1 (28-ounce) can",
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": null,
+            "rawQuantity": "1"
+          },
+          "packageSizePb": {
+            "size": "28",
+            "unit": "ounce",
+            "packageType": "can",
+            "rawPackageSize": "28 ounce can"
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "8829a305662a54afb94f7ac906b81725",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "red bell peppers",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "red-bell-peppers",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "41dd562d4e2a4bbe883bd312654f5f05",
+            "rawIngredient": "2 red bell peppers, stemmed, seeded, and cut into 1/2-inch pieces (see illustrations below)",
+            "name": "red bell peppers",
+            "quantity": "2",
+            "note": "stemmed, seeded, and cut into 1/2-inch pieces (see illustrations below)",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "2",
+            "unit": null,
+            "rawQuantity": "2"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "06784bb9869054b2992f9d1b4d9fbc14",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "fresh cilantro leaves",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "cilantro",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": true,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "19da72474a034f2f8265ca55413cf525",
+            "rawIngredient": "½ cup fresh cilantro leaves, minced",
+            "name": "fresh cilantro leaves",
+            "quantity": "½ cup",
+            "note": "minced",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "½",
+            "unit": "cup",
+            "rawQuantity": "½ cup"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "d7928333f22358e19b869595892a4ee9",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "Salt and ground black pepper",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "spices-and-herbs",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "cooking-and-baking",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "5742a14db8614f6099f144830ccd9911"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "e43e3885729b4c19846d2b4fba4d5972",
+            "rawIngredient": "Salt and ground black pepper",
+            "name": "Salt and ground black pepper",
+            "quantity": null,
+            "note": "",
+            "isHeading": null
+          },
+          "quantityPb": null,
+          "packageSizePb": null,
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    },
+    {
+      "identifier": "52344927d08d5328bc9e1380be42105a",
+      "serverModTime": null,
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": "Lime wedge",
+      "details": null,
+      "checked": null,
+      "recipeId": null,
+      "rawIngredient": null,
+      "priceMatchupTag": "limes",
+      "priceId": null,
+      "category": null,
+      "categoryMatchId": "produce",
+      "photoIds": [],
+      "eventId": null,
+      "storeIds": [],
+      "prices": [],
+      "categoryAssignments": [
+        {
+          "identifier": "c64e6ee8f95b5c68b6405fbfe6e984ba",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "categoryId": "63b9c96e3647498ab73e286cd9b068c7"
+        }
+      ],
+      "quantityPb": null,
+      "priceQuantityPb": null,
+      "priceQuantityShouldOverrideItemQuantity": null,
+      "packageSizePb": null,
+      "pricePackageSizePb": null,
+      "pricePackageSizeShouldOverrideItemPackageSize": null,
+      "ingredients": [
+        {
+          "ingredient": {
+            "identifier": "16876701427f430895c42526b72e8eb4",
+            "rawIngredient": "1 Lime wedge, for serving",
+            "name": "Lime wedge",
+            "quantity": "1",
+            "note": "for serving",
+            "isHeading": null
+          },
+          "quantityPb": {
+            "amount": "1",
+            "unit": null,
+            "rawQuantity": "1"
+          },
+          "packageSizePb": {
+            "size": null,
+            "unit": null,
+            "packageType": null,
+            "rawPackageSize": null
+          },
+          "recipeId": "49b4aafc0d734973bb8ae8a24eed2a5e",
+          "eventId": null,
+          "recipeName": "Black Bean Chili",
+          "eventDate": null
+        }
+      ],
+      "itemQuantityShouldOverrideIngredientQuantity": null,
+      "itemPackageSizeShouldOverrideIngredientPackageSize": null,
+      "productUpc": null,
+      "manualSortIndex": null,
+      "deprecatedQuantity": null
+    }
+  ]
+}
