@@ -635,6 +635,56 @@ try {
     return `Collection "${testCollection}" confirmed`;
   });
 
+  // Collection membership: two disposable recipes go in and out of the disposable collection.
+  const memberA = `🧪 Collection Recipe A ${Date.now()}`;
+  const memberB = `🧪 Collection Recipe B ${Date.now()}`;
+  const collectionLine = async () => {
+    const r = await client.callTool({ name: 'recipe_collections', arguments: { action: 'list' } });
+    return r.content[0].text.split('\n').find(l => l.includes(testCollection)) || '';
+  };
+  for (const recipe of [memberA, memberB]) {
+    await test(`recipes → create ("${recipe}")`, async () => {
+      const r = await client.callTool({ name: 'recipes', arguments: { action: 'create', name: recipe } });
+      if (r.isError) throw new Error(r.content[0].text);
+      return r.content[0].text;
+    });
+  }
+
+  await test(`recipe_collections → add_recipes (A, B)`, async () => {
+    const r = await client.callTool({ name: 'recipe_collections', arguments: {
+      action: 'add_recipes', name: testCollection, recipe_names: [memberA, memberB],
+    }});
+    const text = r.content[0].text;
+    if (r.isError || !text.includes('Added to')) throw new Error(text);
+    const line = await collectionLine();
+    if (!line.includes('2 recipes') || !line.includes(memberA) || !line.includes(memberB)) throw new Error(`unexpected membership: ${line}`);
+    return line;
+  });
+
+  await test(`recipe_collections → add_recipes again is a no-op`, async () => {
+    const r = await client.callTool({ name: 'recipe_collections', arguments: {
+      action: 'add_recipes', name: testCollection, recipe_names: [memberA],
+    }});
+    const text = r.content[0].text;
+    if (r.isError || !text.includes('Already in')) throw new Error(text);
+    const line = await collectionLine();
+    if (!line.includes('2 recipes')) throw new Error(`unexpected membership: ${line}`);
+    return text;
+  });
+
+  await test(`recipe_collections → remove_recipes (A) leaves B in, A still a recipe`, async () => {
+    const r = await client.callTool({ name: 'recipe_collections', arguments: {
+      action: 'remove_recipes', name: testCollection, recipe_names: [memberA],
+    }});
+    const text = r.content[0].text;
+    if (r.isError || !text.includes('Removed from')) throw new Error(text);
+    const line = await collectionLine();
+    if (!line.includes('1 recipes') || !line.includes(memberB) || line.includes(memberA)) throw new Error(`unexpected membership: ${line}`);
+    const get = await client.callTool({ name: 'recipes', arguments: { action: 'get', name: memberA } });
+    if (get.isError || get.content[0].text.toLowerCase().includes('not found')) throw new Error(`recipe A is gone: ${get.content[0].text}`);
+    return line;
+  });
+
   await test(`recipe_collections → delete ("${testCollection}")`, async () => {
     const r = await client.callTool({ name: 'recipe_collections', arguments: { action: 'delete', name: testCollection } });
     const text = r.content[0].text;
@@ -648,6 +698,14 @@ try {
     if (text.includes(testCollection)) throw new Error(`"${testCollection}" still appears after deletion`);
     return 'Collection absent from list after deletion';
   });
+
+  for (const recipe of [memberA, memberB]) {
+    await test(`recipes → delete ("${recipe}")`, async () => {
+      const r = await client.callTool({ name: 'recipes', arguments: { action: 'delete', name: recipe } });
+      if (r.isError) throw new Error(r.content[0].text);
+      return r.content[0].text;
+    });
+  }
 
   // Invalid action test — older SDKs throw at the protocol level; newer ones (>= ~1.2x)
   // return the input-validation failure as an isError tool result

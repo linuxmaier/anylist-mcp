@@ -41,6 +41,7 @@ function makeClient() {
         recipeIds: obj.recipeIds,
         async save() { log.push(['save-collection', obj.name, obj.recipeIds]); },
         async delete() { log.push(['delete-collection', obj.identifier]); },
+        async performOperation(handlerId) { log.push([handlerId, obj.identifier, obj.recipeIds]); },
       };
     },
   };
@@ -134,5 +135,60 @@ describe('AnyListClient collection lookup', () => {
   it('create: recipe ids and names resolve to ids, without duplicates', async () => {
     await client.createRecipeCollection('New', ['rice'], ['r-2', 'r-3']);
     assert.deepEqual(log, [['save-collection', 'New', ['r-2', 'r-3']]]);
+  });
+});
+
+describe('AnyListClient collection membership', () => {
+  let client;
+  let log;
+  beforeEach(() => ({ client, log } = makeClient()));
+
+  it('add: an ambiguous collection name errors, lists both ids, and writes nothing', async () => {
+    await assert.rejects(client.addRecipesToCollection({ name: 'Main Dishes' }, [{ name: 'Rice' }]), err => {
+      assert.match(err.message, /2 recipe collections are named "Main Dishes"/);
+      assert.match(err.message, /id: c-1/);
+      assert.match(err.message, /id: c-2/);
+      return true;
+    });
+    assert.deepEqual(log, []);
+  });
+
+  it('add: one ambiguous or unknown recipe writes nothing', async () => {
+    await assert.rejects(client.addRecipesToCollection({ id: 'c-2' }, [{ name: 'Rice' }, { name: 'Pan-Seared Chicken' }]), /2 recipes are named/);
+    await assert.rejects(client.addRecipesToCollection({ id: 'c-2' }, [{ name: 'Rice' }, { name: 'Nope' }]), /Recipe "Nope" not found/);
+    assert.deepEqual(log, []);
+  });
+
+  it('add: sends one op carrying only the new ids and skips ones already present', async () => {
+    const r = await client.addRecipesToCollection({ id: 'c-1' }, [{ id: 'r-1' }, { id: 'r-2' }, { name: 'rice' }, { id: 'r-3' }]);
+    assert.deepEqual(log, [['add-recipes-to-collection', 'c-1', ['r-2', 'r-3']]]);
+    assert.deepEqual(r, { identifier: 'c-1', name: 'Main Dishes', changed: ['pan-seared chicken', 'Rice'], skipped: ['Pan-Seared Chicken'] });
+  });
+
+  it('add: nothing is sent when every recipe is already present', async () => {
+    const r = await client.addRecipesToCollection({ name: 'Sides' }, [{ name: 'Rice' }]);
+    assert.deepEqual(log, []);
+    assert.deepEqual(r.changed, []);
+    assert.deepEqual(r.skipped, ['Rice']);
+  });
+
+  it('add: at least one recipe is required', async () => {
+    await assert.rejects(client.addRecipesToCollection({ id: 'c-1' }, []), /At least one recipe/);
+  });
+
+  it('remove: sends one op per recipe, each with only that id, and skips absent ones', async () => {
+    const r = await client.removeRecipesFromCollection({ name: 'Sides' }, [{ id: 'r-3' }, { id: 'r-1' }]);
+    assert.deepEqual(log, [['remove-recipes-from-collection', 'c-3', ['r-3']]]);
+    assert.deepEqual(r, { identifier: 'c-3', name: 'Sides', changed: ['Rice'], skipped: ['Pan-Seared Chicken'] });
+  });
+
+  it('remove: several recipes become several single-id ops and no recipe is deleted', async () => {
+    const userData = await client.client._getUserData();
+    userData.recipeDataResponse.recipeCollections[0].recipeIds.push('r-3');
+    await client.removeRecipesFromCollection({ id: 'c-1' }, [{ id: 'r-1' }, { id: 'r-3' }]);
+    assert.deepEqual(log, [
+      ['remove-recipes-from-collection', 'c-1', ['r-1']],
+      ['remove-recipes-from-collection', 'c-1', ['r-3']],
+    ]);
   });
 });

@@ -85,4 +85,53 @@ describe('recipe_collections tool', () => {
       assert.deepEqual(client._collections.map(c => c.identifier), ['c-1']);
     });
   });
+
+  describe('add_recipes / remove_recipes', () => {
+    beforeEach(() => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Salad' });
+      client._collections.push(
+        { identifier: 'c-1', name: 'Main Dishes', recipeIds: ['r-1'] },
+        { identifier: 'c-2', name: 'Main Dishes', recipeIds: [] },
+      );
+    });
+
+    it('adds by collection_id and recipe name, reporting already-present recipes', async () => {
+      const result = await handlers.recipe_collections({ action: 'add_recipes', collection_id: 'c-1', recipe_names: ['Pasta', 'Salad'] });
+      assert.ok(result.content[0].text.includes('Added to "Main Dishes" (id: c-1): Salad'));
+      assert.ok(result.content[0].text.includes('Already in "Main Dishes", skipped: Pasta'));
+      assert.deepEqual(client._collections[0].recipeIds, ['r-1', 'r-2']);
+    });
+
+    it('removes by recipe id without deleting the recipe', async () => {
+      const result = await handlers.recipe_collections({ action: 'remove_recipes', collection_id: 'c-1', recipe_ids: ['r-1'] });
+      assert.ok(result.content[0].text.includes('Removed from "Main Dishes" (id: c-1): Pasta'));
+      assert.deepEqual(client._collections[0].recipeIds, []);
+      assert.equal(client._recipes.length, 2);
+    });
+
+    it('reports recipes that were not in the collection', async () => {
+      const result = await handlers.recipe_collections({ action: 'remove_recipes', collection_id: 'c-2', recipe_names: ['Pasta'] });
+      assert.ok(result.content[0].text.includes('Not in "Main Dishes", skipped: Pasta'));
+    });
+
+    it('errors on an ambiguous collection name and changes nothing', async () => {
+      const result = await handlers.recipe_collections({ action: 'add_recipes', name: 'Main Dishes', recipe_names: ['Salad'] });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('c-1'));
+      assert.ok(result.content[0].text.includes('c-2'));
+      assert.deepEqual(client._collections.map(c => c.recipeIds), [['r-1'], []]);
+    });
+
+    it('errors when no recipes are given', async () => {
+      const result = await handlers.recipe_collections({ action: 'add_recipes', collection_id: 'c-1' });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('At least one recipe'));
+    });
+
+    it('errors when no collection is given', async () => {
+      const result = await handlers.recipe_collections({ action: 'remove_recipes', recipe_names: ['Pasta'] });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('id or name is required'));
+    });
+  });
 });

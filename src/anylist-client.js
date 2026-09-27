@@ -922,6 +922,76 @@ class AnyListClient {
     }
   }
 
+  /**
+   * Add existing recipes to an existing collection. Recipes already in it are skipped.
+   * Every ref is resolved before anything is written.
+   * @param {{ id?: string, name?: string }} collectionRef - collection id or name (id wins)
+   * @param {Array<{ id?: string, name?: string }>} recipeRefs
+   */
+  async addRecipesToCollection(collectionRef, recipeRefs) {
+    return this._changeCollectionRecipes('add', collectionRef, recipeRefs);
+  }
+
+  /**
+   * Take recipes out of a collection. The recipes themselves are not deleted.
+   * Recipes not in the collection are skipped. Every ref is resolved before anything is written.
+   * @param {{ id?: string, name?: string }} collectionRef - collection id or name (id wins)
+   * @param {Array<{ id?: string, name?: string }>} recipeRefs
+   */
+  async removeRecipesFromCollection(collectionRef, recipeRefs) {
+    return this._changeCollectionRecipes('remove', collectionRef, recipeRefs);
+  }
+
+  async _changeCollectionRecipes(mode, collectionRef, recipeRefs) {
+    if (!this.client) {
+      throw new Error('Not connected. Call connect() first.');
+    }
+    try {
+      if (recipeRefs.length === 0) throw new Error('At least one recipe id or name is required');
+      const userData = await this.client._getUserData(true);
+      const collections = userData.recipeDataResponse.recipeCollections || [];
+      const recipes = await this.client.getRecipes();
+      const raw = resolveOne(collections, collectionRef, 'Recipe collection', describeCollection(recipes));
+      const resolved = [];
+      for (const ref of recipeRefs) {
+        const r = resolveOne(recipes, ref, 'Recipe', describeRecipe);
+        if (!resolved.includes(r)) resolved.push(r);
+      }
+
+      const current = raw.recipeIds || [];
+      const changed = resolved.filter(r => (mode === 'add') !== current.includes(r.identifier));
+      const skipped = resolved.filter(r => !changed.includes(r));
+
+      // AnyList reads recipeIds in these operations as the delta, not the whole
+      // list: add sends one op with only the new ids, remove sends one op per
+      // recipe. (anylist-js addRecipe/removeRecipe send the full list; don't use them.)
+      const clone = recipeIds => this.client.createRecipeCollection({
+        identifier: raw.identifier,
+        timestamp: raw.timestamp,
+        name: raw.name,
+        collectionSettings: raw.collectionSettings,
+        recipeIds,
+      });
+      if (mode === 'add' && changed.length > 0) {
+        await clone(changed.map(r => r.identifier)).performOperation('add-recipes-to-collection');
+      }
+      if (mode === 'remove') {
+        for (const r of changed) {
+          await clone([r.identifier]).performOperation('remove-recipes-from-collection');
+        }
+      }
+      console.error(`${mode === 'add' ? 'Added' : 'Removed'} ${changed.length} recipe(s) ${mode === 'add' ? 'to' : 'from'} collection: ${raw.name}`);
+      return {
+        identifier: raw.identifier,
+        name: raw.name,
+        changed: changed.map(r => r.name),
+        skipped: skipped.map(r => r.name),
+      };
+    } catch (error) {
+      throw new Error(`Failed to ${mode} collection recipes: ${error.message}`);
+    }
+  }
+
   async disconnect() {
     if (this.client) {
       try {

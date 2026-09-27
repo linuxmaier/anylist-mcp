@@ -200,4 +200,25 @@ export class MockAnyListClient {
     this._collections.splice(this._collections.indexOf(c), 1);
     return { identifier: c.identifier, name: c.name };
   }
+
+  async addRecipesToCollection(collectionRef, recipeRefs) {
+    return this._changeCollectionRecipes(true, collectionRef, recipeRefs);
+  }
+
+  async removeRecipesFromCollection(collectionRef, recipeRefs) {
+    return this._changeCollectionRecipes(false, collectionRef, recipeRefs);
+  }
+
+  _changeCollectionRecipes(adding, collectionRef, recipeRefs) {
+    if (recipeRefs.length === 0) throw new Error('At least one recipe id or name is required');
+    const c = resolveOne(this._collections, collectionRef, 'Recipe collection');
+    const recipes = recipeRefs.map(ref => resolveOne(this._recipes, ref, 'Recipe'));
+    c.recipeIds = c.recipeIds || [];
+    const changed = recipes.filter(r => adding !== c.recipeIds.includes(r.identifier));
+    const skipped = recipes.filter(r => !changed.includes(r));
+    c.recipeIds = adding
+      ? [...c.recipeIds, ...changed.map(r => r.identifier)]
+      : c.recipeIds.filter(id => !changed.some(r => r.identifier === id));
+    return { identifier: c.identifier, name: c.name, changed: changed.map(r => r.name), skipped: skipped.map(r => r.name) };
+  }
 }
