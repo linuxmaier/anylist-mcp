@@ -46,7 +46,7 @@ class AnyListClient {
         });
 
         // Authenticate
-        console.error(`Connecting to AnyList as ${username}...`);
+        console.error('Connecting to AnyList...');
         await this.client.login();
         console.error('Successfully authenticated with AnyList');
 

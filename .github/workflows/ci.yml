@@ -27,6 +27,7 @@ jobs:
       - run: npm run check:submodule-deps
       - run: node --check src/server.js
       - run: npm test
+      - run: npm run test:http
 
   # stdio mode must keep working without the optional HTTP dependencies
   stdio-only:

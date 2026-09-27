@@ -18,6 +18,7 @@ import oauthRouter, { requireBearerToken } from "./auth/oauth.js";
 import onboardingRouter from "./onboarding.js";
 import { registerAllTools } from "../tools/index.js";
 import { isGoogleEnabled } from "./auth/providers/google.js";
+import { csrfToken, escapeHtml } from "./security.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -62,6 +63,8 @@ app.use(session({
     // secure=true only when the request actually arrived over HTTPS (via proxy).
     // When testing locally over plain HTTP this will be false, allowing cookies to work.
     secure: "auto",
+    // Not sent on cross-site POSTs; backs up the CSRF tokens on form routes
+    sameSite: "lax",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   },
 }));
@@ -99,9 +102,9 @@ app.engine("html", (filePath, options, callback) => {
           content = content.replaceAll(startTag, "").replaceAll(endTag, "");
         }
       }
-      // Value replacement: {{key}}
+      // Value replacement: {{key}} (HTML-escaped; values include request input such as client_id)
       if (typeof v === "string" || typeof v === "number") {
-        content = content.replaceAll(`{{${k}}}`, String(v));
+        content = content.replaceAll(`{{${k}}}`, escapeHtml(v));
       } else if (v === null || v === undefined) {
         content = content.replaceAll(`{{${k}}}`, "");
       }
@@ -114,8 +117,9 @@ app.engine("html", (filePath, options, callback) => {
 
 // ── Login page ────────────────────────────────────────────────────────────────
 
-app.get("/login", (_req, res) => {
+app.get("/login", (req, res) => {
   res.render("login", {
+    csrfToken: csrfToken(req),
     error: "",
     googleEnabled: isGoogleEnabled(),
     googleClientId: process.env.GOOGLE_CLIENT_ID || "",
