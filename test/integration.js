@@ -568,6 +568,22 @@ try {
     return `end_date=${testEventDate} correctly filtered`;
   });
 
+  const testEventDateMoved = '2099-06-17';
+  await test(`meal_plan → update_event (${testEventDate} → ${testEventDateMoved})`, async () => {
+    if (!testEventId) throw new Error('No event ID captured — cannot update');
+    const r = await client.callTool({ name: 'meal_plan', arguments: {
+      action: 'update_event', event_id: testEventId, date: testEventDateMoved,
+    }});
+    const text = r.content[0].text;
+    if (r.isError || !text.includes('Updated')) throw new Error(text);
+    const list = (await client.callTool({ name: 'meal_plan', arguments: {
+      action: 'list_events', start_date: testEventDateMoved, end_date: testEventDateMoved,
+    }})).content[0].text;
+    if (!list.includes(testEventId)) throw new Error(`Event ${testEventId} not found on ${testEventDateMoved}`);
+    if (!list.includes('🧪 Integration Test Meal')) throw new Error('Title lost after update');
+    return text;
+  });
+
   await test(`meal_plan → delete_event (${testEventDate})`, async () => {
     if (!testEventId) throw new Error('No event ID captured — cannot delete');
     const r = await client.callTool({ name: 'meal_plan', arguments: {

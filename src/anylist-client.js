@@ -1,4 +1,6 @@
 import AnyList from '../anylist-js/lib/index.js';
+import uuid from '../anylist-js/lib/uuid.js';
+import FormData from 'form-data';
 import { normalizeRecipe } from './recipe-normalizer.js';
 
 /**
@@ -741,6 +743,54 @@ class AnyListClient {
       return { identifier: event.identifier, date: date };
     } catch (error) {
       throw new Error(`Failed to create meal plan event: ${error.message}`);
+    }
+  }
+
+  /**
+   * Update an existing meal plan event in place (keeps its identifier).
+   * Only fields that are not undefined are changed; an empty string clears a field.
+   */
+  async updateMealPlanEvent(eventId, { date, title, recipeId, labelId, details } = {}) {
+    if (!this.client) {
+      throw new Error('Not connected. Call connect() first.');
+    }
+    try {
+      // 'update-event' replaces the whole event, so start from the full stored
+      // PBCalendarEvent. anylist-js's MealPlanningCalendarEvent is lossy: its
+      // _encode() drops fields such as icon, isLeftover and eventListItems, and
+      // it re-parses the date as UTC midnight but sends the local date. Its
+      // save() also sends 'set-event-details', which only updates details.
+      const userData = await this.client._getUserData(true);
+      const { calendarId, events } = userData.mealPlanningCalendarResponse;
+      const stored = events.find(e => e.identifier === eventId);
+      if (!stored) {
+        throw new Error(`Meal plan event "${eventId}" not found`);
+      }
+      const { PBCalendarEvent, PBCalendarOperation, PBCalendarOperationList } = this.client.protobuf;
+      const event = PBCalendarEvent.decode(stored.toBuffer());
+      const clearable = v => (v === '' ? null : v);
+      if (date !== undefined) event.date = date;
+      if (title !== undefined) event.title = clearable(title);
+      if (recipeId !== undefined) event.recipeId = clearable(recipeId);
+      if (labelId !== undefined) event.labelId = clearable(labelId);
+      if (details !== undefined) event.details = clearable(details);
+      if (!event.title && !event.recipeId) {
+        throw new Error('Event must keep a title or a recipe');
+      }
+
+      const op = new PBCalendarOperation();
+      op.setMetadata({ operationId: uuid(), handlerId: 'update-event', userId: this.client.uid });
+      op.setCalendarId(calendarId);
+      op.setUpdatedEvent(event);
+      const ops = new PBCalendarOperationList();
+      ops.setOperations([op]);
+      const form = new FormData();
+      form.append('operations', ops.toBuffer());
+      await this.client.client.post('data/meal-planning-calendar/update', { body: form });
+      console.error(`Updated meal plan event: ${eventId}`);
+      return { identifier: event.identifier, date: event.date };
+    } catch (error) {
+      throw new Error(`Failed to update meal plan event: ${error.message}`);
     }
   }
 

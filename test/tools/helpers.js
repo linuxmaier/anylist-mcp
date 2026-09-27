@@ -172,6 +172,15 @@ export class MockAnyListClient {
     return { identifier: 'e-1', date: opts.date };
   }
 
+  async updateMealPlanEvent(id, changes) {
+    const event = this._events.find(e => e.identifier === id);
+    if (!event) throw new Error(`Meal plan event "${id}" not found`);
+    for (const [k, v] of Object.entries(changes)) {
+      if (v !== undefined) event[k] = v === '' ? null : v;
+    }
+    return { identifier: id, date: event.date };
+  }
+
   async deleteMealPlanEvent(id) {
     const idx = this._events.findIndex(e => e.identifier === id);
     if (idx === -1) throw new Error(`Meal plan event "${id}" not found`);
