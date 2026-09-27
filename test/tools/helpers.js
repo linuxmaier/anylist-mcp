@@ -8,6 +8,8 @@
  *   Call client.reset() (or create a fresh instance) in beforeEach.
  */
 
+import { resolveOne } from '../../src/anylist-client.js';
+
 export function createMockServer() {
   const handlers = {};
   const server = {
@@ -124,9 +126,8 @@ export class MockAnyListClient {
     return r;
   }
 
-  async getRecipeDetails(name) {
-    const r = this._recipes.find(x => x.name.toLowerCase() === name.toLowerCase());
-    if (!r) throw new Error(`Recipe "${name}" not found`);
+  async getRecipeDetails(ref) {
+    const r = resolveOne(this._recipes, ref, 'Recipe');
     return { ...r, ingredients: r.ingredients || [], preparationSteps: r.preparationSteps || [] };
   }
 
@@ -135,21 +136,18 @@ export class MockAnyListClient {
     return { identifier: 'r-1', name: opts.name };
   }
 
-  async updateRecipe(name, fields = {}) {
-    const matches = this._recipes.filter(r => r.name && r.name.toLowerCase() === name.toLowerCase());
-    if (matches.length === 0) throw new Error(`Recipe "${name}" not found`);
-    if (matches.length > 1) throw new Error(`Multiple recipes named "${name}" (${matches.length}) exist`);
-    const r = matches[0];
+  async updateRecipe(ref, fields = {}) {
+    const r = resolveOne(this._recipes, ref, 'Recipe');
     for (const [key, value] of Object.entries(fields)) {
       if (value !== undefined) r[key] = value;
     }
     return { identifier: r.identifier, name: r.name };
   }
 
-  async deleteRecipe(name) {
-    const idx = this._recipes.findIndex(r => r.name.toLowerCase() === name.toLowerCase());
-    if (idx === -1) throw new Error(`Recipe "${name}" not found`);
-    this._recipes.splice(idx, 1);
+  async deleteRecipe(ref) {
+    const r = resolveOne(this._recipes, ref, 'Recipe');
+    this._recipes.splice(this._recipes.indexOf(r), 1);
+    return { identifier: r.identifier, name: r.name };
   }
 
   async importRecipeFromUrl(url) {
@@ -182,15 +180,15 @@ export class MockAnyListClient {
 
   async getRecipeCollections() { return [...this._collections]; }
 
-  async createRecipeCollection(name, recipeNames = []) {
-    const c = { identifier: 'c-1', name, recipeCount: recipeNames.length, recipeNames };
+  async createRecipeCollection(name, recipeNames = [], recipeIds = []) {
+    const c = { identifier: 'c-1', name, recipeCount: recipeNames.length + recipeIds.length, recipeNames, recipeIds };
     this._collections.push(c);
     return c;
   }
 
-  async deleteRecipeCollection(name) {
-    const idx = this._collections.findIndex(c => c.name.toLowerCase() === name.toLowerCase());
-    if (idx === -1) throw new Error(`Recipe collection "${name}" not found`);
-    this._collections.splice(idx, 1);
+  async deleteRecipeCollection(ref) {
+    const c = resolveOne(this._collections, ref, 'Recipe collection');
+    this._collections.splice(this._collections.indexOf(c), 1);
+    return { identifier: c.identifier, name: c.name };
   }
 }
