@@ -13,6 +13,7 @@
     "start:http": "node src/http/index.js",
     "dev:http": "node --watch src/http/index.js",
     "test": "node --test test/*.test.js test/tools/*.test.js",
+    "test:http": "node --test test/http/*.test.js",
     "check:submodule-deps": "node scripts/check-submodule-deps.mjs"
   },
   "keywords": [
@@ -38,6 +39,7 @@
     "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.8.0",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "express-session": "^1.19.0",
     "google-auth-library": "^10.6.2"
   },

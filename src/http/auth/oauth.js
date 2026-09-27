@@ -15,9 +15,11 @@ import {
 } from "../db.js";
 import { loginWithPassword, registerWithPassword } from "./providers/password.js";
 import { loginWithGoogle, isGoogleEnabled } from "./providers/google.js";
+import { authLimiter, csrfToken, oauthLimiter, requireCsrf } from "../security.js";
 
-function renderLogin(res, error = "") {
+function renderLogin(req, res, error = "") {
   res.render("login", {
+    csrfToken: csrfToken(req),
     error,
     googleEnabled: isGoogleEnabled(),
     googleClientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -67,7 +69,7 @@ router.get(["/.well-known/oauth-protected-resource", "/.well-known/oauth-protect
 
 // ── Dynamic Client Registration (RFC 7591) ────────────────────────────────────
 // Home ASsistent expects /register, but Claude expects /oauth/register, so we support both.
-router.post(["/oauth/register", "/register"], (req, res) => {
+router.post(["/oauth/register", "/register"], oauthLimiter, (req, res) => {
   const { redirect_uris, client_name } = req.body || {};
   const clientId = randomUUID();
   const redirectUri = Array.isArray(redirect_uris) ? redirect_uris[0] : redirect_uris || null;
@@ -86,7 +88,7 @@ router.post(["/oauth/register", "/register"], (req, res) => {
 // ── Authorization Endpoint ────────────────────────────────────────────────────
 // Home ASsistent expects /authorize, but Claude expects /oauth/authorize, so we support both.
 
-router.get(["/oauth/authorize", "/authorize"], (req, res) => {
+router.get(["/oauth/authorize", "/authorize"], oauthLimiter, (req, res) => {
   const { client_id, redirect_uri, state, code_challenge, code_challenge_method, scope } = req.query;
 
   if (!client_id) {
@@ -114,7 +116,7 @@ router.get(["/oauth/authorize", "/authorize"], (req, res) => {
 
 // ── Token Endpoint ────────────────────────────────────────────────────────────
 
-router.post(["/oauth/token", "/token"], async (req, res) => {
+router.post(["/oauth/token", "/token"], oauthLimiter, async (req, res) => {
   const body = req.body || {};
   const { grant_type, client_id } = body;
   const bodyKeys = Object.keys(body);
@@ -260,11 +262,11 @@ async function handleClientCredentialsGrant(req, res) {
 
 // ── Login / Registration form handlers ───────────────────────────────────────
 
-router.post("/auth/login", async (req, res) => {
+router.post("/auth/login", authLimiter, requireCsrf, async (req, res) => {
   const { email, password } = req.body || {};
   console.log(`[auth] login attempt: ${email}`);
   if (!email || !password) {
-    return renderLogin(res, "Email and password are required.");
+    return renderLogin(req, res, "Email and password are required.");
   }
   try {
     const user = await loginWithPassword(email, password);
@@ -272,15 +274,15 @@ router.post("/auth/login", async (req, res) => {
     return completeAuth(req, res, user);
   } catch (err) {
     console.log(`[auth] login failed: ${email} — ${err.message}`);
-    return renderLogin(res, err.message);
+    return renderLogin(req, res, err.message);
   }
 });
 
-router.post("/auth/register", async (req, res) => {
+router.post("/auth/register", authLimiter, requireCsrf, async (req, res) => {
   const { email, password } = req.body || {};
   console.log(`[auth] register attempt: ${email}`);
   if (!email || !password) {
-    return renderLogin(res, "Email and password are required.");
+    return renderLogin(req, res, "Email and password are required.");
   }
   try {
     const user = await registerWithPassword(email, password);
@@ -288,18 +290,18 @@ router.post("/auth/register", async (req, res) => {
     return completeAuth(req, res, user);
   } catch (err) {
     console.log(`[auth] register failed: ${email} — ${err.message}`);
-    return renderLogin(res, err.message);
+    return renderLogin(req, res, err.message);
   }
 });
 
-router.post("/auth/google", async (req, res) => {
+router.post("/auth/google", authLimiter, requireCsrf, async (req, res) => {
   const { credential } = req.body || {};
   try {
     const user = await loginWithGoogle(credential);
     return completeAuth(req, res, user);
   } catch (err) {
     console.log(`[auth] google failed — ${err.message}`);
-    return renderLogin(res, err.message);
+    return renderLogin(req, res, err.message);
   }
 });
 
@@ -334,12 +336,13 @@ router.get("/oauth/consent", (req, res) => {
   }
   // Render consent view
   res.render("consent", {
+    csrfToken: csrfToken(req),
     clientId: req.session.oauthParams.client_id,
     scope: req.session.oauthParams.scope || "mcp",
   });
 });
 
-router.post("/oauth/consent", (req, res) => {
+router.post("/oauth/consent", oauthLimiter, requireCsrf, (req, res) => {
   const { approve } = req.body || {};
   const oauth = req.session.oauthParams;
   const userId = req.session.userId;
