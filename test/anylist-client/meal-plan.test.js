@@ -136,6 +136,39 @@ export async function runMealPlanTests() {
     }
   });
 
+  await test('updateMealPlanEvent keeps labelSortIndex and recipeScaleFactor', async () => {
+    const recipes = await client.getRecipes();
+    const labels = await client.getMealPlanLabels();
+    if (recipes.length === 0 || labels.length === 0) {
+      console.log('    (skipped — needs a recipe and a label)');
+      return;
+    }
+    // Created through anylist-js directly: the wrapper has no way to set these fields.
+    const event = await client.client.createEvent({
+      date: new Date('2099-01-21T12:00:00'), recipeId: recipes[0].identifier,
+      labelId: labels[0].identifier, recipeScaleFactor: 2,
+    });
+    event.labelSortIndex = 5;
+    await event.save();
+    const raw = async () => (await client.client._getUserData(true))
+      .mealPlanningCalendarResponse.events.find(e => e.identifier === event.identifier);
+    try {
+      const before = await raw();
+      if (!before) throw new Error('Created event not found');
+      if (before.labelSortIndex !== 5 || before.recipeScaleFactor !== 2) {
+        throw new Error(`Server did not store the fixture values: labelSortIndex=${before.labelSortIndex}, recipeScaleFactor=${before.recipeScaleFactor}`);
+      }
+      await client.updateMealPlanEvent(event.identifier, { title: '🧪 Preserve Test' });
+      const after = await raw();
+      if (after.title !== '🧪 Preserve Test') throw new Error(`Title not updated: "${after.title}"`);
+      if (after.labelSortIndex !== 5) throw new Error(`labelSortIndex lost: ${after.labelSortIndex}`);
+      if (after.recipeScaleFactor !== 2) throw new Error(`recipeScaleFactor lost: ${after.recipeScaleFactor}`);
+      if (after.date !== '2099-01-21') throw new Error(`Date changed: ${after.date}`);
+    } finally {
+      try { await client.deleteMealPlanEvent(event.identifier); } catch {}
+    }
+  });
+
   await test('updateMealPlanEvent throws for non-existent event', async () => {
     let threw = false;
     try {
