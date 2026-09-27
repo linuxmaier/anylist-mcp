@@ -17,14 +17,43 @@ function localToday() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+const MAX_INGREDIENT_CHARS = 40;
+const NUMBER = String.raw`(?:\d+(?:[./]\d+)?|[¼½¾⅓⅔⅛]|one|two|three|four|five|six|eight|ten|twelve|a|an)`;
+const UNIT = String.raw`(?:pounds?|lbs?|oz|ounces?|cups?|tablespoons?|tbsp|teaspoons?|tsp|cans?|jars?|packages?|heads?|pieces?|cloves?|sticks?|sprigs?|bunch(?:es)?|pinch(?:es)?|dash(?:es)?|grams?|g|kg|ml|inch(?:es)?|quarts?|pints?|heaping|packed|small|medium|large)`;
+// Leading quantity and unit AnyList sometimes leaves in the name: "2 pounds", "14 oz can", "one 1-inch piece of", "about 1 to 2 cups".
+const LEADING_QUANTITY = new RegExp(String.raw`^(?:about\s+)?(?:${NUMBER}(?![\s-]*(?:percent|%))[\s-]+(?:to\s+)?)+(?:${UNIT}\b[\s.-]*)*(?:of\s+)?`);
+// Where an amount or alternative starts mid-name: "egg plus 1 yolk", "cumin - 1.5 tsp", "milk or 1/2 cup cream".
+const AMOUNT_TAIL = /\s+(?:\+|plus\b|(?:or|-)\s+(?:about\s+)?[\d¼½¾⅓⅔⅛])/;
+// A ", " clause starting with one of these is prep or a qualifier, not part of the name.
+const TRAILING_CLAUSE = /^(?:plus|for|such as|like|store-bought|homemade|preferably|about|depending|recipe|if|at|from|halved|chopped|minced|diced|sliced|trimmed|smashed|peeled|grated|crushed|cut|divided|to taste|optional|lightly|finely|roughly|coarsely|thinly|very|softened|melted|browned|cold|straight|separated|stemmed|seeded|quartered|rinsed|picked|toasted|hulled|split|crumbled|pressed|drained|beaten|ends|gills|back|white and green|[\d¼½¾⅓⅔⅛])/;
+
+/** Display form of an ingredient name (no quantity or prep notes), or null for a section heading or a bare amount. */
+export function displayIngredientName(raw) {
+  // "; …", "(…)" and "* …" are always asides. Commas can be part of the name ("boneless, skinless chicken thighs").
+  let n = raw.split(/[;(*]/)[0].toLowerCase().replace(/\s*,\s*/g, ', ').trim().replace(/,$/, '');
+  if (n.endsWith(':') || /^for the\b/.test(n)) return null;
+  n = n.replace(/^[^:]*:\s*/, '') // "toppings: chopped chives"
+    .replace(/^(?:\+|plus)\s+/, '') // a continuation line: "plus 2 teaspoons kasuri methi"
+    .replace(LEADING_QUANTITY, '')
+    .replace(/^of\s+/, '')
+    .split(AMOUNT_TAIL)[0]
+    .replace(/,$/, '');
+  const parts = n.split(', ');
+  const cut = parts.findIndex((p, i) => i > 0 && TRAILING_CLAUSE.test(p));
+  const name = (cut === -1 ? parts : parts.slice(0, cut)).join(', ').trim();
+  return /[a-z]/.test(name) ? name : null;
+}
+
+const truncate = (s) => s.length > MAX_INGREDIENT_CHARS ? `${s.slice(0, MAX_INGREDIENT_CHARS - 1).trimEnd()}…` : s;
+
 function mainIngredients(names) {
   const main = [];
   for (const raw of names) {
-    // AnyList keeps quantity and note in separate fields, but some names still carry "; …" or "(…)" asides.
-    // Commas stay: they are often part of the name ("boneless, skinless chicken thighs").
-    const n = raw.split(/[;(]/)[0].trim().toLowerCase();
-    if (!n || main.includes(n) || PANTRY_STAPLES.some(re => re.test(n))) continue;
-    main.push(n);
+    const n = displayIngredientName(raw);
+    if (!n || PANTRY_STAPLES.some(re => re.test(n))) continue;
+    const shown = truncate(n);
+    if (main.includes(shown)) continue;
+    main.push(shown);
     if (main.length === MAX_MAIN_INGREDIENTS) break;
   }
   return main;
@@ -149,7 +178,7 @@ If a name matches more than one recipe, get/update/delete fail and list each mat
             if (p?.last) parts.push(`last ${p.last}`);
             if (p?.next) parts.push(`next ${p.next}`);
             const main = mainIngredients(r.ingredientNames);
-            if (main.length) parts.push(main.join(', '));
+            if (main.length) parts.push(main.join(' · '));
             parts.push(`id:${r.identifier}`);
             return parts.join(' | ');
           });

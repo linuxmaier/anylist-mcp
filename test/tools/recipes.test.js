@@ -1,7 +1,7 @@
 import { describe, it, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import { register } from '../../src/tools/recipes.js';
+import { register, displayIngredientName } from '../../src/tools/recipes.js';
 import { MockAnyListClient, createMockServer } from './helpers.js';
 
 describe('recipes tool', () => {
@@ -84,7 +84,7 @@ describe('recipes tool', () => {
       assert.ok(pasta.endsWith('| id:r-pasta'));
       assert.ok(lineFor(text, 'Curry').includes('| Serves 4 to 6 |'));
       assert.ok(lineFor(text, 'Curry').includes('| Main Dishes, Instant Pot |'));
-      assert.equal(lineFor(text, 'Salad'), '- Salad | lettuce, red bell pepper | id:r-salad');
+      assert.equal(lineFor(text, 'Salad'), '- Salad | lettuce · red bell pepper | id:r-salad');
     });
 
     it('shows the latest past event as last and the earliest future event as next', async () => {
@@ -100,9 +100,61 @@ describe('recipes tool', () => {
 
     it('strips pantry staples and notes, dedupes, and caps main ingredients at 8', async () => {
       const text = (await handlers.recipes({ action: 'index' })).content[0].text;
-      assert.ok(lineFor(text, 'Pasta').includes('| ground beef, onion, crushed tomatoes, boneless, skinless chicken thighs |'));
+      assert.ok(lineFor(text, 'Pasta').includes('| ground beef · onion · crushed tomatoes · boneless, skinless chicken thighs |'));
       assert.ok(lineFor(text, 'Salad').includes('red bell pepper'), 'bell pepper is not a staple');
-      assert.ok(lineFor(text, 'Many').includes('| a, b, c, d, e, f, g, h |'));
+      assert.ok(lineFor(text, 'Many').includes('| a · b · c · d · e · f · g · h |'));
+    });
+
+    it('normalizes ingredient names for display', () => {
+      const cases = {
+        'one head of garlic cloves, plus 1 tablespoon, plus 1 teaspoon': 'garlic cloves',
+        '2 pounds boneless, skinless chicken thighs, halved crosswise and trimmed': 'boneless, skinless chicken thighs',
+        'parmigiano reggiano, grated, plus more for serving': 'parmigiano reggiano',
+        'pizza sauce, such as our new york–style pizza sauce': 'pizza sauce',
+        'red, yellow, or orange bell pepper': 'red, yellow, or orange bell pepper',
+        '14 oz can crushed tomatoes': 'crushed tomatoes',
+        'one 1-inch piece of fresh ginger, peeled and minced': 'fresh ginger',
+        '1 teaspoon ground cumin': 'ground cumin',
+        '85 percent lean ground beef': '85 percent lean ground beef',
+        'Diamond Crystal kosher salt; for table salt, use half': 'diamond crystal kosher salt',
+        'large eggs': 'large eggs',
+        'plus 2 teaspoons kasuri methi': 'kasuri methi',
+        '+ 2 tablespoon dark brown sugar': 'dark brown sugar',
+        'cumin - 1.5 tsp': 'cumin',
+        'egg plus 1 large egg yolk': 'egg',
+        'nonfat milk or 1/2 cup milk': 'nonfat milk',
+        'juice of 1 to 2 lemons': 'juice of 1 to 2 lemons',
+        'black lentils , picked over and rinsed': 'black lentils',
+        'unsalted butter, at room temperature': 'unsalted butter',
+        'finely chopped dark chocolate, about 72%': 'finely chopped dark chocolate',
+        'eight 3-ounce chicken cutlets': 'chicken cutlets',
+        '4 medium cloves of garlic': 'garlic',
+        'toppings: chopped fresh chives': 'chopped fresh chives',
+        'day old brioche bread* cut into cubes': 'day old brioche bread',
+      };
+      for (const [raw, expected] of Object.entries(cases)) assert.equal(displayIngredientName(raw), expected, raw);
+      assert.equal(displayIngredientName('plus 1 tablespoon'), null, 'a bare amount is not an ingredient');
+      assert.equal(displayIngredientName('4'), null);
+    });
+
+    it('drops staples before truncating long names to 40 characters', async () => {
+      client._recipes.push({ identifier: 'r-mac', name: 'Mac',
+        ingredients: ings('kosher salt and freshly ground black pepper', 'extra-sharp aged white cheddar cheese from vermont') });
+      const line = lineFor((await handlers.recipes({ action: 'index' })).content[0].text, 'Mac');
+      const [shown] = line.split(' | ').filter(c => c.startsWith('extra-sharp'));
+      assert.equal(shown.length, 40);
+      assert.ok(shown.endsWith('…'));
+      assert.ok(!line.includes('salt'));
+    });
+
+    it('skips section headings that leak into ingredient names', async () => {
+      for (const heading of ['For the toasted breadcrumbs:', 'for the pasta', 'Sauce:']) {
+        assert.equal(displayIngredientName(heading), null, heading);
+      }
+      client._recipes.push({ identifier: 'r-ziti', name: 'Ziti',
+        ingredients: ings('For the pasta:', '1 pound ziti', 'for the marinating the chicken:', 'ricotta') });
+      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      assert.ok(lineFor(text, 'Ziti').includes('| ziti · ricotta |'));
     });
 
     it('filters by ingredient across all ingredients, including staples and ones not shown', async () => {
