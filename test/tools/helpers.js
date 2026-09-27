@@ -126,6 +126,19 @@ export class MockAnyListClient {
     return r;
   }
 
+  async getRecipeIndex() {
+    return this._recipes.map(r => ({
+      identifier: r.identifier,
+      name: r.name,
+      rating: r.rating || null,
+      prepTime: r.prepTime || null,
+      cookTime: r.cookTime || null,
+      servings: r.servings || null,
+      ingredientNames: (r.ingredients || []).map(i => i.name),
+      collections: this._collections.filter(c => (c.recipeIds || []).includes(r.identifier)).map(c => c.name),
+    }));
+  }
+
   async getRecipeDetails(ref) {
     const r = resolveOne(this._recipes, ref, 'Recipe');
     return { ...r, ingredients: r.ingredients || [], preparationSteps: r.preparationSteps || [] };

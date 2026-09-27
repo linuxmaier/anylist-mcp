@@ -1,7 +1,7 @@
 import { describe, it, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import { register } from '../../src/tools/recipes.js';
+import { register, displayIngredientName } from '../../src/tools/recipes.js';
 import { MockAnyListClient, createMockServer } from './helpers.js';
 
 describe('recipes tool', () => {
@@ -34,6 +34,167 @@ describe('recipes tool', () => {
       const result = await handlers.recipes({ action: 'list', search: 'pasta' });
       assert.ok(result.content[0].text.includes('Pasta'));
       assert.ok(!result.content[0].text.includes('Salad'));
+    });
+  });
+
+  describe('index', () => {
+    // Local date offset from today, as YYYY-MM-DD (matches the tool's local "today").
+    const day = (offset) => {
+      const d = new Date();
+      d.setDate(d.getDate() + offset);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
+    const ings = (...names) => names.map(name => ({ name }));
+    const lineFor = (text, name) => text.split('\n').find(l => l.startsWith(`- ${name} |`));
+
+    beforeEach(() => {
+      client._recipes.push(
+        { identifier: 'r-pasta', name: 'Pasta', prepTime: 900, cookTime: 2700, servings: '4',
+          ingredients: ings('ground beef', 'kosher salt', 'Onion', 'extra-virgin olive oil', 'crushed tomatoes; or passata', 'onion', 'water', 'freshly ground black pepper', 'coarse salt and pepper', 'vegetable oil spray', 'boneless, skinless chicken thighs') },
+        { identifier: 'r-curry', name: 'Curry', prepTime: 1200, cookTime: 3600, servings: 'Serves 4 to 6',
+          ingredients: ings('chicken thighs', 'garam masala', 'heavy cream') },
+        { identifier: 'r-salad', name: 'Salad', ingredients: ings('lettuce', 'red bell pepper') },
+        { identifier: 'r-soup', name: 'Soup', servings: '6 servings', ingredients: [] },
+        { identifier: 'r-many', name: 'Many', cookTime: 600,
+          ingredients: ings('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j') },
+      );
+      client._collections.push(
+        { identifier: 'c-1', name: 'Main Dishes', recipeIds: ['r-pasta', 'r-curry'] },
+        { identifier: 'c-2', name: 'Instant Pot', recipeIds: ['r-curry'] },
+      );
+      client._events.push(
+        { identifier: 'e-1', date: day(-30), recipeId: 'r-pasta' },
+        { identifier: 'e-2', date: day(-3), recipeId: 'r-pasta' },
+        { identifier: 'e-3', date: day(0), recipeId: 'r-curry' },
+        { identifier: 'e-4', date: day(10), recipeId: 'r-curry' },
+        { identifier: 'e-5', date: day(4), recipeId: 'r-curry' },
+        { identifier: 'e-6', date: day(-1), title: 'Leftovers', recipeId: null },
+      );
+    });
+
+    it('returns one compact line per recipe with times, servings, collections and id', async () => {
+      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      assert.ok(text.startsWith('Recipe index: 5 recipes. Times are prep+cook.'));
+      assert.equal(text.split('\n').length, 6);
+      assert.equal(lineFor(text, 'Soup'), '- Soup | 6 servings | id:r-soup');
+      const pasta = lineFor(text, 'Pasta');
+      assert.ok(pasta.includes('| 15+45 min |'));
+      assert.ok(pasta.includes('| serves 4 |'));
+      assert.ok(pasta.includes('| Main Dishes |'));
+      assert.ok(pasta.endsWith('| id:r-pasta'));
+      assert.ok(lineFor(text, 'Curry').includes('| Serves 4 to 6 |'));
+      assert.ok(lineFor(text, 'Curry').includes('| Main Dishes, Instant Pot |'));
+      assert.equal(lineFor(text, 'Salad'), '- Salad | lettuce · red bell pepper | id:r-salad');
+    });
+
+    it('shows the latest past event as last and the earliest future event as next', async () => {
+      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      const pasta = lineFor(text, 'Pasta');
+      assert.ok(pasta.includes(`| last ${day(-3)} |`));
+      assert.ok(!pasta.includes('next '));
+      const curry = lineFor(text, 'Curry');
+      assert.ok(curry.includes(`| last ${day(0)} |`), 'an event dated today counts as last');
+      assert.ok(curry.includes(`| next ${day(4)} |`));
+      assert.ok(!lineFor(text, 'Salad').includes('last '));
+    });
+
+    it('strips pantry staples and notes, dedupes, and caps main ingredients at 8', async () => {
+      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      assert.ok(lineFor(text, 'Pasta').includes('| ground beef · onion · crushed tomatoes · boneless, skinless chicken thighs |'));
+      assert.ok(lineFor(text, 'Salad').includes('red bell pepper'), 'bell pepper is not a staple');
+      assert.ok(lineFor(text, 'Many').includes('| a · b · c · d · e · f · g · h |'));
+    });
+
+    it('normalizes ingredient names for display', () => {
+      const cases = {
+        'one head of garlic cloves, plus 1 tablespoon, plus 1 teaspoon': 'garlic cloves',
+        '2 pounds boneless, skinless chicken thighs, halved crosswise and trimmed': 'boneless, skinless chicken thighs',
+        'parmigiano reggiano, grated, plus more for serving': 'parmigiano reggiano',
+        'pizza sauce, such as our new york–style pizza sauce': 'pizza sauce',
+        'red, yellow, or orange bell pepper': 'red, yellow, or orange bell pepper',
+        '14 oz can crushed tomatoes': 'crushed tomatoes',
+        'one 1-inch piece of fresh ginger, peeled and minced': 'fresh ginger',
+        '1 teaspoon ground cumin': 'ground cumin',
+        '85 percent lean ground beef': '85 percent lean ground beef',
+        'Diamond Crystal kosher salt; for table salt, use half': 'diamond crystal kosher salt',
+        'large eggs': 'large eggs',
+        'plus 2 teaspoons kasuri methi': 'kasuri methi',
+        '+ 2 tablespoon dark brown sugar': 'dark brown sugar',
+        'cumin - 1.5 tsp': 'cumin',
+        'egg plus 1 large egg yolk': 'egg',
+        'nonfat milk or 1/2 cup milk': 'nonfat milk',
+        'juice of 1 to 2 lemons': 'juice of 1 to 2 lemons',
+        'black lentils , picked over and rinsed': 'black lentils',
+        'unsalted butter, at room temperature': 'unsalted butter',
+        'finely chopped dark chocolate, about 72%': 'finely chopped dark chocolate',
+        'eight 3-ounce chicken cutlets': 'chicken cutlets',
+        '4 medium cloves of garlic': 'garlic',
+        'toppings: chopped fresh chives': 'chopped fresh chives',
+        'day old brioche bread* cut into cubes': 'day old brioche bread',
+      };
+      for (const [raw, expected] of Object.entries(cases)) assert.equal(displayIngredientName(raw), expected, raw);
+      assert.equal(displayIngredientName('plus 1 tablespoon'), null, 'a bare amount is not an ingredient');
+      assert.equal(displayIngredientName('4'), null);
+    });
+
+    it('drops staples before truncating long names to 40 characters', async () => {
+      client._recipes.push({ identifier: 'r-mac', name: 'Mac',
+        ingredients: ings('kosher salt and freshly ground black pepper', 'extra-sharp aged white cheddar cheese from vermont') });
+      const line = lineFor((await handlers.recipes({ action: 'index' })).content[0].text, 'Mac');
+      const [shown] = line.split(' | ').filter(c => c.startsWith('extra-sharp'));
+      assert.equal(shown.length, 40);
+      assert.ok(shown.endsWith('…'));
+      assert.ok(!line.includes('salt'));
+    });
+
+    it('skips section headings that leak into ingredient names', async () => {
+      for (const heading of ['For the toasted breadcrumbs:', 'for the pasta', 'Sauce:']) {
+        assert.equal(displayIngredientName(heading), null, heading);
+      }
+      client._recipes.push({ identifier: 'r-ziti', name: 'Ziti',
+        ingredients: ings('For the pasta:', '1 pound ziti', 'for the marinating the chicken:', 'ricotta') });
+      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      assert.ok(lineFor(text, 'Ziti').includes('| ziti · ricotta |'));
+    });
+
+    it('filters by ingredient across all ingredients, including staples and ones not shown', async () => {
+      let text = (await handlers.recipes({ action: 'index', ingredient: 'Salt' })).content[0].text;
+      assert.ok(lineFor(text, 'Pasta'));
+      assert.ok(!lineFor(text, 'Curry'));
+      text = (await handlers.recipes({ action: 'index', ingredient: 'j' })).content[0].text;
+      assert.ok(text.startsWith('Recipe index: 1 recipe (ingredient~"j")'));
+      assert.ok(lineFor(text, 'Many'));
+    });
+
+    it('filters by collection name', async () => {
+      const text = (await handlers.recipes({ action: 'index', collection: 'instant' })).content[0].text;
+      assert.ok(lineFor(text, 'Curry'));
+      assert.ok(!lineFor(text, 'Pasta'));
+    });
+
+    it('filters by max_total_minutes and counts recipes without times', async () => {
+      const text = (await handlers.recipes({ action: 'index', max_total_minutes: 60 })).content[0].text;
+      assert.ok(text.includes('; 2 without times excluded'));
+      assert.ok(lineFor(text, 'Pasta'));
+      assert.ok(lineFor(text, 'Many'));
+      assert.ok(!lineFor(text, 'Curry'));
+      assert.ok(!lineFor(text, 'Salad'));
+    });
+
+    it('not_planned_since keeps never-planned and older recipes and drops future-scheduled ones', async () => {
+      const text = (await handlers.recipes({ action: 'index', not_planned_since: day(-7) })).content[0].text;
+      assert.ok(!lineFor(text, 'Pasta'), 'planned 3 days ago');
+      assert.ok(!lineFor(text, 'Curry'), 'scheduled in the future');
+      assert.ok(lineFor(text, 'Salad'));
+      assert.ok(lineFor(text, 'Many'));
+      const older = (await handlers.recipes({ action: 'index', not_planned_since: day(-2) })).content[0].text;
+      assert.ok(lineFor(older, 'Pasta'), 'last planned before the date');
+    });
+
+    it('combines filters and reports no matches', async () => {
+      const result = await handlers.recipes({ action: 'index', collection: 'main', ingredient: 'lettuce' });
+      assert.ok(!result.isError);
+      assert.ok(result.content[0].text.includes('No recipes match.'));
     });
   });
 

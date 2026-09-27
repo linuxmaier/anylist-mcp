@@ -456,6 +456,38 @@ class AnyListClient {
     }
   }
 
+  /**
+   * Every recipe with its ingredient names and collection names, for the planning index.
+   * Ingredients without rawIngredient are section headings ("Dough", "For the Icing:") and are skipped.
+   */
+  async getRecipeIndex() {
+    if (!this.client) {
+      throw new Error('Not connected. Call connect() first.');
+    }
+    try {
+      const recipes = await this.client.getRecipes();
+      const userData = await this.client._getUserData();
+      const collections = userData.recipeDataResponse.recipeCollections || [];
+      return recipes.map(r => ({
+        identifier: r.identifier,
+        name: r.name,
+        rating: r.rating || null,
+        prepTime: r.prepTime || null,
+        cookTime: r.cookTime || null,
+        servings: r.servings || null,
+        ingredientNames: (r.ingredients || [])
+          .filter(i => i.rawIngredient)
+          .map(i => i.name || i.rawIngredient),
+        // Collection names can repeat ("Main Dishes" twice); list each name once.
+        collections: [...new Set(collections
+          .filter(c => (c.recipeIds || []).includes(r.identifier))
+          .map(c => c.name))],
+      }));
+    } catch (error) {
+      throw new Error(`Failed to get recipe index: ${error.message}`);
+    }
+  }
+
   /** @param {{ id?: string, name?: string }} ref - recipe id or name (id wins) */
   async getRecipeDetails(ref) {
     if (!this.client) {
