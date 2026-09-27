@@ -2,9 +2,12 @@ name: CI
 
 on:
   push:
-    branches: ['*']
+    branches: ['**']
   pull_request:
     branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -13,13 +16,31 @@ jobs:
       matrix:
         node-version: [20.x, 24.x, 26.x]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
       - run: npm ci
+      - run: npm run check:submodule-deps
       - run: node --check src/server.js
       - run: npm test
+
+  # stdio mode must keep working without the optional HTTP dependencies
+  stdio-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: true
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+      - run: npm ci --omit=optional --omit=dev
+      - name: HTTP-only packages are absent
+        run: for p in bcrypt better-sqlite3 express-session google-auth-library; do test ! -e "node_modules/$p"; done
+      - run: npm test
+      - run: node scripts/smoke-stdio.mjs

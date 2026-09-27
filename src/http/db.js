@@ -125,7 +125,8 @@ export function decrypt(ciphertext) {
   const iv = Buffer.from(ivHex, "hex");
   const tag = Buffer.from(tagHex, "hex");
   const data = Buffer.from(dataHex, "hex");
-  const decipher = createDecipheriv("aes-256-gcm", key, iv);
+  // Pin the tag length so a truncated tag can't weaken GCM authentication
+  const decipher = createDecipheriv("aes-256-gcm", key, iv, { authTagLength: 16 });
   decipher.setAuthTag(tag);
   return Buffer.concat([decipher.update(data), decipher.final()]).toString("utf8");
 }
