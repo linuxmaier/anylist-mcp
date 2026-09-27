@@ -181,14 +181,16 @@ function parseSchemaSteps(instructions) {
   return steps.filter(Boolean);
 }
 
+// Returns seconds, the unit AnyList stores prepTime/cookTime in.
 function parseDuration(iso) {
   if (!iso || typeof iso !== 'string') return null;
-  const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?/i);
+  const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
   if (!match) return null;
   const hours = parseInt(match[1] || '0', 10);
   const minutes = parseInt(match[2] || '0', 10);
-  const total = hours * 60 + minutes;
-  return total > 0 ? `${total} min` : null;
+  const seconds = parseInt(match[3] || '0', 10);
+  const total = hours * 3600 + minutes * 60 + seconds;
+  return total > 0 ? total : null;
 }
 
 function parseServings(recipeYield) {

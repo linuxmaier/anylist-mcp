@@ -3,6 +3,7 @@
 import { fileURLToPath } from 'url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import AnyListClient from '../src/anylist-client.js';
 
 const transport = new StdioClientTransport({
   command: process.execPath,
@@ -418,6 +419,21 @@ try {
     if (recipeField(text, 'ID') !== testRecipeId) throw new Error('identifier changed after multi-field update');
     if (updateCreatedAt && recipeField(text, 'Created') !== updateCreatedAt) throw new Error('Created timestamp changed on update');
     return 'note + prep updated; earlier servings change and Created timestamp preserved';
+  });
+
+  // The tool round trip above would pass even if the unit were wrong the same
+  // way in both directions, so read the stored value directly: AnyList keeps
+  // prepTime in seconds.
+  await test(`recipes → stored prepTime is in seconds (15 min → 900)`, async () => {
+    const direct = new AnyListClient();
+    try {
+      await direct.connect(LIST_NAME);
+      const recipe = await direct.getRecipeDetails(testRecipe);
+      if (recipe.prepTime !== 900) throw new Error(`stored prepTime is ${recipe.prepTime}, expected 900`);
+    } finally {
+      await direct.disconnect();
+    }
+    return 'prepTime stored as 900 seconds';
   });
 
   const replacedIngredients = [

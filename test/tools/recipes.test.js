@@ -1,5 +1,6 @@
-import { describe, it, beforeEach } from 'node:test';
+import { describe, it, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
+import http from 'node:http';
 import { register } from '../../src/tools/recipes.js';
 import { MockAnyListClient, createMockServer } from './helpers.js';
 
@@ -173,6 +174,68 @@ describe('recipes tool', () => {
     it('returns error for non-existent recipe', async () => {
       const result = await handlers.recipes({ action: 'delete', name: 'Nope' });
       assert.equal(result.isError, true);
+    });
+  });
+
+  // AnyList stores prepTime/cookTime in seconds; the tool speaks minutes.
+  describe('prep/cook time units', () => {
+    it('list shows stored seconds as minutes', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 900, cookTime: 5400 });
+      const text = (await handlers.recipes({ action: 'list' })).content[0].text;
+      assert.ok(text.includes('prep: 15 min'), text);
+      assert.ok(text.includes('cook: 90 min'), text);
+    });
+
+    it('get shows stored seconds as minutes', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 900, cookTime: 5400 });
+      const text = (await handlers.recipes({ action: 'get', name: 'Chili' })).content[0].text;
+      assert.match(text, /^Prep: 15 min$/m);
+      assert.match(text, /^Cook: 90 min$/m);
+    });
+
+    it('create stores minutes as seconds', async () => {
+      await handlers.recipes({ action: 'create', name: 'Chili', prep_time: 15, cook_time: 90 });
+      assert.equal(client._recipes[0].prepTime, 900);
+      assert.equal(client._recipes[0].cookTime, 5400);
+    });
+
+    it('update stores minutes as seconds', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 60, cookTime: 60 });
+      await handlers.recipes({ action: 'update', name: 'Chili', prep_time: 15, cook_time: 90 });
+      assert.equal(client._recipes[0].prepTime, 900);
+      assert.equal(client._recipes[0].cookTime, 5400);
+    });
+
+    describe('normalize', () => {
+      let server;
+      let url;
+
+      before(async () => {
+        server = http.createServer((req, res) => {
+          const recipe = {
+            '@type': 'Recipe',
+            name: 'Chili',
+            recipeIngredient: ['1 can beans'],
+            recipeInstructions: ['Simmer'],
+            prepTime: 'PT15M',
+            cookTime: 'PT1H30M',
+          };
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.end(`<script type="application/ld+json">${JSON.stringify(recipe)}</script>`);
+        });
+        await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+        url = `http://127.0.0.1:${server.address().port}/chili`;
+      });
+
+      after(() => server.close());
+
+      it('previews times in minutes and saves them in seconds', async () => {
+        const text = (await handlers.recipes({ action: 'normalize', url, save: true })).content[0].text;
+        assert.match(text, /^Prep: 15 min$/m);
+        assert.match(text, /^Cook: 90 min$/m);
+        assert.equal(client._recipes[0].prepTime, 900);
+        assert.equal(client._recipes[0].cookTime, 5400);
+      });
     });
   });
 });

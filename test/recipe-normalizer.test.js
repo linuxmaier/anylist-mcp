@@ -145,3 +145,44 @@ describe('Recipe Normalizer URL fetch limits', () => {
     await assert.rejects(normalizeRecipe({ url: `${base}/huge` }), /Response too large/);
   });
 });
+
+describe('Recipe Normalizer JSON-LD durations', () => {
+  let server;
+  let base;
+
+  before(async () => {
+    server = http.createServer((req, res) => {
+      const recipe = {
+        '@context': 'https://schema.org',
+        '@type': 'Recipe',
+        name: 'Timed Recipe',
+        recipeIngredient: ['1 cup rice'],
+        recipeInstructions: ['Cook the rice'],
+        prepTime: 'PT15M',
+        cookTime: 'PT1H30M',
+      };
+      if (req.url === '/seconds') {
+        recipe.prepTime = 'PT45S';
+        recipe.cookTime = 'PT0M';
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(`<html><head><script type="application/ld+json">${JSON.stringify(recipe)}</script></head></html>`);
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    base = `http://127.0.0.1:${server.address().port}`;
+  });
+
+  after(() => server.close());
+
+  it('returns prep/cook times in seconds (AnyList storage unit)', async () => {
+    const result = await normalizeRecipe({ url: `${base}/minutes` });
+    assert.equal(result.prepTime, 900);
+    assert.equal(result.cookTime, 5400);
+  });
+
+  it('includes the seconds component and treats zero durations as absent', async () => {
+    const result = await normalizeRecipe({ url: `${base}/seconds` });
+    assert.equal(result.prepTime, 45);
+    assert.equal(result.cookTime, null);
+  });
+});
