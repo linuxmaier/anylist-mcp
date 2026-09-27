@@ -286,4 +286,39 @@ describe('shopping tool', () => {
       assert.ok(result.content[0].text.includes('Avocado'));
     });
   });
+
+  describe('add_recipe', () => {
+    beforeEach(() => {
+      client._recipes = [{ identifier: 'r-1', name: 'Chili' }, { identifier: 'r-2', name: 'Chili' }];
+    });
+
+    it('passes the recipe, event and exclusions through and summarizes outcomes', async () => {
+      const result = await handlers.shopping({
+        action: 'add_recipe', recipe_id: 'r-1', meal_plan_event_id: 'e-1', exclude: ['salt', 'butter'],
+      });
+      assert.deepEqual(client._addRecipeCalls, [{
+        recipeRef: { id: 'r-1', name: undefined },
+        options: { eventId: 'e-1', exclude: ['salt', 'butter'] },
+      }]);
+      assert.equal(result.content[0].text, [
+        'Added recipe "Chili" to list "Test List": 1 added, 1 merged, 1 skipped',
+        '  added: onions',
+        '  merged: yellow onion → "onions"',
+        '  skipped (exclude: salt): Kosher salt',
+        'Exclude entries that matched no ingredient: butter',
+      ].join('\n'));
+    });
+
+    it('reports an ambiguous recipe name as an error', async () => {
+      const result = await handlers.shopping({ action: 'add_recipe', name: 'Chili' });
+      assert.equal(result.isError, true);
+      assert.match(result.content[0].text, /2 recipes are named "Chili"/);
+    });
+
+    it('requires a recipe or an event', async () => {
+      const result = await handlers.shopping({ action: 'add_recipe' });
+      assert.equal(result.isError, true);
+      assert.match(result.content[0].text, /requires recipe_id, name or meal_plan_event_id/);
+    });
+  });
 });

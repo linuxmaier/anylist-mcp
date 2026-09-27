@@ -33,6 +33,9 @@ Manage shopping lists and items.
 | `include_notes` | boolean | No | Include item notes in output (list_items only) |
 | `store_name` | string | No | Filter items by store (add_items, set_item_category only) |
 | `category` | string | No | Category for item (add_item only) |
+| `recipe_id` | string | No | Recipe to add (add_recipe; takes precedence over `name`) |
+| `meal_plan_event_id` | string | No | Meal plan event to link the items to (add_recipe; without a recipe, adds the event's recipe) |
+| `exclude` | string[] | No | Pantry staples to skip (add_recipe); see below |
 
 **Actions:**
 
@@ -65,7 +68,20 @@ Manage shopping lists and items.
 { "name": "shopping", "arguments": { "action": "set_item_store", "name": "Milk", "store_name": "Costco" } }
 
 // Set category for an item
+
+// Add a recipe's ingredients as recipe-linked items, the way the AnyList app does
+{ "name": "shopping", "arguments": { "action": "add_recipe", "recipe_id": "d9b05093be274f7ea1222912ebb1dd84", "exclude": ["Kosher salt"] } }
 ```
+
+`add_recipe` works like "Add to List" in the AnyList app:
+
+- Each ingredient becomes an item that shows its recipe in the app. Headings are skipped.
+- An `exclude` entry skips every ingredient whose name contains all of the entry's words, ignoring case and plurals (words are stemmed). `"salt"` skips "Kosher salt" and "Salt and ground black pepper"; `"black pepper"` skips "Freshly ground black pepper"; `"oil"` skips "neutral oil". Broad entries catch more: `"pepper"` also skips "red bell peppers". Each skipped line names the entry that matched.
+- Item IDs are derived from the stemmed ingredient name, unit and package size, as the app derives them. So an ingredient that is already on the list, from any recipe, gains a second recipe link instead of becoming a duplicate item, and a checked-off one is unchecked.
+- A new item takes its category from a favorite or recent item with the same name, if there is one; the server doesn't categorize recipe items.
+- Scaled recipes (a recipe or meal-plan event scale factor other than 1) are refused for now.
+
+The output lists one line per ingredient: `added`, `merged` (into an item already on the list, named after the arrow if it differs), `revived` (was checked off), `already linked` or `skipped (exclude: <entry>)`.
 
 ---
 

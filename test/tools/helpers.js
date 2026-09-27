@@ -222,6 +222,23 @@ export class MockAnyListClient {
     return this._changeCollectionRecipes(false, collectionRef, recipeRefs);
   }
 
+  // Records its arguments; the real merge logic is tested against anylist-js in
+  // test/anylist-client-recipe-to-list.test.js.
+  async addRecipeToList(recipeRef, options) {
+    this._addRecipeCalls = [...(this._addRecipeCalls || []), { recipeRef, options }];
+    const recipe = resolveOne(this._recipes, recipeRef, 'Recipe');
+    return {
+      recipe: recipe.name,
+      list: this.targetList.name,
+      results: [
+        { name: 'onions', outcome: 'added' },
+        { name: 'yellow onion', outcome: 'merged', item: 'onions' },
+        { name: 'Kosher salt', outcome: 'skipped', exclude: 'salt' },
+      ],
+      unmatchedExcludes: (options.exclude || []).filter(e => e !== 'salt'),
+    };
+  }
+
   _changeCollectionRecipes(adding, collectionRef, recipeRefs) {
     if (recipeRefs.length === 0) throw new Error('At least one recipe id or name is required');
     const c = resolveOne(this._collections, collectionRef, 'Recipe collection');

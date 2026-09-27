@@ -21,7 +21,8 @@ function buildDescription(stores) {
 - delete_item: Permanently remove an item from a list
 - get_favorites: Get favorite items for a list
 - get_recents: Get recently added items for a list
-- list_stores: list stores available for the list (if any)`;
+- list_stores: list stores available for the list (if any)
+- add_recipe: Add a recipe's ingredients as recipe-linked items, like the AnyList app does. Items show their recipe, an ingredient already on the list gains a link instead of a duplicate, and checked-off ones are unchecked. Pass recipe_id (or name), optionally meal_plan_event_id, and exclude for pantry staples to skip. An exclude entry skips every ingredient whose name contains all of its words, ignoring case and plurals: "salt" skips "Kosher salt", "black pepper" skips "Freshly ground black pepper", but "pepper" also skips "red bell peppers". Check the skipped lines in the result`;
   if (!stores || stores.length === 0) return base;
   const storeList = stores.map(s => s.name).join(', ');
   return `${base}\n\nAvailable stores: ${storeList}`;
@@ -76,9 +77,13 @@ export function register(server, getClient) {
     description: buildDescription([]),
     inputSchema: {
       action: z.enum(["list_lists", "list_items", "add_item", "add_items",
-        "set_item_store", "check_item", "uncheck_item", "delete_item", "get_favorites", "get_recents", "list_stores"]).describe("The shopping action to perform"),
+        "set_item_store", "check_item", "uncheck_item", "delete_item", "get_favorites", "get_recents", "list_stores",
+        "add_recipe"]).describe("The shopping action to perform"),
       list_name: z.string().optional().describe("Name of the list (defaults to configured default list)"),
-      name: z.string().optional().describe("Item name (required for add_item, set_item_store, check_item, uncheck_item, delete_item)"),
+      name: z.string().optional().describe("Item name (required for add_item, set_item_store, check_item, uncheck_item, delete_item); recipe name for add_recipe"),
+      recipe_id: z.string().optional().describe("Recipe ID (add_recipe). Takes precedence over name."),
+      meal_plan_event_id: z.string().optional().describe("Meal plan event ID to link the items to (add_recipe). Without recipe_id or name, adds the event's recipe."),
+      exclude: z.array(z.string()).optional().describe("Pantry staples to skip (add_recipe). An entry skips every ingredient whose name contains all its words, ignoring case and plurals: \"salt\" skips \"Kosher salt\"; \"pepper\" also skips \"red bell peppers\""),
       items: z.array(z.union([
         z.string(),
         z.object({
@@ -232,6 +237,21 @@ export function register(server, getClient) {
           if (items.length === 0) return textResponse(`No recent items for list "${client.targetList.name}".`);
           const list = items.map(i => `- ${i.name}${i.details ? ` [${i.details}]` : ''}`).join('\n');
           return textResponse(`Recent items for "${client.targetList.name}" (${items.length}):\n${list}`);
+        }
+        case "add_recipe": {
+          if (!params.recipe_id && !name && !params.meal_plan_event_id) {
+            throw new Error(`Action "add_recipe" requires recipe_id, name or meal_plan_event_id`);
+          }
+          await client.connect(list_name);
+          const { recipe, list, results, unmatchedExcludes } = await client.addRecipeToList(
+            { id: params.recipe_id, name },
+            { eventId: params.meal_plan_event_id, exclude: params.exclude || [] });
+          const counts = {};
+          results.forEach(r => { counts[r.outcome] = (counts[r.outcome] || 0) + 1; });
+          const lines = [`Added recipe "${recipe}" to list "${list}": ${Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(", ") || "no ingredients"}`];
+          results.forEach(r => lines.push(`  ${r.outcome}${r.exclude ? ` (exclude: ${r.exclude})` : ""}: ${r.name}${r.item ? ` → "${r.item}"` : ""}`));
+          if (unmatchedExcludes.length > 0) lines.push(`Exclude entries that matched no ingredient: ${unmatchedExcludes.join(", ")}`);
+          return textResponse(lines.join("\n"));
         }
         case "list_stores": {
           await client.connect(list_name || null);
