@@ -14,15 +14,17 @@ export function register(server, getClient) {
     title: "Recipes",
     description: `Manage AnyList recipes. Actions:
 - list: Browse recipes (returns summaries: name, rating, times, servings). Use 'search' to filter.
-- get: Get full recipe details (ingredients, steps) by name
+- get: Get full recipe details (ingredients, steps) by recipe_id or name
 - create: Create a new recipe
-- update: Partially update an existing recipe by name (only the fields you pass change; the rest are preserved)
-- delete: Delete a recipe by name
+- update: Partially update an existing recipe by recipe_id or name (only the fields you pass change; the rest are preserved)
+- delete: Delete a recipe by recipe_id or name
+If a name matches more than one recipe, get/update/delete fail and list each match's id; retry with recipe_id.
 - import_url: Import a recipe from a website URL (parses ingredients, steps, etc.)
 - normalize: Preview/parse a recipe from a URL or raw text without saving (set save=true to also save)`,
     inputSchema: {
       action: z.enum(["list", "get", "create", "update", "delete", "import_url", "normalize"]).describe("The recipe action to perform"),
-      name: z.string().optional().describe("Recipe name (required for get, create, update, delete)"),
+      name: z.string().optional().describe("Recipe name (required for create; get, update and delete take this or recipe_id)"),
+      recipe_id: z.string().optional().describe("Recipe ID (get, update, delete). Takes precedence over name."),
       search: z.string().optional().describe("Search query to filter recipes (list only)"),
       ingredients: z.array(z.object({
         name: z.string().describe("Ingredient name, e.g. 'flour'"),
@@ -40,7 +42,7 @@ export function register(server, getClient) {
       save: z.boolean().optional().describe("If true, also save normalized recipe to AnyList (normalize only, default false)"),
     }
   }, async (params) => {
-    const { action, name, search, ingredients, steps, note, source_name, source_url, prep_time, cook_time, servings, url, text: recipeText, save: saveRecipe } = params;
+    const { action, name, recipe_id, search, ingredients, steps, note, source_name, source_url, prep_time, cook_time, servings, url, text: recipeText, save: saveRecipe } = params;
     try {
       const client = await getClient();
       await client.connect(null);
@@ -61,8 +63,8 @@ export function register(server, getClient) {
         }
         case "get": {
           let getRecipeName = name;
-          if (!getRecipeName) getRecipeName = await elicitRequiredField("name", "Which recipe would you like to view?");
-          const recipe = await client.getRecipeDetails(getRecipeName);
+          if (!recipe_id && !getRecipeName) getRecipeName = await elicitRequiredField("name", "Which recipe would you like to view?");
+          const recipe = await client.getRecipeDetails({ id: recipe_id, name: getRecipeName });
           let text = `# ${recipe.name}\n\nID: ${recipe.identifier}\n`;
           if (recipe.sourceName) text += `Source: ${recipe.sourceName}\n`;
           if (recipe.sourceUrl) text += `URL: ${recipe.sourceUrl}\n`;
@@ -88,11 +90,16 @@ export function register(server, getClient) {
           let recipeName = name;
           if (!recipeName) recipeName = await elicitRequiredField("name", "What should the recipe be called?");
           const existingRecipes = await client.getRecipes(recipeName);
-          const exactMatch = existingRecipes.find(r => r.name.toLowerCase() === recipeName.toLowerCase());
+          const exactMatches = existingRecipes.filter(r => r.name.toLowerCase() === recipeName.toLowerCase());
+          if (exactMatches.length > 1) {
+            const ids = exactMatches.map(r => `- id: ${r.identifier}`).join('\n');
+            return errorResponse(`${exactMatches.length} recipes are already named "${recipeName}", so it's unclear which to overwrite. Use update or delete with recipe_id instead:\n${ids}`);
+          }
+          const exactMatch = exactMatches[0];
           if (exactMatch) {
             const confirmed = await elicitConfirmation(`Recipe "${exactMatch.name}" already exists. Overwrite?`);
             if (!confirmed) return textResponse(`Cancelled — recipe "${exactMatch.name}" was not overwritten.`);
-            await client.deleteRecipe(exactMatch.name);
+            await client.deleteRecipe({ id: exactMatch.identifier });
           }
           const result = await client.createRecipe({
             name: recipeName,
@@ -113,7 +120,7 @@ export function register(server, getClient) {
         }
         case "update": {
           let updateRecipeName = name;
-          if (!updateRecipeName) updateRecipeName = await elicitRequiredField("name", "Which recipe would you like to update?");
+          if (!recipe_id && !updateRecipeName) updateRecipeName = await elicitRequiredField("name", "Which recipe would you like to update?");
           // Build a partial patch: only fields the caller actually provided.
           // ingredients/steps, when present, replace the whole array (see client.updateRecipe).
           const fields = {};
@@ -134,14 +141,14 @@ export function register(server, getClient) {
           if (Object.keys(fields).length === 0) {
             return errorResponse('Action "update" requires at least one field to change (ingredients, steps, note, source_name, source_url, prep_time, cook_time, or servings).');
           }
-          const updated = await client.updateRecipe(updateRecipeName, fields);
+          const updated = await client.updateRecipe({ id: recipe_id, name: updateRecipeName }, fields);
           return textResponse(`Updated recipe "${updated.name}"`);
         }
         case "delete": {
           let deleteRecipeName = name;
-          if (!deleteRecipeName) deleteRecipeName = await elicitRequiredField("name", "Which recipe would you like to delete?");
-          await client.deleteRecipe(deleteRecipeName);
-          return textResponse(`Deleted recipe "${deleteRecipeName}"`);
+          if (!recipe_id && !deleteRecipeName) deleteRecipeName = await elicitRequiredField("name", "Which recipe would you like to delete?");
+          const deleted = await client.deleteRecipe({ id: recipe_id, name: deleteRecipeName });
+          return textResponse(`Deleted recipe "${deleted.name}" (id: ${deleted.identifier})`);
         }
         case "import_url": {
           let importUrl = url;

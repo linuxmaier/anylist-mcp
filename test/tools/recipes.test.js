@@ -57,6 +57,20 @@ describe('recipes tool', () => {
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('not found'));
     });
+
+    it('returns error listing ids when the name matches multiple recipes', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'pasta' });
+      const result = await handlers.recipes({ action: 'get', name: 'Pasta' });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('r-1'));
+      assert.ok(result.content[0].text.includes('r-2'));
+    });
+
+    it('gets a recipe by recipe_id, which wins over name', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Salad' });
+      const result = await handlers.recipes({ action: 'get', recipe_id: 'r-2', name: 'Pasta' });
+      assert.ok(result.content[0].text.includes('# Salad'));
+    });
   });
 
   describe('create', () => {
@@ -78,6 +92,17 @@ describe('recipes tool', () => {
         servings: '4',
       });
       assert.equal(client._recipes[0].name, 'Full Recipe');
+    });
+  });
+
+  describe('create (existing name)', () => {
+    it('refuses to overwrite when the name already matches multiple recipes', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
+      const result = await handlers.recipes({ action: 'create', name: 'Pasta' });
+      assert.equal(result.isError, true);
+      assert.ok(result.content[0].text.includes('r-1'));
+      assert.ok(result.content[0].text.includes('r-2'));
+      assert.equal(client._recipes.length, 2);
     });
   });
 
@@ -159,7 +184,19 @@ describe('recipes tool', () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
       const result = await handlers.recipes({ action: 'update', name: 'Pasta', note: 'x' });
       assert.equal(result.isError, true);
-      assert.ok(result.content[0].text.includes('Multiple recipes'));
+      assert.ok(result.content[0].text.includes('2 recipes are named "Pasta"'));
+      assert.ok(result.content[0].text.includes('r-1'));
+      assert.ok(result.content[0].text.includes('r-2'));
+      assert.equal(client._recipes[0].note, undefined);
+      assert.equal(client._recipes[1].note, undefined);
+    });
+
+    it('updates the recipe named by recipe_id when names are duplicated', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
+      const result = await handlers.recipes({ action: 'update', recipe_id: 'r-2', note: 'x' });
+      assert.ok(result.content[0].text.includes('Updated recipe "Pasta"'));
+      assert.equal(client._recipes[0].note, undefined);
+      assert.equal(client._recipes[1].note, 'x');
     });
   });
 
@@ -174,6 +211,20 @@ describe('recipes tool', () => {
     it('returns error for non-existent recipe', async () => {
       const result = await handlers.recipes({ action: 'delete', name: 'Nope' });
       assert.equal(result.isError, true);
+    });
+
+    it('deletes nothing when the name matches multiple recipes', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
+      const result = await handlers.recipes({ action: 'delete', name: 'Pasta' });
+      assert.equal(result.isError, true);
+      assert.equal(client._recipes.length, 2);
+    });
+
+    it('deletes only the recipe named by recipe_id', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
+      const result = await handlers.recipes({ action: 'delete', recipe_id: 'r-2' });
+      assert.ok(result.content[0].text.includes('Deleted recipe "Pasta" (id: r-2)'));
+      assert.deepEqual(client._recipes.map(r => r.identifier), ['r-1']);
     });
   });
 
