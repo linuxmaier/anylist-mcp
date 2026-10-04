@@ -63,10 +63,41 @@ class AnyListClient {
    */
   constructor({ username, password, defaultListName } = {}) {
     this.client = null;
-    this.targetList = null;
+    this._targetListId = null;
+    this._lastTargetList = null;
     this._username = username || null;
     this._password = password || null;
     this.defaultListName = defaultListName || null;
+  }
+
+  /**
+   * The connected list, looked up by identifier on every access. anylist-js
+   * replaces `client.lists` with new objects on each refresh (including the
+   * WebSocket push when the list changes in the app), so a cached List object
+   * goes stale (#19). Falls back to the last object seen if the list isn't in
+   * `client.lists`.
+   */
+  get targetList() {
+    if (!this._targetListId) return null;
+    const current = this.client?.lists?.find(l => l.identifier === this._targetListId);
+    if (current) this._lastTargetList = current;
+    return this._lastTargetList;
+  }
+
+  set targetList(list) {
+    this._targetListId = list?.identifier ?? null;
+    this._lastTargetList = list ?? null;
+  }
+
+  /**
+   * Reload lists unless the WebSocket is open. While it's open, anylist-js
+   * refreshes `client.lists` on every change pushed from the app. It gives up
+   * after two failed reconnects, and changes made while it's down are never
+   * pushed, so fall back to fetching.
+   */
+  async _refreshListsIfStale() {
+    if (this.client.ws?.readyState === 1) return;
+    await this.client.getLists();
   }
 
   async connect(listName = null) {
@@ -86,14 +117,15 @@ class AnyListClient {
       throw error;
     }
 
-    // If already connected to the same list, skip reconnection
-    if (this.client && this.targetList && this.targetList.name === targetListName) {
-      return true;
-    }
-
     try {
-      // Create AnyList client if not already authenticated
-      if (!this.client) {
+      if (this.client) {
+        await this._refreshListsIfStale();
+        // Already connected to the same list: nothing else to do
+        if (this.targetList && this.targetList.name === targetListName) {
+          return true;
+        }
+      } else {
+        // Create the AnyList client and authenticate
         this.client = new AnyList({
           email: username,
           password: password
