@@ -1,7 +1,12 @@
-import { describe, it, before, after } from 'node:test';
+import { describe, it, before, after, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeRecipe } from '../src/recipe-normalizer.js';
+import { normalizeRecipe, isPublicAddress, fetchPolicy } from '../src/recipe-normalizer.js';
 import http from 'node:http';
+
+// The fixture servers listen on loopback, which real fetches refuse (#24).
+const DEFAULT_POLICY = { ...fetchPolicy };
+const allowLoopback = () => { fetchPolicy.isAllowed = a => a === '127.0.0.1' || isPublicAddress(a); };
+const restorePolicy = () => Object.assign(fetchPolicy, DEFAULT_POLICY);
 
 describe('Recipe Normalizer', () => {
   describe('text parsing', () => {
@@ -129,9 +134,10 @@ describe('Recipe Normalizer URL fetch limits', () => {
     });
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     base = `http://127.0.0.1:${server.address().port}`;
+    allowLoopback();
   });
 
-  after(() => server.close());
+  after(() => { server.close(); restorePolicy(); });
 
   it('rejects non-http(s) schemes', async () => {
     await assert.rejects(normalizeRecipe({ url: 'file:///etc/passwd' }), /Unsupported URL scheme/);
@@ -170,9 +176,10 @@ describe('Recipe Normalizer JSON-LD durations', () => {
     });
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     base = `http://127.0.0.1:${server.address().port}`;
+    allowLoopback();
   });
 
-  after(() => server.close());
+  after(() => { server.close(); restorePolicy(); });
 
   it('returns prep/cook times in seconds (AnyList storage unit)', async () => {
     const result = await normalizeRecipe({ url: `${base}/minutes` });
@@ -184,5 +191,91 @@ describe('Recipe Normalizer JSON-LD durations', () => {
     const result = await normalizeRecipe({ url: `${base}/seconds` });
     assert.equal(result.prepTime, 45);
     assert.equal(result.cookTime, null);
+  });
+});
+
+describe('Recipe Normalizer address blocking (#24)', () => {
+  it('classifies addresses', () => {
+    for (const a of ['8.8.8.8', '1.1.1.1', '2606:4700:4700::1111', '::ffff:8.8.8.8']) {
+      assert.equal(isPublicAddress(a), true, a);
+    }
+    for (const a of [
+      '127.0.0.1', '10.1.2.3', '172.16.0.1', '172.31.255.255', '192.168.1.1', '169.254.169.254',
+      '100.64.0.1', '100.127.255.254', '0.0.0.0', '224.0.0.1', '255.255.255.255', '198.18.0.1',
+      '::1', '::', 'fe80::1', 'fd12:3456::1', 'ff02::1', '2001:db8::1',
+      '::ffff:127.0.0.1', '::ffff:a00:1', '::ffff:169.254.169.254', 'not-an-ip',
+    ]) {
+      assert.equal(isPublicAddress(a), false, a);
+    }
+  });
+
+  for (const url of [
+    'http://127.0.0.1/',
+    'http://169.254.169.254/latest/meta-data/',
+    'http://10.0.0.5:8000/mcp',
+    'http://[::1]/',
+    'http://[::ffff:10.0.0.1]/',
+    'http://0x7f.1/',       // URL normalizes this to 127.0.0.1
+    'http://2130706433/',   // and this
+  ]) {
+    it(`refuses the literal address in ${url}`, async () => {
+      await assert.rejects(normalizeRecipe({ url }), /not a public internet address/);
+    });
+  }
+
+  const stubLookup = answers => (hostname, options, callback) => callback(null, answers[hostname] || []);
+  afterEach(restorePolicy);
+
+  it('refuses a hostname that resolves to a private address', async () => {
+    fetchPolicy.lookup = stubLookup({ 'recipes.example': [{ address: '10.0.0.7', family: 4 }] });
+    await assert.rejects(normalizeRecipe({ url: 'http://recipes.example/' }),
+      /Refusing to fetch from recipes\.example/);
+  });
+
+  it('refuses a hostname with one public and one private address', async () => {
+    fetchPolicy.lookup = stubLookup({ 'mixed.example': [
+      { address: '93.184.216.34', family: 4 },
+      { address: '192.168.0.10', family: 4 },
+    ] });
+    await assert.rejects(normalizeRecipe({ url: 'http://mixed.example/' }), /not a public internet address/);
+  });
+
+  it('refuses a hostname with no addresses', async () => {
+    fetchPolicy.lookup = stubLookup({});
+    await assert.rejects(normalizeRecipe({ url: 'http://empty.example/' }), /not a public internet address/);
+  });
+
+  describe('redirects', () => {
+    let server;
+    let base;
+    before(async () => {
+      server = http.createServer((req, res) => {
+        const targets = {
+          '/to-private': 'http://10.0.0.1/recipe',
+          '/to-metadata': 'http://169.254.169.254/latest/meta-data/',
+          '/to-internal-name': 'http://internal.example/recipe',
+        };
+        res.writeHead(302, { Location: targets[req.url] || '/' });
+        res.end();
+      });
+      await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+      base = `http://127.0.0.1:${server.address().port}`;
+    });
+    beforeEach(allowLoopback);
+    after(() => server.close());
+
+    it('refuses a redirect to a private address', async () => {
+      await assert.rejects(normalizeRecipe({ url: `${base}/to-private` }), /not a public internet address/);
+    });
+
+    it('refuses a redirect to the metadata service', async () => {
+      await assert.rejects(normalizeRecipe({ url: `${base}/to-metadata` }), /not a public internet address/);
+    });
+
+    it('refuses a redirect to a name that resolves privately', async () => {
+      fetchPolicy.lookup = stubLookup({ 'internal.example': [{ address: '172.20.0.3', family: 4 }] });
+      await assert.rejects(normalizeRecipe({ url: `${base}/to-internal-name` }),
+        /Refusing to fetch from internal\.example/);
+    });
   });
 });

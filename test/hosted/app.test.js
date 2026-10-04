@@ -134,6 +134,20 @@ describe('hosted server', () => {
     assert.equal((await post('x'.repeat(1024 * 1024 + 1), auth)).status, 413);
   });
 
+  it('survives a request target that is not a valid URL', async () => {
+    const net = await import('node:net');
+    const { port } = hosted.server.address();
+    const reply = await new Promise((resolve, reject) => {
+      const socket = net.connect(port, '127.0.0.1', () => socket.write('GET http://[ HTTP/1.1\r\nHost: x\r\nConnection: close\r\n\r\n'));
+      let data = '';
+      socket.on('data', d => { data += d; });
+      socket.on('end', () => resolve(data));
+      socket.on('error', reject);
+    });
+    assert.match(reply, /^HTTP\/1\.1 400/);
+    assert.equal((await fetch(`${base}/healthz`)).status, 200);
+  });
+
   it('answers 404 elsewhere', async () => {
     assert.equal((await fetch(`${base}/`)).status, 404);
     assert.equal((await fetch(`${base}/sse`)).status, 404);
