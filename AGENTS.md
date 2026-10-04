@@ -35,7 +35,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - **Release:** `.github/workflows/hosted-image.yml` builds the image on PRs and `main`, and **pushes it only from the `production` branch** to `ghcr.io/linuxmaier/anylist-mcp-hosted` (tags: the commit SHA and `production`). Day-to-day work merges to `main`; to deploy, push `main` to `production` (`git push origin main:production`, or a PR into `production`). home-server then picks up the new digest.
   - **Never push to `production` without the owner asking.** It's the deploy.
 - **HTTP (optional, upstream's):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README). Not used by this fork.
-- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
+- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`, `src/tag-data.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
 
 ## How the code talks to AnyList
 
@@ -50,7 +50,8 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - **Dates:** meal-plan dates are stored as `YYYY-MM-DD` strings. Don't round-trip them through `new Date()`, which shifts them a day west of UTC. The owner is on CDT. Compute "today" in local time.
   - **Names:** look up recipes and collections with `resolveOne` (by ID, with an error on ambiguous names), never `Array.find` by name. The account has duplicate names.
   - **Stale list:** anylist-js replaces its List objects on every refresh. `targetList` is looked up by ID for that reason, and `connect()` refetches lists whenever the WebSocket isn't open (#19). Don't cache List or Item objects across calls. Anything that reads and then writes a list should still refresh it first, as `addRecipeToList` does.
-- **`src/recipe-to-list/`:** a Porter2 stemmer, a quantity/package parser, and deterministic item IDs matching the app's. The golden test (`test/fixtures/recipe-list-items.json`) must stay at 37/37. If a change breaks it, the app's behaviour wins.
+- **`src/recipe-to-list/`:** a Porter2 stemmer, a quantity/package parser, deterministic item IDs matching the app's, and the app's categorizer (`categorize.js`: item name → grocery tag → list category, honouring the list's categorization rules). The golden tests (`test/fixtures/recipe-list-items.json`) must stay at 37/37 for both item IDs and categories. If a change breaks them, the app's behaviour wins.
+  - The categorizer's tag data comes from AnyList at runtime (`src/tag-data.js`). Offline tests use `test/fixtures/tag-data-extract.json`, a slice of it; regenerate that with `node scripts/extract-tag-fixture.mjs` if AnyList's tag data changes. `test/fixtures/test-list-categories.json` holds Test List's category groups.
 
 ## Live testing
 
@@ -78,7 +79,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
     - `SERVER_SECRET_KEY` and `SESSION_SECRET`
   - Refer to them by name or path only.
 - **Network:**
-  - At runtime the server talks only to `www.anylist.com` (via anylist-js) and to recipe URLs the user supplies (`src/recipe-normalizer.js`). Recipe fetches connect only to public addresses, checked after DNS resolution and on every redirect (#24). Keep it that way for any new fetch. Hosted mode also fetches Access's signing keys from `ACCESS_TEAM_DOMAIN`'s `/cdn-cgi/access/certs` (approved by the owner on 2026-10-04); `ACCESS_TEAM_DOMAIN` must be an `https://*.cloudflareaccess.com` URL.
+  - At runtime the server talks only to `www.anylist.com` (via anylist-js) and to recipe URLs the user supplies (`src/recipe-normalizer.js`). Recipe fetches connect only to public addresses, checked after DNS resolution and on every redirect (#24). Keep it that way for any new fetch. Hosted mode also fetches Access's signing keys from `ACCESS_TEAM_DOMAIN`'s `/cdn-cgi/access/certs` (approved by the owner on 2026-10-04); `ACCESS_TEAM_DOMAIN` must be an `https://*.cloudflareaccess.com` URL. `src/tag-data.js` fetches AnyList's public grocery tag data from `https://www.anylist.com/static/webapp/data/tag_data.json`, refusing redirects (approved by the owner on 2026-10-04, #20).
   - Don't add new outbound destinations, telemetry, analytics or update checks.
 - **No dynamic code:** no `eval`, `new Function`, `vm`, or `child_process` in server code.
 - **Dependencies:**
@@ -167,9 +168,6 @@ General fixes accepted upstream shrink this fork's diff and future merge conflic
 - **protobufjs 5:** anylist-js pins `protobufjs@5.0.3`. Its advisories are accepted until 2026-12-31 (see `osv-scanner.toml`). The fix is to port anylist-js to protobufjs 7.
 - **Shared token cache in HTTP mode:** every user shares the default token cache path (`~/.anylist_credentials`). Each user's tokens are encrypted with their own password, so this causes re-logins, not leaks. The cache key is also weak (linuxmaier/anylist-js#2).
 - **Open issues that affect behaviour** (roadmap: #11):
-  - **#20, no categorizer:** `add_recipe` copies categories only from favorite or recent items, so new ingredients land in "other".
-  - **#21:** MCP-created recipes' ingredients have no identifiers.
-  - **#22:** a moved meal-plan event keeps its old sort position.
   - `add_recipe` refuses scaled recipes.
 
 # Part 2: General coding guidelines (from upstream)

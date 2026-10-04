@@ -3,6 +3,8 @@ import uuid from '../anylist-js/lib/uuid.js';
 import FormData from 'form-data';
 import { normalizeRecipe } from './recipe-normalizer.js';
 import { excludeMatcher, findSavedItem, itemIdentifier, newListItem, sameItemIngredient, toItemIngredient } from './recipe-to-list/index.js';
+import { categorizeNewItem, classifyItemName } from './recipe-to-list/categorize.js';
+import { getTagData } from './tag-data.js';
 
 /**
  * Pick exactly one item (anything with `identifier` and `name`) by id or name.
@@ -131,6 +133,7 @@ class AnyListClient {
     this._credentialsFile = credentialsFile || null;
     this._webSocket = webSocket;
     this._loggingIn = null;
+    this.getTagData = getTagData;
   }
 
   /**
@@ -1070,6 +1073,20 @@ class AnyListClient {
       const favorites = saved(this.client.getFavoriteItemsByListId(list.identifier)?.items);
       const recents = saved(this.client.getRecentItemsByListId(list.identifier));
 
+      // How the app categorizes new items on this list (#20).
+      const listResponse = (userData.shoppingListsResponse?.listResponses || []).find(r => r.listId === list.identifier);
+      const allSettings = userData.listSettingsResponse?.settings || [];
+      const settings = allSettings.find(s => s.listId === list.identifier);
+      const defaultSettings = allSettings.find(s => !s.listId);
+      const genericEnabled = settings?.genericGroceryAutocompleteEnabled ?? defaultSettings?.genericGroceryAutocompleteEnabled ?? false;
+      const tagData = genericEnabled ? await this.getTagData() : null;
+      const listCategories = {
+        listId: list.identifier,
+        groups: (listResponse?.categoryGroupResponses || []).map(g => g.categoryGroup).filter(Boolean),
+        rules: listResponse?.categorizationRules || [],
+        selectedGroupId: settings?.listCategoryGroupId,
+      };
+
       const results = [];
       const touched = new Map(); // item id -> item name, for items this call adds or changes
       for (const ingredient of recipe.ingredients || []) {
@@ -1086,8 +1103,11 @@ class AnyListClient {
         const existing = list.getItemById(id);
         if (!existing && !touched.has(id)) {
           const item = newListItem(itemIngredient, { identifier: id, listId: list.identifier, userId: this.client.uid });
-          // The server doesn't categorize these; the app copies the category of a
-          // favorite or recent item with the same name.
+          // The server doesn't categorize these. The app classifies the name with
+          // its tag data and the list's categorization rules, then copies the
+          // category of a favorite or recent item with the same name, if any.
+          const tag = tagData ? classifyItemName(item.name, tagData) : null;
+          Object.assign(item, categorizeNewItem(item.name, tag, tagData, listCategories));
           const match = findSavedItem(itemIngredient, favorites, recents);
           if (match?.categoryMatchId) {
             item.categoryMatchId = match.categoryMatchId;

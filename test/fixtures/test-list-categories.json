@@ -1,0 +1,137 @@
+{
+  "_source": "Test List category groups, categorization rules and settings, read from AnyList on 2026-10-04 (read-only). Pairs with recipe-list-items.json.",
+  "listId": "23b32271ec5a4498b933af9489ba562a",
+  "genericGroceryAutocompleteEnabled": true,
+  "listCategoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+  "categoryGroups": [
+    {
+      "identifier": "a3b348a86eed5c0f92ffbc793064431f",
+      "listId": "23b32271ec5a4498b933af9489ba562a",
+      "name": null,
+      "defaultCategoryId": "405ebfa8104d4ae8a577a55bd9a5be83",
+      "categories": [
+        {
+          "identifier": "b300796f1127475fa7b30656926a004d",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Baby",
+          "systemCategory": "baby"
+        },
+        {
+          "identifier": "e48fc7cf9d4a4aa3a9732c90245240ea",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Bakery",
+          "systemCategory": "bakery"
+        },
+        {
+          "identifier": "a5f939f517d04907b86f0dbab3478ca5",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Beverages",
+          "systemCategory": "beverages"
+        },
+        {
+          "identifier": "3ae81e7d7c1f4d2cad515de35afb19a9",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Breakfast & Cereal",
+          "systemCategory": "breakfast-and-cereal"
+        },
+        {
+          "identifier": "50f101cd135843a99eeab875ed0c4dee",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Condiments & Dressings",
+          "systemCategory": "condiments-oils-and-salad-dressings"
+        },
+        {
+          "identifier": "5742a14db8614f6099f144830ccd9911",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Cooking & Baking",
+          "systemCategory": "cooking-and-baking"
+        },
+        {
+          "identifier": "05e01b96345647dab8761e131f5f8739",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Dairy",
+          "systemCategory": "dairy"
+        },
+        {
+          "identifier": "b2243d25bec5405880b401fd5715e19a",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Deli",
+          "systemCategory": "deli"
+        },
+        {
+          "identifier": "0ad4a34d214847a383b6b35e65c2acc4",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Frozen Foods",
+          "systemCategory": "frozen-foods"
+        },
+        {
+          "identifier": "3184f01e9d33491bb694f91931a4ca0f",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Grains, Pasta & Sides",
+          "systemCategory": "grains-pasta-and-side-dishes"
+        },
+        {
+          "identifier": "72c35f089cc24be8a09942566807e9d8",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Health & Personal Care",
+          "systemCategory": "health-and-personal-care"
+        },
+        {
+          "identifier": "ba6a2033c6d2404085b13d19c5e78e77",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Household & Cleaning",
+          "systemCategory": "household-and-cleaning"
+        },
+        {
+          "identifier": "29ac49d19e9f43ff955d934b60f24ccd",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Meat",
+          "systemCategory": "meat"
+        },
+        {
+          "identifier": "ebe887a867964fbd9ed6da10fcbb72d1",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Pet Supplies",
+          "systemCategory": "pet-supplies"
+        },
+        {
+          "identifier": "63b9c96e3647498ab73e286cd9b068c7",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Produce",
+          "systemCategory": "produce"
+        },
+        {
+          "identifier": "4ecfe9331f954a6f8410c6f3d826b380",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Seafood",
+          "systemCategory": "seafood"
+        },
+        {
+          "identifier": "059050592c3543e4bcc6d371864fda29",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Snacks",
+          "systemCategory": "snacks-cookies-and-candy"
+        },
+        {
+          "identifier": "a92817459661433aaf3cfa9bfca11c11",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Soups & Canned Goods",
+          "systemCategory": "soups-and-canned-goods"
+        },
+        {
+          "identifier": "d80144db491c45c5889f1c822e7dba45",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Wine, Beer & Spirits",
+          "systemCategory": "wine-beer-spirits"
+        },
+        {
+          "identifier": "405ebfa8104d4ae8a577a55bd9a5be83",
+          "categoryGroupId": "a3b348a86eed5c0f92ffbc793064431f",
+          "name": "Other",
+          "systemCategory": "other"
+        }
+      ]
+    }
+  ],
+  "categorizationRules": []
+}
