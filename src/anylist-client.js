@@ -44,6 +44,28 @@ function describeRecipe(r) {
   return parts.join(', ');
 }
 
+/**
+ * Give every ingredient an identifier, as app-created recipes have (#21).
+ * One that lacks an identifier takes an unused one from `previous` with the
+ * same rawIngredient, so unchanged lines keep theirs across an update, or
+ * else a new uuid. Each previous identifier is used at most once, so
+ * duplicate lines don't share one.
+ *
+ * @param {object[]} ingredients - plain ingredient objects
+ * @param {Array<{identifier?: string, rawIngredient?: string}>} [previous]
+ */
+export function withIngredientIds(ingredients, previous = []) {
+  const unused = previous.filter(p => p.identifier);
+  const taken = new Set(ingredients.map(i => i.identifier).filter(Boolean));
+  return ingredients.map(i => {
+    if (i.identifier) return i;
+    const index = unused.findIndex(p => p.rawIngredient === i.rawIngredient && !taken.has(p.identifier));
+    const identifier = index === -1 ? uuid() : unused.splice(index, 1)[0].identifier;
+    taken.add(identifier);
+    return { ...i, identifier };
+  });
+}
+
 function describeCollection(recipes) {
   return c => {
     const ids = c.recipeIds || [];
@@ -596,7 +618,14 @@ class AnyListClient {
           servings: decoded.recipe.servings || null,
           nutritionalInfo: decoded.recipe.nutritionalInfo || null,
           rating: decoded.recipe.rating || null,
-          ingredients: decoded.recipe.ingredients || [],
+          ingredients: withIngredientIds((decoded.recipe.ingredients || []).map(i => ({
+            identifier: i.identifier,
+            rawIngredient: i.rawIngredient,
+            name: i.name,
+            quantity: i.quantity,
+            note: i.note,
+            isHeading: i.isHeading,
+          }))),
           preparationSteps: decoded.recipe.preparationSteps || [],
         });
         recipe.isNewRecipeFromWebImport = true;
@@ -667,12 +696,12 @@ class AnyListClient {
       if (servings) recipeObj.servings = servings;
       if (preparationSteps.length > 0) recipeObj.preparationSteps = preparationSteps;
       if (ingredients.length > 0) {
-        recipeObj.ingredients = ingredients.map(i => ({
+        recipeObj.ingredients = withIngredientIds(ingredients.map(i => ({
           rawIngredient: typeof i === 'string' ? i : i.rawIngredient || `${i.quantity || ''} ${i.name || ''}`.trim(),
           name: typeof i === 'string' ? i : (i.name || i.rawIngredient || null),
           quantity: typeof i === 'string' ? null : i.quantity || null,
           note: typeof i === 'string' ? null : i.note || null,
-        }));
+        })));
       }
       const recipe = await this.client.createRecipe(recipeObj);
       await recipe.save();
@@ -736,12 +765,13 @@ class AnyListClient {
         if (fields[key] !== undefined) merged[key] = fields[key];
       }
       if (fields.ingredients !== undefined) {
-        merged.ingredients = fields.ingredients.map(i => ({
+        // Unchanged lines keep their identifiers; edited or new ones get new ones.
+        merged.ingredients = withIngredientIds(fields.ingredients.map(i => ({
           rawIngredient: typeof i === 'string' ? i : i.rawIngredient || `${i.quantity || ''} ${i.name || ''}`.trim(),
           name: typeof i === 'string' ? i : (i.name || i.rawIngredient || null),
           quantity: typeof i === 'string' ? null : i.quantity || null,
           note: typeof i === 'string' ? null : i.note || null,
-        }));
+        })), merged.ingredients);
       }
 
       const recipe = await this.client.createRecipe(merged);
