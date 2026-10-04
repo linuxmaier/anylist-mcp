@@ -67,7 +67,7 @@ export async function runRecipesTests() {
   // ── getRecipeDetails ──────────────────────────────────────────────────
 
   await test('getRecipeDetails returns full recipe with ingredients and steps', async () => {
-    const recipe = await client.getRecipeDetails(RECIPE);
+    const recipe = await client.getRecipeDetails({ name: RECIPE });
     if (recipe.name !== RECIPE) throw new Error(`Expected name "${RECIPE}", got "${recipe.name}"`);
     if (!Array.isArray(recipe.ingredients)) throw new Error('ingredients should be an array');
     if (!Array.isArray(recipe.preparationSteps)) throw new Error('preparationSteps should be an array');
@@ -83,7 +83,7 @@ export async function runRecipesTests() {
   });
 
   await test('getRecipeDetails ingredient rawIngredient matches what was saved', async () => {
-    const recipe = await client.getRecipeDetails(RECIPE);
+    const recipe = await client.getRecipeDetails({ name: RECIPE });
     const rawIngredients = recipe.ingredients.map(i => i.rawIngredient);
     for (const expected of RECIPE_INGREDIENTS) {
       if (!rawIngredients.includes(expected)) {
@@ -92,10 +92,34 @@ export async function runRecipesTests() {
     }
   });
 
+  // ── ingredient identifiers (#21) ─────────────────────────────────────
+
+  // getRecipeDetails doesn't return ingredient identifiers, so read the
+  // stored recipe from anylist-js directly.
+  const storedIngredients = async () => {
+    const recipes = await client.client.getRecipes();
+    return recipes.find(r => r.name === RECIPE).ingredients.map(i => i.toJSON());
+  };
+
+  let createdIds = [];
+  await test('createRecipe gives every ingredient its own identifier', async () => {
+    const ingredients = await storedIngredients();
+    createdIds = ingredients.map(i => i.identifier);
+    if (!createdIds.every(id => /^[0-9a-f]{32}$/.test(id || ''))) throw new Error(`Missing identifiers: ${JSON.stringify(createdIds)}`);
+    if (new Set(createdIds).size !== createdIds.length) throw new Error(`Duplicate identifiers: ${JSON.stringify(createdIds)}`);
+  });
+
+  await test('updateRecipe keeps identifiers of unchanged ingredients and adds new ones', async () => {
+    await client.updateRecipe({ name: RECIPE }, { ingredients: [RECIPE_INGREDIENTS[0], '3 tsp more assertions'] });
+    const ids = (await storedIngredients()).map(i => i.identifier);
+    if (ids[0] !== createdIds[0]) throw new Error(`Unchanged ingredient lost its identifier: ${ids[0]} != ${createdIds[0]}`);
+    if (!/^[0-9a-f]{32}$/.test(ids[1] || '') || createdIds.includes(ids[1])) throw new Error(`Edited ingredient should get a new identifier, got ${ids[1]}`);
+  });
+
   await test('getRecipeDetails throws for non-existent recipe', async () => {
     let threw = false;
     try {
-      await client.getRecipeDetails('🚫 No Such Recipe');
+      await client.getRecipeDetails({ name: '🚫 No Such Recipe' });
     } catch (e) {
       threw = true;
       if (!e.message.includes('not found')) throw new Error(`Expected "not found", got: ${e.message}`);
@@ -120,7 +144,7 @@ export async function runRecipesTests() {
     });
     if (!result.identifier) throw new Error('createRecipe should return identifier');
 
-    const recipe = await client.getRecipeDetails(RECIPE_FULL);
+    const recipe = await client.getRecipeDetails({ name: RECIPE_FULL });
     if (recipe.note !== 'A test note') throw new Error(`Expected note "A test note", got "${recipe.note}"`);
     if (recipe.sourceName !== 'Test Source') throw new Error(`Expected sourceName "Test Source", got "${recipe.sourceName}"`);
     if (recipe.sourceUrl !== 'https://example.com/recipe') throw new Error(`Expected sourceUrl mismatch`);
@@ -132,7 +156,7 @@ export async function runRecipesTests() {
   // ── deleteRecipe ──────────────────────────────────────────────────────
 
   await test('deleteRecipe removes recipe from account', async () => {
-    await client.deleteRecipe(RECIPE);
+    await client.deleteRecipe({ name: RECIPE });
     const recipes = await client.getRecipes();
     const found = recipes.find(r => r.name === RECIPE);
     if (found) throw new Error(`Recipe "${RECIPE}" should be gone after deleteRecipe`);
@@ -141,7 +165,7 @@ export async function runRecipesTests() {
   await test('deleteRecipe throws for non-existent recipe', async () => {
     let threw = false;
     try {
-      await client.deleteRecipe('🚫 No Such Recipe');
+      await client.deleteRecipe({ name: '🚫 No Such Recipe' });
     } catch (e) {
       threw = true;
       if (!e.message.includes('not found')) throw new Error(`Expected "not found", got: ${e.message}`);
@@ -150,7 +174,7 @@ export async function runRecipesTests() {
   });
 
   // Cleanup
-  try { await client.deleteRecipe(RECIPE_FULL); } catch {}
+  try { await client.deleteRecipe({ name: RECIPE_FULL }); } catch {}
 
   await client.disconnect();
   return printSuiteResults('Recipes', results());

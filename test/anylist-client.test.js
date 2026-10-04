@@ -101,6 +101,54 @@ describe('AnyListClient recipe lookup', () => {
   });
 });
 
+describe('AnyListClient ingredient identifiers', () => {
+  const ID = /^[0-9a-f]{32}$/;
+  const stored = (identifier, rawIngredient) => ({ toJSON() { return { identifier, rawIngredient, name: rawIngredient }; } });
+  let client;
+  let saved;
+  beforeEach(() => {
+    ({ client } = makeClient());
+    const recipes = [{
+      identifier: 'r-ids',
+      name: 'Chili',
+      ingredients: [stored('id-salt-1', '1 tsp salt'), stored('id-beans', '1 can beans'), stored('id-salt-2', '1 tsp salt')],
+    }];
+    client.client.getRecipes = async () => recipes;
+    const create = client.client.createRecipe;
+    client.client.createRecipe = async obj => { saved = obj; return create(obj); };
+  });
+
+  it('create: every ingredient gets its own new identifier', async () => {
+    await client.createRecipe({ name: 'New', ingredients: ['1 tsp salt', { name: 'beans', quantity: '1 can' }, '1 tsp salt'] });
+    const ids = saved.ingredients.map(i => i.identifier);
+    assert.equal(ids.length, 3);
+    for (const id of ids) assert.match(id, ID);
+    assert.equal(new Set(ids).size, 3);
+  });
+
+  it('update: unchanged lines keep their identifiers, edited and new ones get new ones', async () => {
+    await client.updateRecipe({ id: 'r-ids' }, { ingredients: ['1 tsp salt', '2 cans beans', '1 tsp salt', '1 onion'] });
+    const ids = saved.ingredients.map(i => i.identifier);
+    assert.equal(ids[0], 'id-salt-1');
+    assert.equal(ids[2], 'id-salt-2');
+    assert.match(ids[1], ID);
+    assert.match(ids[3], ID);
+    assert.equal(new Set(ids).size, 4);
+  });
+
+  it('update: a duplicate line beyond the stored ones gets a new identifier', async () => {
+    await client.updateRecipe({ id: 'r-ids' }, { ingredients: ['1 tsp salt', '1 tsp salt', '1 tsp salt'] });
+    const ids = saved.ingredients.map(i => i.identifier);
+    assert.deepEqual(ids.slice(0, 2), ['id-salt-1', 'id-salt-2']);
+    assert.match(ids[2], ID);
+  });
+
+  it('update: ingredients left out of the update are kept as stored', async () => {
+    await client.updateRecipe({ id: 'r-ids' }, { note: 'x' });
+    assert.deepEqual(saved.ingredients.map(i => i.identifier), ['id-salt-1', 'id-beans', 'id-salt-2']);
+  });
+});
+
 describe('AnyListClient collection lookup', () => {
   let client;
   let log;
