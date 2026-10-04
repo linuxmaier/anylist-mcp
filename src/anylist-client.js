@@ -57,17 +57,22 @@ function describeCollection(recipes) {
 
 class AnyListClient {
   /**
-   * @param {{ username?: string, password?: string, defaultListName?: string }} [credentials]
+   * @param {{ username?: string, password?: string, defaultListName?: string, credentialsFile?: string, webSocket?: boolean }} [credentials]
    *   Optional credentials. Falls back to ANYLIST_USERNAME / ANYLIST_PASSWORD / ANYLIST_LIST_NAME
-   *   environment variables when not provided (stdio mode).
+   *   environment variables when not provided (stdio mode). `credentialsFile` is where anylist-js
+   *   caches tokens (default `~/.anylist_credentials`). `webSocket: false` skips the push
+   *   connection; lists are then fetched on every connect().
    */
-  constructor({ username, password, defaultListName } = {}) {
+  constructor({ username, password, defaultListName, credentialsFile, webSocket = true } = {}) {
     this.client = null;
     this._targetListId = null;
     this._lastTargetList = null;
     this._username = username || null;
     this._password = password || null;
     this.defaultListName = defaultListName || null;
+    this._credentialsFile = credentialsFile || null;
+    this._webSocket = webSocket;
+    this._loggingIn = null;
   }
 
   /**
@@ -119,6 +124,8 @@ class AnyListClient {
 
     try {
       if (this.client) {
+        // A login started by a concurrent call (hosted sessions share a client)
+        await this._loggingIn;
         await this._refreshListsIfStale();
         // Already connected to the same list: nothing else to do
         if (this.targetList && this.targetList.name === targetListName) {
@@ -126,17 +133,27 @@ class AnyListClient {
         }
       } else {
         // Create the AnyList client and authenticate
-        this.client = new AnyList({
+        const client = new AnyList({
           email: username,
-          password: password
+          password: password,
+          ...(this._credentialsFile ? { credentialsFile: this._credentialsFile } : {}),
         });
-
-        // Authenticate
-        console.error('Connecting to AnyList...');
-        await this.client.login();
-        console.error('Successfully authenticated with AnyList');
-
-        await this.client.getLists();
+        this.client = client;
+        this._loggingIn = (async () => {
+          console.error('Connecting to AnyList...');
+          await client.login(this._webSocket);
+          console.error('Successfully authenticated with AnyList');
+          await client.getLists();
+        })();
+        try {
+          await this._loggingIn;
+        } catch (error) {
+          // Let the next call try again rather than use a client that never logged in
+          if (this.client === client) this.client = null;
+          throw error;
+        } finally {
+          this._loggingIn = null;
+        }
       }
 
       // Find the target list
