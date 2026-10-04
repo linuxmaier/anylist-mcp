@@ -9,10 +9,12 @@
     "dev": "node --watch src/server.js",
     "test:client": "node test/anylist-client/index.js",
     "test:integration": "node test/integration.js",
+    "test:hosted-live": "node test/hosted/live.js",
     "pack": "mcpb pack",
     "start:http": "node src/http/index.js",
     "dev:http": "node --watch src/http/index.js",
-    "test": "node --test test/*.test.js test/tools/*.test.js",
+    "test": "node --test test/*.test.js test/tools/*.test.js test/hosted/*.test.js",
+    "start:hosted": "node src/hosted/index.js",
     "test:http": "node --test test/http/*.test.js",
     "check:submodule-deps": "node scripts/check-submodule-deps.mjs"
   },
