@@ -1,28 +1,12 @@
 import { z } from "zod";
-import { textResponse, errorResponse } from "./helpers.js";
+import { textResponse, errorResponse, tierActions, READ, WRITE, DELETE } from "./helpers.js";
 import { createElicitationHelpers } from "./elicitation.js";
 
 export function register(server, getClient) {
   const { elicitRequiredField } = createElicitationHelpers(server);
 
-  server.registerTool("recipe_collections", {
-    title: "Recipe Collections",
-    description: `Manage AnyList recipe collections. Actions:
-- list: Show all collections with ids, recipe counts and names
-- create: Create a new collection, optionally with recipes (by recipe_ids or recipe_names)
-- delete: Delete a collection by collection_id or name
-- add_recipes: Add existing recipes (recipe_ids and/or recipe_names) to a collection (collection_id or name). Recipes already in it are skipped.
-- remove_recipes: Take recipes (recipe_ids and/or recipe_names) out of a collection (collection_id or name). The recipes themselves are not deleted.
-If a name matches more than one collection or recipe, the action fails and lists each match's id; retry with the id.`,
-    inputSchema: {
-      action: z.enum(["list", "create", "delete", "add_recipes", "remove_recipes"]).describe("The collection action to perform"),
-      name: z.string().optional().describe("Collection name (required for create; delete, add_recipes and remove_recipes take this or collection_id)"),
-      collection_id: z.string().optional().describe("Collection ID (delete, add_recipes, remove_recipes). Takes precedence over name."),
-      recipe_names: z.array(z.string()).optional().describe("Recipe names (create, add_recipes, remove_recipes). Each must match exactly one recipe."),
-      recipe_ids: z.array(z.string()).optional().describe("Recipe IDs (create, add_recipes, remove_recipes)"),
-    }
-  }, async (params) => {
-    const { action, name, collection_id, recipe_names, recipe_ids } = params;
+  async function run(action, params) {
+    const { name, collection_id, recipe_names, recipe_ids } = params;
     try {
       const client = await getClient();
       await client.connect(null);
@@ -61,5 +45,48 @@ If a name matches more than one collection or recipe, the action fails and lists
     } catch (error) {
       return errorResponse(`Recipe collections ${action} failed: ${error.message}`);
     }
-  });
+  }
+
+  const read = tierActions(["list"], run, "The collection read action to perform");
+  const write = tierActions(["create", "add_recipes", "remove_recipes"], run, "The collection write action to perform");
+  const recipeRefs = {
+    recipe_names: z.array(z.string()).optional().describe("Recipe names. Each must match exactly one recipe."),
+    recipe_ids: z.array(z.string()).optional().describe("Recipe IDs"),
+  };
+
+  server.registerTool("recipe_collections_read", {
+    title: "Recipe Collections: Read",
+    description: `Read AnyList recipe collections. Never changes anything. Actions:
+- list: Show all collections with ids, recipe counts and names`,
+    annotations: READ,
+    inputSchema: {
+      action: read.action,
+    }
+  }, read.handler);
+
+  server.registerTool("recipe_collections_write", {
+    title: "Recipe Collections: Add & Change",
+    description: `Create AnyList recipe collections and change which recipes they hold. Deleting a collection is a separate tool (recipe_collections_delete). Actions:
+- create: Create a new collection, optionally with recipes (by recipe_ids or recipe_names)
+- add_recipes: Add existing recipes (recipe_ids and/or recipe_names) to a collection (collection_id or name). Recipes already in it are skipped.
+- remove_recipes: Take recipes (recipe_ids and/or recipe_names) out of a collection (collection_id or name). The recipes themselves are not deleted.
+If a name matches more than one collection or recipe, the action fails and lists each match's id; retry with the id.`,
+    annotations: WRITE,
+    inputSchema: {
+      action: write.action,
+      name: z.string().optional().describe("Collection name (required for create; add_recipes and remove_recipes take this or collection_id)"),
+      collection_id: z.string().optional().describe("Collection ID (add_recipes, remove_recipes). Takes precedence over name."),
+      ...recipeRefs,
+    }
+  }, write.handler);
+
+  server.registerTool("recipe_collections_delete", {
+    title: "Recipe Collections: Delete",
+    description: "Permanently delete one AnyList recipe collection by collection_id or name. The recipes in it are not deleted. If the name matches more than one collection, this fails and lists each match's id; retry with collection_id.",
+    annotations: DELETE,
+    inputSchema: {
+      name: z.string().optional().describe("Collection name"),
+      collection_id: z.string().optional().describe("Collection ID. Takes precedence over name."),
+    }
+  }, params => run("delete", params));
 }

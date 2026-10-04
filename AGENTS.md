@@ -88,6 +88,9 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - Dependency install scripts must be listed in `allowScripts` in `package.json`: approved (pinned to an exact version) or denied (`false`).
     - `.npmrc` sets `strict-allow-scripts=true`, so an install fails if any unlisted script appears. By default npm 11 only warns and then runs the script anyway.
     - Never approve a new script, broaden an approval, or remove `.npmrc` without the owner's OK. `anylist-js` has the same `.npmrc` and denies husky/highlight.js.
+- **Tool tiers (#38):** each area has a `*_read`, `*_write` and `*_delete` tool, because clients grant permissions per tool (e.g. reads Always allow, deletes Needs approval).
+  - A `*_read` action must never change anything, including through a flag (a "save" option belongs in `*_write`). Only `*_delete` may remove an item, recipe, event or collection; a `*_write` action that would replace something by deleting it must refuse instead.
+  - Put every new action in the right tier and add it to `test/tools/registry.test.js`, which checks names, annotations and that read actions call nothing that writes.
 - **Destructive tool actions:**
   - Lists are shared with the household. Deletes must target one specific, named item, event or collection.
   - Don't add bulk delete/clear actions or "delete all matching" behaviour without asking.

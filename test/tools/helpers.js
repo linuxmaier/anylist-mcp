@@ -2,7 +2,7 @@
  * Shared test infrastructure for tool-level tests.
  *
  * createMockServer() — returns a minimal MCP server stub that captures
- *   registerTool() calls, plus the resulting handlers map.
+ *   registerTool() calls, plus the resulting handlers and definitions maps.
  *
  * MockAnyListClient — in-memory client that owns its own state arrays.
  *   Call client.reset() (or create a fresh instance) in beforeEach.
@@ -12,9 +12,11 @@ import { resolveOne } from '../../src/anylist-client.js';
 
 export function createMockServer() {
   const handlers = {};
+  const definitions = {};
   const server = {
-    registerTool: (name, _schema, handler) => {
+    registerTool: (name, definition, handler) => {
       handlers[name] = handler;
+      definitions[name] = definition;
       // Return a stub registeredTool so callers can call .update() without error.
       return { update: () => {} };
     },
@@ -22,7 +24,7 @@ export function createMockServer() {
     // Returning null means elicitation is disabled; missing-param paths throw instead.
     server: { getClientCapabilities: () => null },
   };
-  return { server, handlers };
+  return { server, handlers, definitions };
 }
 
 export class MockAnyListClient {

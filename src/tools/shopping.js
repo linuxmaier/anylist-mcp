@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { textResponse, errorResponse } from "./helpers.js";
+import { textResponse, errorResponse, tierActions, READ, WRITE, DELETE } from "./helpers.js";
 import { createElicitationHelpers } from "./elicitation.js";
 
 // Default categories recognized by anylist.
@@ -9,19 +9,20 @@ const valid_categories = ["baby","bakery","beverages","breakfast-and-cereal","co
   "produce","seafood","snacks-cookies-and-candy","soups-and-canned-goods",
   "wine-beer-spirits","other"];
 
-  // TODO: What does this do?
-function buildDescription(stores) {
-  const base = `Manage AnyList shopping lists and items. Actions:
+const READ_DESCRIPTION = `Read AnyList shopping lists. Never changes anything. Actions:
 - list_lists: Show all lists with item counts
 - list_items: Show items on a list (grouped by category)
+- get_favorites: Get favorite items for a list
+- get_recents: Get recently added items for a list
+- list_stores: List stores available for the list (if any)`;
+
+function writeDescription(stores) {
+  const base = `Add, check off or change items on AnyList shopping lists. Deleting an item is a separate tool (shopping_delete). Actions:
 - add_item: Add an item to a list
 - add_items: Add several items to a list in one call (use this instead of repeating add_item)
 - check_item: Check off (complete) an item
 - uncheck_item: Uncheck a previously checked-off item (make it active again)
-- delete_item: Permanently remove an item from a list
-- get_favorites: Get favorite items for a list
-- get_recents: Get recently added items for a list
-- list_stores: list stores available for the list (if any)
+- set_item_store: Assign an item to a store, or clear its store (omit store_name)
 - add_recipe: Add a recipe's ingredients as recipe-linked items, like the AnyList app does. Items show their recipe, an ingredient already on the list gains a link instead of a duplicate, and checked-off ones are unchecked. Pass recipe_id (or name), optionally meal_plan_event_id, and exclude for pantry staples to skip. An exclude entry skips every ingredient whose name contains all of its words, ignoring case and plurals: "salt" skips "Kosher salt", "black pepper" skips "Freshly ground black pepper", but "pepper" also skips "red bell peppers". Check the skipped lines in the result`;
   if (!stores || stores.length === 0) return base;
   const storeList = stores.map(s => s.name).join(', ');
@@ -72,37 +73,8 @@ export function register(server, getClient) {
 
   let lastStoreSignature = '';
 
-  const registeredTool = server.registerTool("shopping", {
-    title: "Shopping Lists & Items",
-    description: buildDescription([]),
-    inputSchema: {
-      action: z.enum(["list_lists", "list_items", "add_item", "add_items",
-        "set_item_store", "check_item", "uncheck_item", "delete_item", "get_favorites", "get_recents", "list_stores",
-        "add_recipe"]).describe("The shopping action to perform"),
-      list_name: z.string().optional().describe("Name of the list (defaults to configured default list)"),
-      name: z.string().optional().describe("Item name (required for add_item, set_item_store, check_item, uncheck_item, delete_item); recipe name for add_recipe"),
-      recipe_id: z.string().optional().describe("Recipe ID (add_recipe). Takes precedence over name."),
-      meal_plan_event_id: z.string().optional().describe("Meal plan event ID to link the items to (add_recipe). Without recipe_id or name, adds the event's recipe."),
-      exclude: z.array(z.string()).optional().describe("Pantry staples to skip (add_recipe). An entry skips every ingredient whose name contains all its words, ignoring case and plurals: \"salt\" skips \"Kosher salt\"; \"pepper\" also skips \"red bell peppers\""),
-      items: z.array(z.union([
-        z.string(),
-        z.object({
-          name: z.string(),
-          quantity: z.union([z.number().min(1), z.string().min(1)]).optional(),
-          notes: z.string().optional(),
-          category: z.enum(valid_categories).optional(),
-          store_name: z.string().optional(),
-        })
-      ])).optional().describe("Items to add (add_items only). Each entry is either a plain item name or an object with name/quantity/notes/category/store_name"),
-      quantity: z.union([z.number().min(1), z.string().min(1)]).optional().describe("Item quantity, e.g. 2 or \"500 g\" (add_item only, defaults to 1)"),
-      notes: z.string().optional().describe("Notes for the item (add_item only)"),
-      include_checked: z.boolean().optional().describe("Include checked-off items (list_items only, default false)"),
-      include_notes: z.boolean().optional().describe("Include notes for each item (list_items only, default false)"),
-      category: z.enum(valid_categories).optional().describe("Category for the item (add_item only, defaults to 'other')"),
-      store_name: z.string().optional().describe("Store to assign to this item (add_item and set_item_store only; omit or leave blank to clear)"),
-    }
-  }, async (params) => {
-    const { action, list_name, name, quantity, notes, include_checked, include_notes, category } = params;
+  async function run(action, params) {
+    const { list_name, name, quantity, notes, include_checked, include_notes, category } = params;
     if (category && !valid_categories.includes(category)) {
       throw new Error(`Invalid input for field "category": "${category}". Valid categories are: ${valid_categories.join(", ")}`);
     }
@@ -115,7 +87,7 @@ export function register(server, getClient) {
           const sig = stores.map(s => s.name).join(',');
           if (sig !== lastStoreSignature) {
             lastStoreSignature = sig;
-            registeredTool.update({ description: buildDescription(stores) });
+            writeTool.update({ description: writeDescription(stores) });
           }
           const lists = client.getLists();
           if (lists.length === 0) return textResponse("No lists found in the account.");
@@ -136,7 +108,7 @@ export function register(server, getClient) {
           const sig = stores.map(s => s.name).join(',');
           if (sig !== lastStoreSignature) {
             lastStoreSignature = sig;
-            registeredTool.update({ description: buildDescription(stores) });
+            writeTool.update({ description: writeDescription(stores) });
           }
           const items = await client.getItems(include_checked || false, include_notes || false);
           if (items.length === 0) {
@@ -199,6 +171,16 @@ export function register(server, getClient) {
           added.forEach(n => summary.push(`  ✓ ${n}`));
           failed.forEach(f => summary.push(`  ✗ ${f}`));
           return failed.length > 0 ? errorResponse(summary.join("\n")) : textResponse(summary.join("\n"));
+        }
+        case "set_item_store": {
+          let itemName = name;
+          if (!itemName) itemName = await elicitRequiredField("name", "Which item should get a store?");
+          await client.connect(list_name);
+          const resolvedItem = await resolveItemName(client, itemName);
+          await client.setItemStore(resolvedItem, params.store_name || null);
+          return textResponse(params.store_name
+            ? `Set the store of "${resolvedItem}" to "${params.store_name}" on list "${client.targetList.name}"`
+            : `Cleared the store of "${resolvedItem}" on list "${client.targetList.name}"`);
         }
         case "check_item": {
           let itemName = name;
@@ -264,5 +246,63 @@ export function register(server, getClient) {
     } catch (error) {
       return errorResponse(`Shopping ${action} failed: ${error.message}`);
     }
-  });
+  }
+
+  const read = tierActions(["list_lists", "list_items", "get_favorites", "get_recents", "list_stores"], run,
+    "The shopping read action to perform");
+  const write = tierActions(["add_item", "add_items", "check_item", "uncheck_item", "set_item_store", "add_recipe"], run,
+    "The shopping write action to perform");
+  const listName = {
+    list_name: z.string().optional().describe("Name of the list (defaults to configured default list)"),
+  };
+
+  server.registerTool("shopping_read", {
+    title: "Shopping Lists: Read",
+    description: READ_DESCRIPTION,
+    annotations: READ,
+    inputSchema: {
+      action: read.action,
+      ...listName,
+      include_checked: z.boolean().optional().describe("Include checked-off items (list_items only, default false)"),
+      include_notes: z.boolean().optional().describe("Include notes for each item (list_items only, default false)"),
+    }
+  }, read.handler);
+
+  const writeTool = server.registerTool("shopping_write", {
+    title: "Shopping Lists: Add & Change Items",
+    description: writeDescription([]),
+    annotations: WRITE,
+    inputSchema: {
+      action: write.action,
+      ...listName,
+      name: z.string().optional().describe("Item name (required for add_item, set_item_store, check_item, uncheck_item); recipe name for add_recipe"),
+      recipe_id: z.string().optional().describe("Recipe ID (add_recipe). Takes precedence over name."),
+      meal_plan_event_id: z.string().optional().describe("Meal plan event ID to link the items to (add_recipe). Without recipe_id or name, adds the event's recipe."),
+      exclude: z.array(z.string()).optional().describe("Pantry staples to skip (add_recipe). An entry skips every ingredient whose name contains all its words, ignoring case and plurals: \"salt\" skips \"Kosher salt\"; \"pepper\" also skips \"red bell peppers\""),
+      items: z.array(z.union([
+        z.string(),
+        z.object({
+          name: z.string(),
+          quantity: z.union([z.number().min(1), z.string().min(1)]).optional(),
+          notes: z.string().optional(),
+          category: z.enum(valid_categories).optional(),
+          store_name: z.string().optional(),
+        })
+      ])).optional().describe("Items to add (add_items only). Each entry is either a plain item name or an object with name/quantity/notes/category/store_name"),
+      quantity: z.union([z.number().min(1), z.string().min(1)]).optional().describe("Item quantity, e.g. 2 or \"500 g\" (add_item only, defaults to 1)"),
+      notes: z.string().optional().describe("Notes for the item (add_item only)"),
+      category: z.enum(valid_categories).optional().describe("Category for the item (add_item only, defaults to 'other')"),
+      store_name: z.string().optional().describe("Store to assign to this item (add_item and set_item_store only; omit or leave blank to clear)"),
+    }
+  }, write.handler);
+
+  server.registerTool("shopping_delete", {
+    title: "Shopping Lists: Delete Item",
+    description: "Permanently remove one item from an AnyList shopping list (to complete an item, use shopping_write check_item instead). A partial name that matches several items asks which one, or fails.",
+    annotations: DELETE,
+    inputSchema: {
+      ...listName,
+      name: z.string().describe("Name of the item to delete"),
+    }
+  }, params => run("delete_item", params));
 }

@@ -54,20 +54,52 @@
       "description": "Test connection to AnyList and access to target shopping list"
     },
     {
-      "name": "shopping",
-      "description": "Manage shopping lists and items — list all lists, view/add/check off/delete items, get favorites and recents"
+      "name": "shopping_read",
+      "description": "Read shopping lists — list all lists, view items, favorites, recents and stores"
     },
     {
-      "name": "recipes",
-      "description": "Manage recipes — browse, search, view full details, create, and delete recipes"
+      "name": "shopping_write",
+      "description": "Add, check off, uncheck and organize shopping list items, and add a recipe's ingredients"
     },
     {
-      "name": "meal_plan",
-      "description": "Manage meal planning calendar — view/create/delete meal plan events, list meal labels"
+      "name": "shopping_delete",
+      "description": "Permanently delete one shopping list item"
     },
     {
-      "name": "recipe_collections",
-      "description": "Manage recipe collections — view, create and delete collections, and add or remove recipes"
+      "name": "recipes_read",
+      "description": "Read recipes — browse, search, view full details, planning index, preview a parsed recipe"
+    },
+    {
+      "name": "recipes_write",
+      "description": "Create, update and import recipes"
+    },
+    {
+      "name": "recipes_delete",
+      "description": "Permanently delete one recipe"
+    },
+    {
+      "name": "meal_plan_read",
+      "description": "Read the meal planning calendar — events and meal labels"
+    },
+    {
+      "name": "meal_plan_write",
+      "description": "Create and change meal plan events"
+    },
+    {
+      "name": "meal_plan_delete",
+      "description": "Permanently delete one meal plan event"
+    },
+    {
+      "name": "recipe_collections_read",
+      "description": "Read recipe collections"
+    },
+    {
+      "name": "recipe_collections_write",
+      "description": "Create recipe collections and add or remove recipes"
+    },
+    {
+      "name": "recipe_collections_delete",
+      "description": "Permanently delete one recipe collection (its recipes are kept)"
     }
   ],
   "keywords": ["anylist", "shopping", "groceries", "recipes", "meal-planning"],

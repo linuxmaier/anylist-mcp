@@ -3,7 +3,11 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
-const expected = ["health_check", "meal_plan", "recipe_collections", "recipes", "shopping"];
+const expected = ["health_check",
+  "meal_plan_delete", "meal_plan_read", "meal_plan_write",
+  "recipe_collections_delete", "recipe_collections_read", "recipe_collections_write",
+  "recipes_delete", "recipes_read", "recipes_write",
+  "shopping_delete", "shopping_read", "shopping_write"];
 
 const transport = new StdioClientTransport({
   command: process.execPath,
