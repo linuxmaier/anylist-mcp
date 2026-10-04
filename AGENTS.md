@@ -75,7 +75,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
     - `SERVER_SECRET_KEY` and `SESSION_SECRET`
   - Refer to them by name or path only.
 - **Network:**
-  - At runtime the server talks only to `www.anylist.com` (via anylist-js) and to recipe URLs the user supplies (`src/recipe-normalizer.js`). Hosted mode also fetches Access's signing keys from `ACCESS_TEAM_DOMAIN`'s `/cdn-cgi/access/certs` (approved by the owner on 2026-10-04); `ACCESS_TEAM_DOMAIN` must be an `https://*.cloudflareaccess.com` URL.
+  - At runtime the server talks only to `www.anylist.com` (via anylist-js) and to recipe URLs the user supplies (`src/recipe-normalizer.js`). Recipe fetches connect only to public addresses, checked after DNS resolution and on every redirect (#24). Keep it that way for any new fetch. Hosted mode also fetches Access's signing keys from `ACCESS_TEAM_DOMAIN`'s `/cdn-cgi/access/certs` (approved by the owner on 2026-10-04); `ACCESS_TEAM_DOMAIN` must be an `https://*.cloudflareaccess.com` URL.
   - Don't add new outbound destinations, telemetry, analytics or update checks.
 - **No dynamic code:** no `eval`, `new Function`, `vm`, or `child_process` in server code.
 - **Dependencies:**
@@ -161,7 +161,6 @@ General fixes accepted upstream shrink this fork's diff and future merge conflic
 ## Known gaps (follow-ups)
 
 - **protobufjs 5:** anylist-js pins `protobufjs@5.0.3`. Its advisories are accepted until 2026-12-31 (see `osv-scanner.toml`). The fix is to port anylist-js to protobufjs 7.
-- **Recipe import in HTTP mode:** the importer blocks non-HTTP(S) schemes and limits redirects and response size. It does not block private or internal IP addresses, which matters if HTTP mode is exposed to others.
 - **Shared token cache in HTTP mode:** every user shares the default token cache path (`~/.anylist_credentials`). Each user's tokens are encrypted with their own password, so this causes re-logins, not leaks. The cache key is also weak (linuxmaier/anylist-js#2).
 - **Open issues that affect behaviour** (roadmap: #11):
   - **#20, no categorizer:** `add_recipe` copies categories only from favorite or recent items, so new ingredients land in "other".
