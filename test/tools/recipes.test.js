@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import { register, displayIngredientName } from '../../src/tools/recipes.js';
 import { MockAnyListClient, createMockServer } from './helpers.js';
+import { fetchPolicy, isPublicAddress } from '../../src/recipe-normalizer.js';
 
 describe('recipes tool', () => {
   let client;
@@ -437,9 +438,14 @@ describe('recipes tool', () => {
         });
         await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
         url = `http://127.0.0.1:${server.address().port}/chili`;
+        // The fixture server is on loopback, which real fetches refuse.
+        fetchPolicy.isAllowed = address => address === '127.0.0.1' || isPublicAddress(address);
       });
 
-      after(() => server.close());
+      after(() => {
+        server.close();
+        fetchPolicy.isAllowed = isPublicAddress;
+      });
 
       it('previews times in minutes and saves them in seconds', async () => {
         const text = (await handlers.recipes({ action: 'normalize', url, save: true })).content[0].text;

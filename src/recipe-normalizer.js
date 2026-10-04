@@ -1,5 +1,7 @@
 import https from 'node:https';
 import http from 'node:http';
+import dns from 'node:dns';
+import net from 'node:net';
 
 /**
  * Normalize a recipe from various input types into AnyList-compatible format.
@@ -27,15 +29,76 @@ export async function normalizeRecipe(input) {
 const MAX_REDIRECTS = 5;
 const MAX_HTML_BYTES = 5 * 1024 * 1024;
 
+// Recipe URLs come from a chat, so a link (or a prompt injection) could point the
+// server at the machine it runs on or its network: loopback, the LAN, other
+// containers, the tailnet, or a cloud metadata service. Only public addresses
+// are fetched (#24).
+const NON_PUBLIC = new net.BlockList();
+for (const [address, prefix] of [
+  ['0.0.0.0', 8], ['10.0.0.0', 8], ['100.64.0.0', 10], ['127.0.0.0', 8],
+  ['169.254.0.0', 16], ['172.16.0.0', 12], ['192.0.0.0', 24], ['192.0.2.0', 24],
+  ['192.168.0.0', 16], ['198.18.0.0', 15], ['198.51.100.0', 24], ['203.0.113.0', 24],
+  ['224.0.0.0', 4], ['240.0.0.0', 4],
+]) NON_PUBLIC.addSubnet(address, prefix, 'ipv4');
+for (const [address, prefix] of [
+  ['::', 128], ['::1', 128], ['100::', 64], ['2001:db8::', 32],
+  ['fc00::', 7], ['fe80::', 10], ['ff00::', 8],
+]) NON_PUBLIC.addSubnet(address, prefix, 'ipv6');
+// IPv4-mapped IPv6 (::ffff:10.0.0.1) is checked against the IPv4 ranges by BlockList.
+
+export function isPublicAddress(address) {
+  const family = net.isIP(address);
+  if (family === 0) return false;
+  return !NON_PUBLIC.check(address, family === 6 ? 'ipv6' : 'ipv4');
+}
+
+class BlockedAddressError extends Error {
+  constructor(host) {
+    super(`Refusing to fetch from ${host}: it is not a public internet address`);
+  }
+}
+
+/**
+ * A `lookup` for http(s).get that resolves every address for the host and
+ * fails unless all of them pass `isAllowed`. The socket then connects to an
+ * address that was checked, so a second DNS answer can't swap it.
+ */
+function checkedLookup(isAllowed, resolve) {
+  return (hostname, options, callback) => {
+    resolve(hostname, { ...options, all: true }, (err, addresses) => {
+      if (err) return callback(err);
+      if (addresses.length === 0 || !addresses.every(a => isAllowed(a.address))) {
+        return callback(new BlockedAddressError(hostname));
+      }
+      if (options.all) return callback(null, addresses);
+      callback(null, addresses[0].address, addresses[0].family);
+    });
+  };
+}
+
+/**
+ * Which addresses URL fetches may connect to, and how hostnames are resolved.
+ * Only tests change these, to reach fixture servers on loopback.
+ */
+export const fetchPolicy = { isAllowed: isPublicAddress, lookup: dns.lookup };
+
 async function fetchHtml(url, redirectsLeft = MAX_REDIRECTS) {
+  const { isAllowed, lookup } = fetchPolicy;
   return new Promise((resolve, reject) => {
-    const { protocol } = new URL(url);
+    const { protocol, hostname } = new URL(url);
     if (protocol !== 'https:' && protocol !== 'http:') {
       reject(new Error(`Unsupported URL scheme: ${protocol}`));
       return;
     }
+    // Node skips `lookup` for IP literals, so check those here.
+    const literal = hostname.replace(/^\[(.*)\]$/, '$1');
+    if (net.isIP(literal) && !isAllowed(literal)) {
+      reject(new BlockedAddressError(hostname));
+      return;
+    }
     const client = protocol === 'https:' ? https : http;
     const req = client.get(url, {
+      lookup: checkedLookup(isAllowed, lookup),
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
