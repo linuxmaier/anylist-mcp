@@ -1,6 +1,8 @@
 # Unofficial AnyList MCP Server
 
 > **Fork** of [bobby060/anylist-mcp](https://github.com/bobby060/anylist-mcp), with security hardening and CI scanning added. The HTTP-server dependencies are optional: `npm ci --omit=optional` installs stdio mode only, and `npm ci` installs everything. `mise run security` runs the same scanners as CI. See [AGENTS.md](AGENTS.md) for the rules and the upstream-sync process.
+>
+> **Hosted mode (this fork):** `src/hosted/` serves the MCP over Streamable HTTP behind Cloudflare Access, mapping each signed-in person to their own AnyList account. It runs on the owner's home-server platform from the `ghcr.io/linuxmaier/anylist-mcp-hosted` image (`docker/hosted.Dockerfile`), which is published from the `production` branch. Configuration and the release flow are in [AGENTS.md](AGENTS.md#install-modes). The upstream HTTP server described below isn't used by this fork.
 
 An MCP server that integrates with [AnyList](https://www.anylist.com/) — shopping lists, recipes, and meal planning — exposed via the Model Context Protocol. Works with Claude Desktop, Claude Code, Claude Web/Mobile, or any MCP-compatible client like Home Assistant.
 

@@ -1,0 +1,74 @@
+name: Hosted image
+
+# Builds docker/hosted.Dockerfile (see AGENTS.md "Install modes"). Pull requests and
+# main only build it. The production branch also pushes it to GHCR, tagged with the
+# commit SHA and `production`, for the home-server platform to pin by digest: pushing
+# to production is what deploys.
+
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read # checkout only
+
+# One run per branch at a time; a newer production push waits rather than racing to publish.
+concurrency:
+  group: hosted-image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    if: github.ref != 'refs/heads/production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: true
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: docker/hosted.Dockerfile
+          platforms: linux/amd64
+          push: false
+
+  publish:
+    name: Build and publish
+    if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    # The only job allowed to write packages, and it runs only on production.
+    permissions:
+      contents: read # checkout
+      packages: write # push ghcr.io/linuxmaier/anylist-mcp-hosted
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: true
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/anylist-mcp-hosted
+          tags: |
+            type=sha,format=long,prefix=
+            type=raw,value=production
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: docker/hosted.Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -1,0 +1,10 @@
+# Build context for docker/hosted.Dockerfile (BuildKit reads <Dockerfile>.dockerignore).
+# Allowlist: only what the hosted server runs. Upstream's HTTP mode (src/http/) is left out.
+*
+!package.json
+!package-lock.json
+!.npmrc
+!anylist-js/package.json
+!anylist-js/lib/
+!src/
+src/http/

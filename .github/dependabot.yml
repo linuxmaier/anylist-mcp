@@ -22,3 +22,11 @@ updates:
     groups:
       actions:
         patterns: ['*']
+
+  # The hosted image's base (docker/hosted.Dockerfile), pinned by digest
+  - package-ecosystem: docker
+    directory: /docker
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
