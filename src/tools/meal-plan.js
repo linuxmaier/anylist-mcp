@@ -1,31 +1,19 @@
 import { z } from "zod";
-import { textResponse, errorResponse } from "./helpers.js";
+import { textResponse, errorResponse, tierActions, READ, WRITE, DELETE } from "./helpers.js";
 import { createElicitationHelpers } from "./elicitation.js";
 
 export function register(server, getClient) {
   const { elicitRequiredField } = createElicitationHelpers(server);
 
-  server.registerTool("meal_plan", {
-    title: "Meal Plan",
-    description: `Manage AnyList meal planning calendar. Actions:
-- list_events: Show all meal plan events (sorted by date)
-- list_labels: Show available labels (Breakfast, Lunch, Dinner, etc.) with IDs
-- create_event: Add a meal plan event for a date
-- update_event: Change an existing event in place (keeps its ID). Only the fields given are changed; pass "" to clear one
-- delete_event: Delete a meal plan event by ID`,
-    inputSchema: {
-      action: z.enum(["list_events", "list_labels", "create_event", "update_event", "delete_event"]).describe("The meal plan action to perform"),
-      date: z.string().optional().describe("Date in YYYY-MM-DD format (required for create_event; new date for update_event)"),
-      start_date: z.string().optional().describe("Filter events on or after this date, YYYY-MM-DD (list_events only)"),
-      end_date: z.string().optional().describe("Filter events on or before this date, YYYY-MM-DD (list_events only)"),
-      title: z.string().optional().describe("Event title (create_event: use this OR recipe_id; update_event: \"\" clears it, only if the event still has a recipe)"),
-      recipe_id: z.string().optional().describe("Recipe ID to link (create_event, update_event; \"\" unlinks it on update, only if the event still has a title)"),
-      label_id: z.string().optional().describe("Label ID for meal type (create_event, update_event; \"\" clears it on update)"),
-      details: z.string().optional().describe("Additional notes (create_event, update_event; \"\" clears them on update)"),
-      event_id: z.string().optional().describe("Event ID (required for update_event and delete_event)"),
-    }
-  }, async (params) => {
-    const { action, date, start_date, end_date, title, recipe_id, label_id, details, event_id } = params;
+  const eventFields = {
+    title: z.string().optional().describe("Event title (create_event: use this OR recipe_id; update_event: \"\" clears it, only if the event still has a recipe)"),
+    recipe_id: z.string().optional().describe("Recipe ID to link (\"\" unlinks it on update_event, only if the event still has a title)"),
+    label_id: z.string().optional().describe("Label ID for meal type (\"\" clears it on update_event)"),
+    details: z.string().optional().describe("Additional notes (\"\" clears them on update_event)"),
+  };
+
+  async function run(action, params) {
+    const { date, start_date, end_date, title, recipe_id, label_id, details, event_id } = params;
     try {
       const client = await getClient();
       await client.connect(null);
@@ -88,5 +76,44 @@ export function register(server, getClient) {
     } catch (error) {
       return errorResponse(`Meal plan ${action} failed: ${error.message}`);
     }
-  });
+  }
+
+  const read = tierActions(["list_events", "list_labels"], run, "The meal plan read action to perform");
+  const write = tierActions(["create_event", "update_event"], run, "The meal plan write action to perform");
+
+  server.registerTool("meal_plan_read", {
+    title: "Meal Plan: Read",
+    description: `Read the AnyList meal planning calendar. Never changes anything. Actions:
+- list_events: Show meal plan events (sorted by date), optionally between start_date and end_date
+- list_labels: Show available labels (Breakfast, Lunch, Dinner, etc.) with IDs`,
+    annotations: READ,
+    inputSchema: {
+      action: read.action,
+      start_date: z.string().optional().describe("Filter events on or after this date, YYYY-MM-DD (list_events only)"),
+      end_date: z.string().optional().describe("Filter events on or before this date, YYYY-MM-DD (list_events only)"),
+    }
+  }, read.handler);
+
+  server.registerTool("meal_plan_write", {
+    title: "Meal Plan: Add & Change",
+    description: `Add or change AnyList meal plan events. Deleting is a separate tool (meal_plan_delete). Actions:
+- create_event: Add a meal plan event for a date
+- update_event: Change an existing event in place (keeps its ID). Only the fields given are changed; pass "" to clear one`,
+    annotations: WRITE,
+    inputSchema: {
+      action: write.action,
+      date: z.string().optional().describe("Date in YYYY-MM-DD format (required for create_event; new date for update_event)"),
+      event_id: z.string().optional().describe("Event ID (required for update_event)"),
+      ...eventFields,
+    }
+  }, write.handler);
+
+  server.registerTool("meal_plan_delete", {
+    title: "Meal Plan: Delete Event",
+    description: "Permanently delete one AnyList meal plan event by its ID (from meal_plan_read list_events).",
+    annotations: DELETE,
+    inputSchema: {
+      event_id: z.string().describe("ID of the event to delete"),
+    }
+  }, params => run("delete_event", params));
 }

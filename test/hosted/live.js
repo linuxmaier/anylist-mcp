@@ -70,7 +70,7 @@ try {
   });
 
   await check('list_items reads the list (37 fixture items or more)', async () => {
-    const text = await call('shopping', { action: 'list_items', include_checked: true });
+    const text = await call('shopping_read', { action: 'list_items', include_checked: true });
     const count = Number(text.match(/\((\d+) items\)/)?.[1]);
     assert.ok(count >= 37, text.slice(0, 200));
   });
@@ -78,13 +78,13 @@ try {
   await check('a second call fetches fresh lists (no WebSocket)', async () => {
     const anylist = registry.clientFor(accounts[0]).client;
     const before = anylist.lists;
-    await call('shopping', { action: 'list_items' });
+    await call('shopping_read', { action: 'list_items' });
     assert.notEqual(anylist.lists, before, 'lists were not refetched');
   });
 
-  await check('meal_plan and recipes work with the account\'s default list', async () => {
-    await call('meal_plan', { action: 'list_labels' });
-    await call('recipes', { action: 'list' });
+  await check('meal_plan_read and recipes_read work with the account\'s default list', async () => {
+    await call('meal_plan_read', { action: 'list_labels' });
+    await call('recipes_read', { action: 'list' });
   });
 
   await client.close();

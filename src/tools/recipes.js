@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { textResponse, errorResponse } from "./helpers.js";
+import { textResponse, errorResponse, tierActions, READ, WRITE, DELETE } from "./helpers.js";
 import { createElicitationHelpers } from "./elicitation.js";
 import { normalizeRecipe } from "../recipe-normalizer.js";
 
@@ -60,46 +60,10 @@ function mainIngredients(names) {
 }
 
 export function register(server, getClient) {
-  const { elicitRequiredField, elicitConfirmation } = createElicitationHelpers(server);
+  const { elicitRequiredField } = createElicitationHelpers(server);
 
-  server.registerTool("recipes", {
-    title: "Recipes",
-    description: `Manage AnyList recipes. Actions:
-- list: Browse recipes (returns summaries: name, rating, times, servings). Use 'search' to filter.
-- get: Get full recipe details (ingredients, steps) by recipe_id or name
-- create: Create a new recipe
-- update: Partially update an existing recipe by recipe_id or name (only the fields you pass change; the rest are preserved)
-- delete: Delete a recipe by recipe_id or name
-If a name matches more than one recipe, get/update/delete fail and list each match's id; retry with recipe_id.
-- import_url: Import a recipe from a website URL (parses ingredients, steps, etc.)
-- normalize: Preview/parse a recipe from a URL or raw text without saving (set save=true to also save)
-- index: One compact line per recipe for meal planning: times, servings, collections, last/next planned date, up to 8 main ingredients, id. Filters (all optional, combined): search, ingredient, collection, max_total_minutes, not_planned_since.`,
-    inputSchema: {
-      action: z.enum(["list", "get", "create", "update", "delete", "import_url", "normalize", "index"]).describe("The recipe action to perform"),
-      name: z.string().optional().describe("Recipe name (required for create; get, update and delete take this or recipe_id)"),
-      recipe_id: z.string().optional().describe("Recipe ID (get, update, delete). Takes precedence over name."),
-      search: z.string().optional().describe("Search query to filter recipes by name (list, index)"),
-      ingredient: z.string().optional().describe("Keep recipes with an ingredient whose name contains this (index only)"),
-      collection: z.string().optional().describe("Keep recipes in a collection whose name contains this (index only)"),
-      max_total_minutes: z.number().optional().describe("Keep recipes whose prep + cook time is at most this many minutes; recipes with no times are excluded (index only)"),
-      not_planned_since: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("YYYY-MM-DD. Keep recipes with no meal-plan event on or after this date, future ones included (index only)"),
-      ingredients: z.array(z.object({
-        name: z.string().describe("Ingredient name, e.g. 'flour'"),
-        quantity: z.string().describe("Quantity with unit, e.g. '2 cups'"),
-      })).optional().describe("Ingredients with name and quantity (create, update). On update, replaces the entire ingredient list."),
-      steps: z.array(z.string()).optional().describe("Preparation steps in order (create, update). On update, replaces the entire step list."),
-      note: z.string().optional().describe("Recipe notes (create, update)"),
-      source_name: z.string().optional().describe("Source name (create, update)"),
-      source_url: z.string().optional().describe("Source URL (create, update)"),
-      prep_time: z.number().optional().describe("Prep time in minutes (create, update)"),
-      cook_time: z.number().optional().describe("Cook time in minutes (create, update)"),
-      servings: z.string().optional().describe("Servings, e.g. '4' or '4-6' (create, update)"),
-      url: z.string().optional().describe("URL to import recipe from (import_url, normalize)"),
-      text: z.string().optional().describe("Raw recipe text to parse (normalize only)"),
-      save: z.boolean().optional().describe("If true, also save normalized recipe to AnyList (normalize only, default false)"),
-    }
-  }, async (params) => {
-    const { action, name, recipe_id, search, ingredient, collection, max_total_minutes, not_planned_since, ingredients, steps, note, source_name, source_url, prep_time, cook_time, servings, url, text: recipeText, save: saveRecipe } = params;
+  async function run(action, params) {
+    const { name, recipe_id, search, ingredient, collection, max_total_minutes, not_planned_since, ingredients, steps, note, source_name, source_url, prep_time, cook_time, servings, url, text: recipeText } = params;
     try {
       const client = await getClient();
       await client.connect(null);
@@ -216,13 +180,11 @@ If a name matches more than one recipe, get/update/delete fail and list each mat
           const exactMatches = existingRecipes.filter(r => r.name.toLowerCase() === recipeName.toLowerCase());
           if (exactMatches.length > 1) {
             const ids = exactMatches.map(r => `- id: ${r.identifier}`).join('\n');
-            return errorResponse(`${exactMatches.length} recipes are already named "${recipeName}", so it's unclear which to overwrite. Use update or delete with recipe_id instead:\n${ids}`);
+            return errorResponse(`${exactMatches.length} recipes are already named "${recipeName}". Use update with recipe_id instead:\n${ids}`);
           }
-          const exactMatch = exactMatches[0];
-          if (exactMatch) {
-            const confirmed = await elicitConfirmation(`Recipe "${exactMatch.name}" already exists. Overwrite?`);
-            if (!confirmed) return textResponse(`Cancelled — recipe "${exactMatch.name}" was not overwritten.`);
-            await client.deleteRecipe({ id: exactMatch.identifier });
+          // Replacing a recipe would delete it, which belongs to recipes_delete.
+          if (exactMatches.length === 1) {
+            return errorResponse(`Recipe "${exactMatches[0].name}" already exists (id: ${exactMatches[0].identifier}). Use update to change it, or recipes_delete first to replace it.`);
           }
           const result = await client.createRecipe({
             name: recipeName,
@@ -284,9 +246,10 @@ If a name matches more than one recipe, get/update/delete fail and list each mat
           if (result.method) importText += `- Method: ${result.method}\n`;
           return textResponse(importText);
         }
-        case "normalize": {
+        case "normalize":
+        case "normalize_and_save": {
           if (!url && !recipeText) {
-            throw new Error('Action "normalize" requires either "url" or "text" parameter');
+            throw new Error(`Action "${action}" requires either "url" or "text" parameter`);
           }
           const input = {};
           if (url) input.url = url;
@@ -305,7 +268,8 @@ If a name matches more than one recipe, get/update/delete fail and list each mat
           output += `\n## Steps (${normalized.preparationSteps.length})\n`;
           normalized.preparationSteps.forEach((s, idx) => { output += `${idx + 1}. ${s}\n`; });
 
-          if (saveRecipe) {
+          // recipes_read previews; recipes_write saves.
+          if (action === "normalize_and_save") {
             const created = await client.createRecipe({
               name: normalized.name,
               ingredients: normalized.ingredients,
@@ -325,5 +289,75 @@ If a name matches more than one recipe, get/update/delete fail and list each mat
     } catch (error) {
       return errorResponse(`Recipes ${action} failed: ${error.message}`);
     }
-  });
+  }
+
+  const read = tierActions(["list", "get", "index", "normalize"], run, "The recipe read action to perform");
+  const write = tierActions(["create", "update", "import_url", "normalize_and_save"], run, "The recipe write action to perform");
+  const recipeRef = {
+    name: z.string().optional().describe("Recipe name"),
+    recipe_id: z.string().optional().describe("Recipe ID. Takes precedence over name."),
+  };
+  const recipeSource = {
+    url: z.string().optional().describe("URL of a recipe web page"),
+    text: z.string().optional().describe("Raw recipe text to parse instead of a URL"),
+  };
+  const ambiguity = "If a name matches more than one recipe, the action fails and lists each match's id; retry with recipe_id.";
+
+  server.registerTool("recipes_read", {
+    title: "Recipes: Read",
+    description: `Read AnyList recipes. Never changes anything. Actions:
+- list: Browse recipes (returns summaries: name, rating, times, servings). Use 'search' to filter.
+- get: Get full recipe details (ingredients, steps) by recipe_id or name
+- index: One compact line per recipe for meal planning: times, servings, collections, last/next planned date, up to 8 main ingredients, id. Filters (all optional, combined): search, ingredient, collection, max_total_minutes, not_planned_since.
+- normalize: Preview a recipe parsed from a URL or raw text, without saving it (recipes_write normalize_and_save saves it)
+${ambiguity}`,
+    annotations: { ...READ, openWorldHint: true },
+    inputSchema: {
+      action: read.action,
+      ...recipeRef,
+      search: z.string().optional().describe("Search query to filter recipes by name (list, index)"),
+      ingredient: z.string().optional().describe("Keep recipes with an ingredient whose name contains this (index only)"),
+      collection: z.string().optional().describe("Keep recipes in a collection whose name contains this (index only)"),
+      max_total_minutes: z.number().optional().describe("Keep recipes whose prep + cook time is at most this many minutes; recipes with no times are excluded (index only)"),
+      not_planned_since: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("YYYY-MM-DD. Keep recipes with no meal-plan event on or after this date, future ones included (index only)"),
+      ...recipeSource,
+    }
+  }, read.handler);
+
+  server.registerTool("recipes_write", {
+    title: "Recipes: Add & Change",
+    description: `Create, import or change AnyList recipes. Deleting is a separate tool (recipes_delete). Actions:
+- create: Create a new recipe. Fails if a recipe with that name exists; use update instead.
+- update: Partially update an existing recipe by recipe_id or name (only the fields you pass change; the rest are preserved)
+- import_url: Import a recipe from a website URL (parses ingredients, steps, etc.)
+- normalize_and_save: Parse a recipe from a URL or raw text and save it to AnyList
+${ambiguity}`,
+    annotations: { ...WRITE, openWorldHint: true },
+    inputSchema: {
+      action: write.action,
+      name: z.string().optional().describe("Recipe name (required for create; update takes this or recipe_id)"),
+      recipe_id: z.string().optional().describe("Recipe ID (update). Takes precedence over name."),
+      ingredients: z.array(z.object({
+        name: z.string().describe("Ingredient name, e.g. 'flour'"),
+        quantity: z.string().describe("Quantity with unit, e.g. '2 cups'"),
+      })).optional().describe("Ingredients with name and quantity (create, update). On update, replaces the entire ingredient list."),
+      steps: z.array(z.string()).optional().describe("Preparation steps in order (create, update). On update, replaces the entire step list."),
+      note: z.string().optional().describe("Recipe notes (create, update)"),
+      source_name: z.string().optional().describe("Source name (create, update)"),
+      source_url: z.string().optional().describe("Source URL (create, update)"),
+      prep_time: z.number().optional().describe("Prep time in minutes (create, update)"),
+      cook_time: z.number().optional().describe("Cook time in minutes (create, update)"),
+      servings: z.string().optional().describe("Servings, e.g. '4' or '4-6' (create, update)"),
+      ...recipeSource,
+    }
+  }, write.handler);
+
+  server.registerTool("recipes_delete", {
+    title: "Recipes: Delete",
+    description: `Permanently delete one AnyList recipe by recipe_id or name. ${ambiguity}`,
+    annotations: DELETE,
+    inputSchema: {
+      ...recipeRef,
+    }
+  }, params => run("delete", params));
 }

@@ -18,13 +18,13 @@ describe('recipes tool', () => {
 
   describe('list', () => {
     it('returns empty message when no recipes', async () => {
-      const result = await handlers.recipes({ action: 'list' });
+      const result = await handlers.recipes_read({ action: 'list' });
       assert.ok(result.content[0].text.includes('No recipes found'));
     });
 
     it('lists recipes with metadata and id', async () => {
       client._recipes.push({ identifier: 'r-abc', name: 'Pasta', rating: 5, prepTime: 10, cookTime: 20, servings: '4' });
-      const result = await handlers.recipes({ action: 'list' });
+      const result = await handlers.recipes_read({ action: 'list' });
       assert.ok(result.content[0].text.includes('Pasta'));
       assert.ok(result.content[0].text.includes('⭐5'));
       assert.ok(result.content[0].text.includes('r-abc'));
@@ -32,7 +32,7 @@ describe('recipes tool', () => {
 
     it('filters by search query', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Salad' });
-      const result = await handlers.recipes({ action: 'list', search: 'pasta' });
+      const result = await handlers.recipes_read({ action: 'list', search: 'pasta' });
       assert.ok(result.content[0].text.includes('Pasta'));
       assert.ok(!result.content[0].text.includes('Salad'));
     });
@@ -74,7 +74,7 @@ describe('recipes tool', () => {
     });
 
     it('returns one compact line per recipe with times, servings, collections and id', async () => {
-      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index' })).content[0].text;
       assert.ok(text.startsWith('Recipe index: 5 recipes. Times are prep+cook.'));
       assert.equal(text.split('\n').length, 6);
       assert.equal(lineFor(text, 'Soup'), '- Soup | 6 servings | id:r-soup');
@@ -89,7 +89,7 @@ describe('recipes tool', () => {
     });
 
     it('shows the latest past event as last and the earliest future event as next', async () => {
-      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index' })).content[0].text;
       const pasta = lineFor(text, 'Pasta');
       assert.ok(pasta.includes(`| last ${day(-3)} |`));
       assert.ok(!pasta.includes('next '));
@@ -100,7 +100,7 @@ describe('recipes tool', () => {
     });
 
     it('strips pantry staples and notes, dedupes, and caps main ingredients at 8', async () => {
-      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index' })).content[0].text;
       assert.ok(lineFor(text, 'Pasta').includes('| ground beef · onion · crushed tomatoes · boneless, skinless chicken thighs |'));
       assert.ok(lineFor(text, 'Salad').includes('red bell pepper'), 'bell pepper is not a staple');
       assert.ok(lineFor(text, 'Many').includes('| a · b · c · d · e · f · g · h |'));
@@ -141,7 +141,7 @@ describe('recipes tool', () => {
     it('drops staples before truncating long names to 40 characters', async () => {
       client._recipes.push({ identifier: 'r-mac', name: 'Mac',
         ingredients: ings('kosher salt and freshly ground black pepper', 'extra-sharp aged white cheddar cheese from vermont') });
-      const line = lineFor((await handlers.recipes({ action: 'index' })).content[0].text, 'Mac');
+      const line = lineFor((await handlers.recipes_read({ action: 'index' })).content[0].text, 'Mac');
       const [shown] = line.split(' | ').filter(c => c.startsWith('extra-sharp'));
       assert.equal(shown.length, 40);
       assert.ok(shown.endsWith('…'));
@@ -154,27 +154,27 @@ describe('recipes tool', () => {
       }
       client._recipes.push({ identifier: 'r-ziti', name: 'Ziti',
         ingredients: ings('For the pasta:', '1 pound ziti', 'for the marinating the chicken:', 'ricotta') });
-      const text = (await handlers.recipes({ action: 'index' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index' })).content[0].text;
       assert.ok(lineFor(text, 'Ziti').includes('| ziti · ricotta |'));
     });
 
     it('filters by ingredient across all ingredients, including staples and ones not shown', async () => {
-      let text = (await handlers.recipes({ action: 'index', ingredient: 'Salt' })).content[0].text;
+      let text = (await handlers.recipes_read({ action: 'index', ingredient: 'Salt' })).content[0].text;
       assert.ok(lineFor(text, 'Pasta'));
       assert.ok(!lineFor(text, 'Curry'));
-      text = (await handlers.recipes({ action: 'index', ingredient: 'j' })).content[0].text;
+      text = (await handlers.recipes_read({ action: 'index', ingredient: 'j' })).content[0].text;
       assert.ok(text.startsWith('Recipe index: 1 recipe (ingredient~"j")'));
       assert.ok(lineFor(text, 'Many'));
     });
 
     it('filters by collection name', async () => {
-      const text = (await handlers.recipes({ action: 'index', collection: 'instant' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index', collection: 'instant' })).content[0].text;
       assert.ok(lineFor(text, 'Curry'));
       assert.ok(!lineFor(text, 'Pasta'));
     });
 
     it('filters by max_total_minutes and counts recipes without times', async () => {
-      const text = (await handlers.recipes({ action: 'index', max_total_minutes: 60 })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index', max_total_minutes: 60 })).content[0].text;
       assert.ok(text.includes('; 2 without times excluded'));
       assert.ok(lineFor(text, 'Pasta'));
       assert.ok(lineFor(text, 'Many'));
@@ -183,17 +183,17 @@ describe('recipes tool', () => {
     });
 
     it('not_planned_since keeps never-planned and older recipes and drops future-scheduled ones', async () => {
-      const text = (await handlers.recipes({ action: 'index', not_planned_since: day(-7) })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'index', not_planned_since: day(-7) })).content[0].text;
       assert.ok(!lineFor(text, 'Pasta'), 'planned 3 days ago');
       assert.ok(!lineFor(text, 'Curry'), 'scheduled in the future');
       assert.ok(lineFor(text, 'Salad'));
       assert.ok(lineFor(text, 'Many'));
-      const older = (await handlers.recipes({ action: 'index', not_planned_since: day(-2) })).content[0].text;
+      const older = (await handlers.recipes_read({ action: 'index', not_planned_since: day(-2) })).content[0].text;
       assert.ok(lineFor(older, 'Pasta'), 'last planned before the date');
     });
 
     it('combines filters and reports no matches', async () => {
-      const result = await handlers.recipes({ action: 'index', collection: 'main', ingredient: 'lettuce' });
+      const result = await handlers.recipes_read({ action: 'index', collection: 'main', ingredient: 'lettuce' });
       assert.ok(!result.isError);
       assert.ok(result.content[0].text.includes('No recipes match.'));
     });
@@ -207,7 +207,7 @@ describe('recipes tool', () => {
         ingredients: [{ rawIngredient: '2 cups flour' }],
         preparationSteps: ['Boil water', 'Cook pasta'],
       });
-      const result = await handlers.recipes({ action: 'get', name: 'Pasta' });
+      const result = await handlers.recipes_read({ action: 'get', name: 'Pasta' });
       assert.ok(result.content[0].text.includes('# Pasta'));
       assert.ok(result.content[0].text.includes('r-xyz'));
       assert.ok(result.content[0].text.includes('2 cups flour'));
@@ -215,14 +215,14 @@ describe('recipes tool', () => {
     });
 
     it('returns error for non-existent recipe', async () => {
-      const result = await handlers.recipes({ action: 'get', name: 'Nope' });
+      const result = await handlers.recipes_read({ action: 'get', name: 'Nope' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('not found'));
     });
 
     it('returns error listing ids when the name matches multiple recipes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'pasta' });
-      const result = await handlers.recipes({ action: 'get', name: 'Pasta' });
+      const result = await handlers.recipes_read({ action: 'get', name: 'Pasta' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('r-1'));
       assert.ok(result.content[0].text.includes('r-2'));
@@ -230,20 +230,20 @@ describe('recipes tool', () => {
 
     it('gets a recipe by recipe_id, which wins over name', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Salad' });
-      const result = await handlers.recipes({ action: 'get', recipe_id: 'r-2', name: 'Pasta' });
+      const result = await handlers.recipes_read({ action: 'get', recipe_id: 'r-2', name: 'Pasta' });
       assert.ok(result.content[0].text.includes('# Salad'));
     });
   });
 
   describe('create', () => {
     it('creates a recipe', async () => {
-      const result = await handlers.recipes({ action: 'create', name: 'New Recipe' });
+      const result = await handlers.recipes_write({ action: 'create', name: 'New Recipe' });
       assert.ok(result.content[0].text.includes('Created recipe "New Recipe"'));
       assert.equal(client._recipes.length, 1);
     });
 
     it('creates recipe with all fields', async () => {
-      await handlers.recipes({
+      await handlers.recipes_write({
         action: 'create',
         name: 'Full Recipe',
         ingredients: [{ name: 'sugar', quantity: '1 cup' }],
@@ -260,11 +260,19 @@ describe('recipes tool', () => {
   describe('create (existing name)', () => {
     it('refuses to overwrite when the name already matches multiple recipes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'create', name: 'Pasta' });
+      const result = await handlers.recipes_write({ action: 'create', name: 'Pasta' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('r-1'));
       assert.ok(result.content[0].text.includes('r-2'));
       assert.equal(client._recipes.length, 2);
+    });
+
+    it('refuses to replace an existing recipe, which would delete it', async () => {
+      client._recipes.push({ identifier: 'r-1', name: 'Pasta', note: 'keep me' });
+      const result = await handlers.recipes_write({ action: 'create', name: 'pasta', steps: ['new'] });
+      assert.equal(result.isError, true);
+      assert.match(result.content[0].text, /already exists \(id: r-1\).*recipes_delete/);
+      assert.deepEqual(client._recipes, [{ identifier: 'r-1', name: 'Pasta', note: 'keep me' }]);
     });
   });
 
@@ -277,7 +285,7 @@ describe('recipes tool', () => {
         source: 'AllRecipes',
         sourceUrl: 'https://example.com/recipe',
       };
-      const result = await handlers.recipes({ action: 'import_url', url: 'https://example.com/recipe' });
+      const result = await handlers.recipes_write({ action: 'import_url', url: 'https://example.com/recipe' });
       assert.ok(result.content[0].text.includes('Imported recipe "Chicken Tikka Masala"'));
       assert.ok(result.content[0].text.includes('12 ingredients'));
       assert.ok(result.content[0].text.includes('6 steps'));
@@ -286,7 +294,7 @@ describe('recipes tool', () => {
 
     it('returns error when URL cannot be parsed', async () => {
       client._pendingImport = null;
-      const result = await handlers.recipes({ action: 'import_url', url: 'https://bad-site.com' });
+      const result = await handlers.recipes_write({ action: 'import_url', url: 'https://bad-site.com' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('Could not parse'));
     });
@@ -303,7 +311,7 @@ describe('recipes tool', () => {
         ingredients: [{ rawIngredient: '1 lb spaghetti' }],
         preparationSteps: ['Boil'],
       });
-      const result = await handlers.recipes({ action: 'update', name: 'Pasta', note: 'updated note' });
+      const result = await handlers.recipes_write({ action: 'update', name: 'Pasta', note: 'updated note' });
       assert.ok(result.content[0].text.includes('Updated recipe "Pasta"'));
       const r = client._recipes[0];
       assert.equal(r.note, 'updated note');
@@ -320,7 +328,7 @@ describe('recipes tool', () => {
         name: 'Pasta',
         ingredients: [{ rawIngredient: '1 lb spaghetti' }, { rawIngredient: '2 cloves garlic' }],
       });
-      await handlers.recipes({
+      await handlers.recipes_write({
         action: 'update',
         name: 'Pasta',
         ingredients: [{ name: 'penne', quantity: '1 lb' }],
@@ -331,20 +339,20 @@ describe('recipes tool', () => {
 
     it('returns error when no fields are provided', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'update', name: 'Pasta' });
+      const result = await handlers.recipes_write({ action: 'update', name: 'Pasta' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('at least one field'));
     });
 
     it('returns error for non-existent recipe', async () => {
-      const result = await handlers.recipes({ action: 'update', name: 'Nope', note: 'x' });
+      const result = await handlers.recipes_write({ action: 'update', name: 'Nope', note: 'x' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('not found'));
     });
 
     it('returns error when the name matches multiple recipes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'update', name: 'Pasta', note: 'x' });
+      const result = await handlers.recipes_write({ action: 'update', name: 'Pasta', note: 'x' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('2 recipes are named "Pasta"'));
       assert.ok(result.content[0].text.includes('r-1'));
@@ -355,7 +363,7 @@ describe('recipes tool', () => {
 
     it('updates the recipe named by recipe_id when names are duplicated', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'update', recipe_id: 'r-2', note: 'x' });
+      const result = await handlers.recipes_write({ action: 'update', recipe_id: 'r-2', note: 'x' });
       assert.ok(result.content[0].text.includes('Updated recipe "Pasta"'));
       assert.equal(client._recipes[0].note, undefined);
       assert.equal(client._recipes[1].note, 'x');
@@ -365,26 +373,26 @@ describe('recipes tool', () => {
   describe('delete', () => {
     it('deletes an existing recipe', async () => {
       client._recipes.push({ name: 'Old Recipe' });
-      const result = await handlers.recipes({ action: 'delete', name: 'Old Recipe' });
+      const result = await handlers.recipes_delete({ name: 'Old Recipe' });
       assert.ok(result.content[0].text.includes('Deleted recipe'));
       assert.equal(client._recipes.length, 0);
     });
 
     it('returns error for non-existent recipe', async () => {
-      const result = await handlers.recipes({ action: 'delete', name: 'Nope' });
+      const result = await handlers.recipes_delete({ name: 'Nope' });
       assert.equal(result.isError, true);
     });
 
     it('deletes nothing when the name matches multiple recipes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'delete', name: 'Pasta' });
+      const result = await handlers.recipes_delete({ name: 'Pasta' });
       assert.equal(result.isError, true);
       assert.equal(client._recipes.length, 2);
     });
 
     it('deletes only the recipe named by recipe_id', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Pasta' }, { identifier: 'r-2', name: 'Pasta' });
-      const result = await handlers.recipes({ action: 'delete', recipe_id: 'r-2' });
+      const result = await handlers.recipes_delete({ recipe_id: 'r-2' });
       assert.ok(result.content[0].text.includes('Deleted recipe "Pasta" (id: r-2)'));
       assert.deepEqual(client._recipes.map(r => r.identifier), ['r-1']);
     });
@@ -394,27 +402,27 @@ describe('recipes tool', () => {
   describe('prep/cook time units', () => {
     it('list shows stored seconds as minutes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 900, cookTime: 5400 });
-      const text = (await handlers.recipes({ action: 'list' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'list' })).content[0].text;
       assert.ok(text.includes('prep: 15 min'), text);
       assert.ok(text.includes('cook: 90 min'), text);
     });
 
     it('get shows stored seconds as minutes', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 900, cookTime: 5400 });
-      const text = (await handlers.recipes({ action: 'get', name: 'Chili' })).content[0].text;
+      const text = (await handlers.recipes_read({ action: 'get', name: 'Chili' })).content[0].text;
       assert.match(text, /^Prep: 15 min$/m);
       assert.match(text, /^Cook: 90 min$/m);
     });
 
     it('create stores minutes as seconds', async () => {
-      await handlers.recipes({ action: 'create', name: 'Chili', prep_time: 15, cook_time: 90 });
+      await handlers.recipes_write({ action: 'create', name: 'Chili', prep_time: 15, cook_time: 90 });
       assert.equal(client._recipes[0].prepTime, 900);
       assert.equal(client._recipes[0].cookTime, 5400);
     });
 
     it('update stores minutes as seconds', async () => {
       client._recipes.push({ identifier: 'r-1', name: 'Chili', prepTime: 60, cookTime: 60 });
-      await handlers.recipes({ action: 'update', name: 'Chili', prep_time: 15, cook_time: 90 });
+      await handlers.recipes_write({ action: 'update', name: 'Chili', prep_time: 15, cook_time: 90 });
       assert.equal(client._recipes[0].prepTime, 900);
       assert.equal(client._recipes[0].cookTime, 5400);
     });
@@ -448,11 +456,19 @@ describe('recipes tool', () => {
       });
 
       it('previews times in minutes and saves them in seconds', async () => {
-        const text = (await handlers.recipes({ action: 'normalize', url, save: true })).content[0].text;
+        const text = (await handlers.recipes_write({ action: 'normalize_and_save', url })).content[0].text;
         assert.match(text, /^Prep: 15 min$/m);
         assert.match(text, /^Cook: 90 min$/m);
+        assert.match(text, /Saved to AnyList/);
         assert.equal(client._recipes[0].prepTime, 900);
         assert.equal(client._recipes[0].cookTime, 5400);
+      });
+
+      it('recipes_read normalize only previews, even if asked to save', async () => {
+        const text = (await handlers.recipes_read({ action: 'normalize', url, save: true })).content[0].text;
+        assert.match(text, /^Prep: 15 min$/m);
+        assert.doesNotMatch(text, /Saved to AnyList/);
+        assert.equal(client._recipes.length, 0);
       });
     });
   });

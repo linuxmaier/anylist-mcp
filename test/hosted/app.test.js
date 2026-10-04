@@ -79,14 +79,22 @@ describe('hosted server', () => {
   it('lists the tools for a signed-in account', async () => {
     const { client } = await connect('andrew@example.com');
     const { tools } = await client.listTools();
-    assert.deepEqual(tools.map(t => t.name).sort(), ['health_check', 'meal_plan', 'recipe_collections', 'recipes', 'shopping']);
+    assert.deepEqual(tools.map(t => t.name).sort(), ['health_check',
+      'meal_plan_delete', 'meal_plan_read', 'meal_plan_write',
+      'recipe_collections_delete', 'recipe_collections_read', 'recipe_collections_write',
+      'recipes_delete', 'recipes_read', 'recipes_write',
+      'shopping_delete', 'shopping_read', 'shopping_write']);
+    // Clients decide what to auto-approve from these.
+    const shoppingRead = tools.find(t => t.name === 'shopping_read');
+    assert.equal(shoppingRead.annotations.readOnlyHint, true);
+    assert.equal(tools.find(t => t.name === 'shopping_delete').annotations.destructiveHint, true);
     await client.close();
   });
 
   it('routes each person to their own AnyList account', async () => {
     const andrew = await connect('ANDREW@example.com');
     const hanna = await connect('hanna@example.com');
-    const items = async c => (await c.client.callTool({ name: 'shopping', arguments: { action: 'list_items' } })).content[0].text;
+    const items = async c => (await c.client.callTool({ name: 'shopping_read', arguments: { action: 'list_items' } })).content[0].text;
     assert.match(await items(andrew), /andrew's item/);
     assert.doesNotMatch(await items(andrew), /hanna's item/);
     assert.match(await items(hanna), /hanna's item/);

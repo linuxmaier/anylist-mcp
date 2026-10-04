@@ -16,7 +16,7 @@ describe('meal_plan tool', () => {
 
   describe('list_events', () => {
     it('returns empty message when no events', async () => {
-      const result = await handlers.meal_plan({ action: 'list_events' });
+      const result = await handlers.meal_plan_read({ action: 'list_events' });
       assert.ok(result.content[0].text.includes('No meal plan events'));
     });
 
@@ -25,14 +25,14 @@ describe('meal_plan tool', () => {
         { date: '2025-02-10', title: 'Tacos', identifier: 'e1' },
         { date: '2025-02-08', title: 'Pizza', identifier: 'e2' },
       );
-      const result = await handlers.meal_plan({ action: 'list_events' });
+      const result = await handlers.meal_plan_read({ action: 'list_events' });
       const t = result.content[0].text;
       assert.ok(t.indexOf('2025-02-08') < t.indexOf('2025-02-10'));
     });
 
     it('includes event identifier in output', async () => {
       client._events.push({ date: '2025-03-01', title: 'Sushi', identifier: 'e-abc' });
-      const result = await handlers.meal_plan({ action: 'list_events' });
+      const result = await handlers.meal_plan_read({ action: 'list_events' });
       assert.ok(result.content[0].text.includes('e-abc'));
     });
 
@@ -42,7 +42,7 @@ describe('meal_plan tool', () => {
         { date: '2025-04-10', title: 'Mid', identifier: 'e-mid' },
         { date: '2025-04-20', title: 'Late', identifier: 'e-late' },
       );
-      const result = await handlers.meal_plan({ action: 'list_events', start_date: '2025-04-10' });
+      const result = await handlers.meal_plan_read({ action: 'list_events', start_date: '2025-04-10' });
       const t = result.content[0].text;
       assert.ok(!t.includes('2025-04-01'), 'event before start_date should be excluded');
       assert.ok(t.includes('2025-04-10'), 'event on start_date should be included');
@@ -55,7 +55,7 @@ describe('meal_plan tool', () => {
         { date: '2025-05-10', title: 'Mid', identifier: 'f-mid' },
         { date: '2025-05-20', title: 'Late', identifier: 'f-late' },
       );
-      const result = await handlers.meal_plan({ action: 'list_events', end_date: '2025-05-10' });
+      const result = await handlers.meal_plan_read({ action: 'list_events', end_date: '2025-05-10' });
       const t = result.content[0].text;
       assert.ok(t.includes('2025-05-01'), 'event before end_date should be included');
       assert.ok(t.includes('2025-05-10'), 'event on end_date should be included');
@@ -68,7 +68,7 @@ describe('meal_plan tool', () => {
         { date: '2025-06-05', title: 'InRange', identifier: 'g-in' },
         { date: '2025-06-10', title: 'After', identifier: 'g-after' },
       );
-      const result = await handlers.meal_plan({ action: 'list_events', start_date: '2025-06-03', end_date: '2025-06-07' });
+      const result = await handlers.meal_plan_read({ action: 'list_events', start_date: '2025-06-03', end_date: '2025-06-07' });
       const t = result.content[0].text;
       assert.ok(!t.includes('2025-06-01'), 'event before range should be excluded');
       assert.ok(t.includes('2025-06-05'), 'event in range should be included');
@@ -77,20 +77,20 @@ describe('meal_plan tool', () => {
 
     it('returns empty message when date filter excludes all events', async () => {
       client._events.push({ date: '2025-07-15', title: 'Lonely', identifier: 'h-lonely' });
-      const result = await handlers.meal_plan({ action: 'list_events', start_date: '2025-08-01' });
+      const result = await handlers.meal_plan_read({ action: 'list_events', start_date: '2025-08-01' });
       assert.ok(result.content[0].text.includes('No meal plan events'));
     });
   });
 
   describe('list_labels', () => {
     it('returns empty message when no labels', async () => {
-      const result = await handlers.meal_plan({ action: 'list_labels' });
+      const result = await handlers.meal_plan_read({ action: 'list_labels' });
       assert.ok(result.content[0].text.includes('No meal plan labels'));
     });
 
     it('lists labels with ids', async () => {
       client._labels.push({ identifier: 'l1', name: 'Dinner', hexColor: '#FF0000' });
-      const result = await handlers.meal_plan({ action: 'list_labels' });
+      const result = await handlers.meal_plan_read({ action: 'list_labels' });
       assert.ok(result.content[0].text.includes('Dinner'));
       assert.ok(result.content[0].text.includes('l1'));
     });
@@ -98,7 +98,7 @@ describe('meal_plan tool', () => {
 
   describe('create_event', () => {
     it('creates an event', async () => {
-      const result = await handlers.meal_plan({ action: 'create_event', date: '2025-03-01' });
+      const result = await handlers.meal_plan_write({ action: 'create_event', date: '2025-03-01' });
       assert.ok(result.content[0].text.includes('Created meal plan event'));
       assert.equal(client._events.length, 1);
     });
@@ -107,7 +107,7 @@ describe('meal_plan tool', () => {
   describe('update_event', () => {
     it('updates only the given fields and keeps the ID', async () => {
       client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos', labelId: 'l1', details: 'spicy' });
-      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1', date: '2099-06-17' });
+      const result = await handlers.meal_plan_write({ action: 'update_event', event_id: 'e1', date: '2099-06-17' });
       assert.ok(!result.isError, result.content[0].text);
       assert.ok(result.content[0].text.includes('Updated meal plan event e1'));
       assert.deepEqual(client._events[0], { identifier: 'e1', date: '2099-06-17', title: 'Tacos', labelId: 'l1', details: 'spicy' });
@@ -115,27 +115,27 @@ describe('meal_plan tool', () => {
 
     it('passes "" through so the client can clear a field', async () => {
       client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos', labelId: 'l1' });
-      await handlers.meal_plan({ action: 'update_event', event_id: 'e1', label_id: '' });
+      await handlers.meal_plan_write({ action: 'update_event', event_id: 'e1', label_id: '' });
       assert.equal(client._events[0].labelId, null);
       assert.equal(client._events[0].title, 'Tacos');
     });
 
     it('returns error when no fields are given', async () => {
       client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos' });
-      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1' });
+      const result = await handlers.meal_plan_write({ action: 'update_event', event_id: 'e1' });
       assert.equal(result.isError, true);
       assert.ok(result.content[0].text.includes('Nothing to update'));
     });
 
     it('returns error for a malformed date', async () => {
       client._events.push({ identifier: 'e1', date: '2099-06-15', title: 'Tacos' });
-      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'e1', date: '6/17/2099' });
+      const result = await handlers.meal_plan_write({ action: 'update_event', event_id: 'e1', date: '6/17/2099' });
       assert.equal(result.isError, true);
       assert.equal(client._events[0].date, '2099-06-15');
     });
 
     it('returns error for non-existent event', async () => {
-      const result = await handlers.meal_plan({ action: 'update_event', event_id: 'bad', title: 'x' });
+      const result = await handlers.meal_plan_write({ action: 'update_event', event_id: 'bad', title: 'x' });
       assert.equal(result.isError, true);
     });
   });
@@ -143,12 +143,12 @@ describe('meal_plan tool', () => {
   describe('delete_event', () => {
     it('deletes an existing event', async () => {
       client._events.push({ identifier: 'e1', date: '2025-03-01' });
-      const result = await handlers.meal_plan({ action: 'delete_event', event_id: 'e1' });
+      const result = await handlers.meal_plan_delete({ event_id: 'e1' });
       assert.ok(result.content[0].text.includes('Deleted meal plan event'));
     });
 
     it('returns error for non-existent event', async () => {
-      const result = await handlers.meal_plan({ action: 'delete_event', event_id: 'bad' });
+      const result = await handlers.meal_plan_delete({ event_id: 'bad' });
       assert.equal(result.isError, true);
     });
   });

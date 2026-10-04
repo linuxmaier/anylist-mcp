@@ -49,19 +49,6 @@ export function createElicitationHelpers(server) {
     return content.item;
   }
 
-  async function elicitConfirmation(message) {
-    const content = await elicitOrError(
-      message,
-      {
-        type: "object",
-        properties: { confirm: { type: "boolean", description: "Confirm the action" } },
-        required: ["confirm"]
-      },
-      message + " (cannot confirm without elicitation support)"
-    );
-    return content.confirm;
-  }
-
   async function elicitRequiredField(fieldName, message) {
     const content = await elicitOrError(
       message,
@@ -75,5 +62,5 @@ export function createElicitationHelpers(server) {
     return content[fieldName];
   }
 
-  return { elicitListName, elicitItemChoice, elicitConfirmation, elicitRequiredField };
+  return { elicitListName, elicitItemChoice, elicitRequiredField };
 }

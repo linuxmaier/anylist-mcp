@@ -12,15 +12,15 @@ Two deployment modes:
 
 ## Tools Overview
 
-The MCP server provides **5 domain-grouped tools** rather than 18+ individual ones:
+Each area is split into a **read**, a **write** and a **delete** tool, so your MCP client can let reads run freely while asking before changes or deletions:
 
-- **shopping** — Manage shopping lists and items: add, check off, delete, organize by category and store, and browse favorites
-- **recipes** — Browse, create, and import recipes from URLs; includes ingredient and step parsing, plus a compact planning index (times, collections, main ingredients, last/next planned)
-- **meal_plan** — Schedule meals on a calendar with optional links to recipes
-- **recipe_collections** — Organize recipes into curated named collections
+- **shopping_read / shopping_write / shopping_delete** — Browse lists, favorites and stores; add, check off and organize items, and add a recipe's ingredients; delete an item
+- **recipes_read / recipes_write / recipes_delete** — Browse recipes and a compact planning index (times, collections, main ingredients, last/next planned), and preview parsed recipes; create, update and import recipes from URLs; delete a recipe
+- **meal_plan_read / meal_plan_write / meal_plan_delete** — View the meal-plan calendar; schedule and move meals, with optional links to recipes; delete an event
+- **recipe_collections_read / recipe_collections_write / recipe_collections_delete** — View collections; create them and add or remove recipes; delete a collection
 - **health_check** — Verify your connection to AnyList and access to target lists
 
-These tools work together to enable typical workflows: browse or create recipes → plan meals → add ingredients to your shopping list. See [docs/tools.md](docs/tools.md) for the complete reference including all actions and parameters.
+Read tools are marked read-only and delete tools destructive (MCP tool annotations). These tools work together to enable typical workflows: browse or create recipes → plan meals → add ingredients to your shopping list. See [docs/tools.md](docs/tools.md) for the complete reference including all actions and parameters.
 
 
 
