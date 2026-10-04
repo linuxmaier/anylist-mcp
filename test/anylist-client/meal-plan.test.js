@@ -136,6 +136,31 @@ export async function runMealPlanTests() {
     }
   });
 
+  await test('created and moved events go last on their date (orderAddedSortIndex)', async () => {
+    const DAY = '2099-01-22';
+    const OTHER = '2099-01-23';
+    const raw = async id => (await client.client._getUserData(true))
+      .mealPlanningCalendarResponse.events.find(e => e.identifier === id);
+    const ids = [];
+    try {
+      for (const [date, title] of [[DAY, '🧪 Sort A'], [DAY, '🧪 Sort B'], [OTHER, '🧪 Sort C']]) {
+        ids.push((await client.createMealPlanEvent({ date, title })).identifier);
+      }
+      const [a, b, c] = await Promise.all(ids.map(raw));
+      if (!(b.orderAddedSortIndex > a.orderAddedSortIndex)) {
+        throw new Error(`Second event on ${DAY} should sort after the first: ${a.orderAddedSortIndex}, ${b.orderAddedSortIndex}`);
+      }
+      await client.updateMealPlanEvent(c.identifier, { date: DAY });
+      const moved = await raw(c.identifier);
+      if (moved.date !== DAY) throw new Error(`Move failed: ${moved.date}`);
+      if (!(moved.orderAddedSortIndex > b.orderAddedSortIndex)) {
+        throw new Error(`Moved event should sort last on ${DAY}: ${moved.orderAddedSortIndex} <= ${b.orderAddedSortIndex}`);
+      }
+    } finally {
+      for (const id of ids) { try { await client.deleteMealPlanEvent(id); } catch {} }
+    }
+  });
+
   await test('updateMealPlanEvent keeps labelSortIndex and recipeScaleFactor', async () => {
     const recipes = await client.getRecipes();
     const labels = await client.getMealPlanLabels();

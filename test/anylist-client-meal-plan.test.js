@@ -5,7 +5,7 @@ process.env.TZ = 'America/Chicago';
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import AnyList from '../anylist-js/lib/index.js';
-import AnyListClient from '../src/anylist-client.js';
+import AnyListClient, { refreshEventSortIndex } from '../src/anylist-client.js';
 
 // Every PBCalendarEvent field set, including the ones anylist-js's _encode() drops.
 const FIXTURE = {
@@ -32,6 +32,7 @@ describe('AnyListClient.updateMealPlanEvent', () => {
   let client;
   let pb;
   let stored;
+  let events;
   let posted;
 
   // Decodes the operation list out of the multipart form that was posted.
@@ -49,8 +50,9 @@ describe('AnyListClient.updateMealPlanEvent', () => {
     const anylist = new AnyList({ email: 'test', password: 'test', credentialsFile: '/nonexistent' });
     pb = anylist.protobuf;
     stored = new pb.PBCalendarEvent(FIXTURE);
+    events = [stored];
     anylist.uid = 'u1';
-    anylist._getUserData = async () => ({ mealPlanningCalendarResponse: { calendarId: 'cal1', events: [stored] } });
+    anylist._getUserData = async () => ({ mealPlanningCalendarResponse: { calendarId: 'cal1', events } });
     anylist.client = {
       post: async (url, { body }) => { posted = { url, body: body.getBuffer(), boundary: body.getBoundary() }; },
     };
@@ -91,7 +93,8 @@ describe('AnyListClient.updateMealPlanEvent', () => {
     const e = sentOperation().updatedEvent;
     assert.equal(e.date, '2099-06-17');
     assert.equal(e.identifier, 'e1');
-    assert.ok(e.toBuffer().equals(new pb.PBCalendarEvent({ ...FIXTURE, date: '2099-06-17' }).toBuffer()));
+    // A move goes last in its group (empty here) and loses its label position.
+    assert.ok(e.toBuffer().equals(new pb.PBCalendarEvent({ ...FIXTURE, date: '2099-06-17', orderAddedSortIndex: 0, labelSortIndex: null }).toBuffer()));
   });
 
   it('clears fields given as ""', async () => {
@@ -111,5 +114,83 @@ describe('AnyListClient.updateMealPlanEvent', () => {
   it('throws for an unknown event', async () => {
     await assert.rejects(client.updateMealPlanEvent('nope', { title: 'x' }), /not found/);
     assert.equal(posted, null);
+  });
+
+  it('a calendar event moved to another date goes after that date\'s events', async () => {
+    stored = new pb.PBCalendarEvent({ ...FIXTURE, eventType: 0 });
+    events = [
+      stored,
+      new pb.PBCalendarEvent({ identifier: 'e2', eventType: 0, date: '2099-06-17', title: 'a', orderAddedSortIndex: 4 }),
+      new pb.PBCalendarEvent({ identifier: 'e3', eventType: 0, date: '2099-06-17', title: 'b', orderAddedSortIndex: 7 }),
+      new pb.PBCalendarEvent({ identifier: 'e4', eventType: 0, date: '2099-06-18', title: 'c', orderAddedSortIndex: 9 }),
+    ];
+    await client.updateMealPlanEvent('e1', { date: '2099-06-17' });
+    const e = sentOperation().updatedEvent;
+    assert.equal(e.orderAddedSortIndex, 8);
+    assert.equal(e.labelSortIndex, null);
+  });
+
+  it('a title-only update keeps both sort indexes', async () => {
+    events.push(new pb.PBCalendarEvent({ identifier: 'e2', eventType: 1, title: 'a', orderAddedSortIndex: 10 }));
+    await client.updateMealPlanEvent('e1', { title: 'Burritos' });
+    const e = sentOperation().updatedEvent;
+    assert.equal(e.orderAddedSortIndex, 3);
+    assert.equal(e.labelSortIndex, 2);
+  });
+});
+
+describe('refreshEventSortIndex', () => {
+  const others = [
+    { identifier: 'a', eventType: 0, date: '2099-06-17', labelId: 'l1', orderAddedSortIndex: 2 },
+    { identifier: 'b', eventType: 0, date: '2099-06-17', labelId: 'l2', orderAddedSortIndex: 5 },
+    { identifier: 'q', eventType: 1, orderAddedSortIndex: 11 },
+  ];
+
+  it('a calendar event that changes label goes last on its day and loses labelSortIndex', () => {
+    const old = { identifier: 'x', eventType: 0, date: '2099-06-17', labelId: 'l1', orderAddedSortIndex: 0, labelSortIndex: 3 };
+    const event = { ...old, labelId: 'l2' };
+    refreshEventSortIndex(event, old, [old, ...others]);
+    assert.equal(event.orderAddedSortIndex, 6);
+    assert.equal(event.labelSortIndex, null);
+  });
+
+  it('a queue event that changes label goes last in the queue and keeps labelSortIndex', () => {
+    const old = { identifier: 'x', eventType: 1, labelId: 'l1', orderAddedSortIndex: 0, labelSortIndex: 3 };
+    const event = { ...old, labelId: null };
+    refreshEventSortIndex(event, old, [old, ...others]);
+    assert.equal(event.orderAddedSortIndex, 12);
+    assert.equal(event.labelSortIndex, 3);
+  });
+
+  it('an event with no others in its group gets 0', () => {
+    const old = { identifier: 'x', eventType: 0, date: '2099-06-17', orderAddedSortIndex: 4, labelSortIndex: 1 };
+    const event = { ...old, date: '2099-07-01' };
+    refreshEventSortIndex(event, old, [old, ...others]);
+    assert.equal(event.orderAddedSortIndex, 0);
+    assert.equal(event.labelSortIndex, null);
+  });
+
+  it('an unchanged date and label leave the event alone', () => {
+    const old = { identifier: 'x', eventType: 0, date: '2099-06-17', labelId: null, orderAddedSortIndex: 0, labelSortIndex: 3 };
+    const event = { ...old, labelId: undefined, title: 'new' };
+    refreshEventSortIndex(event, old, [old, ...others]);
+    assert.equal(event.orderAddedSortIndex, 0);
+    assert.equal(event.labelSortIndex, 3);
+  });
+});
+
+describe('AnyListClient.createMealPlanEvent', () => {
+  it('puts the new event after the events already on that date', async () => {
+    let created;
+    const client = new AnyListClient();
+    client.client = {
+      _getUserData: async () => ({ mealPlanningCalendarResponse: { events: [
+        { identifier: 'a', eventType: 0, date: '2099-06-17', orderAddedSortIndex: 1 },
+        { identifier: 'b', eventType: 0, date: '2099-06-18', orderAddedSortIndex: 6 },
+      ] } }),
+      createEvent: async obj => { created = obj; return { ...obj, identifier: 'new', async save() {} }; },
+    };
+    await client.createMealPlanEvent({ date: '2099-06-17', title: 'Soup' });
+    assert.equal(created.orderAddedSortIndex, 2);
   });
 });
