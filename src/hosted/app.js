@@ -118,7 +118,12 @@ export function createHostedServer({ verifier, registry, version, sessionIdleMs 
 
   const server = http.createServer(async (req, res) => {
     const started = Date.now();
-    const { pathname } = new URL(req.url, "http://localhost");
+    let pathname;
+    try {
+      ({ pathname } = new URL(req.url, "http://localhost"));
+    } catch {
+      return sendJson(res, 400, { error: "Bad request" });
+    }
     let accountName = "-";
     res.on("finish", () => {
       console.error(`${req.method} ${pathname} → ${res.statusCode} (${Date.now() - started}ms) account:${accountName}`);
