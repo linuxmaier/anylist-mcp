@@ -10,6 +10,7 @@ import List from '../anylist-js/lib/list.js';
 import Item from '../anylist-js/lib/item.js';
 import AnyListClient from '../src/anylist-client.js';
 import { itemIdentifier, toItemIngredient } from '../src/recipe-to-list/index.js';
+import tagExtract from './fixtures/tag-data-extract.json' with { type: 'json' };
 
 const LIST_ID = '11111111111141118111111111111111';
 
@@ -40,6 +41,9 @@ describe('AnyListClient.addRecipeToList', () => {
   let recents;
   let recipes;
   let events;
+  let listResponse; // the list's category groups and rules
+  let settings; // PBListSettings for the list
+  let tagLoads;
   let posted;
 
   const idFor = (recipe, ingredientId) =>
@@ -58,12 +62,17 @@ describe('AnyListClient.addRecipeToList', () => {
     recents = [];
     recipes = [chili, soup];
     events = [];
+    listResponse = null;
+    settings = null;
+    tagLoads = 0;
     anylist = new AnyList({ email: 'test', password: 'test', credentialsFile: '/nonexistent' });
     pb = anylist.protobuf;
     anylist.uid = 'u1';
     anylist._getUserData = async () => ({
       recipeDataResponse: { recipes: recipes.map(r => new pb.PBRecipe(r)) },
       mealPlanningCalendarResponse: { events: events.map(e => new pb.PBCalendarEvent(e)) },
+      shoppingListsResponse: { listResponses: listResponse ? [new pb.PBListResponse({ listId: LIST_ID, ...listResponse })] : [] },
+      listSettingsResponse: { settings: settings ? [new pb.PBListSettings({ listId: LIST_ID, ...settings })] : [] },
     });
     anylist.getLists = async () => {
       const context = { client: anylist.client, protobuf: pb, uid: 'u1' };
@@ -82,6 +91,7 @@ describe('AnyListClient.addRecipeToList', () => {
     client = new AnyListClient();
     client.client = anylist;
     client.targetList = { identifier: LIST_ID, name: 'Groceries' };
+    client.getTagData = async () => { tagLoads++; return tagExtract; };
   });
 
   it('adds each ingredient as a recipe-linked item, skipping headings and exclusions', async () => {
@@ -176,7 +186,68 @@ describe('AnyListClient.addRecipeToList', () => {
     const [onions, beans] = sentOps();
     assert.equal(onions.listItem.categoryMatchId, 'produce');
     assert.equal(onions.listItem.categoryAssignments[0].categoryId, 'c-produce');
-    assert.equal(beans.listItem.categoryMatchId, null);
+    assert.equal(beans.listItem.categoryMatchId, 'other');
+  });
+
+  describe('categorizing new items like the app (#20)', () => {
+    const GROUP = 'g-store';
+    const category = (id, systemCategory, name) => ({ identifier: id, categoryGroupId: GROUP, listId: LIST_ID, systemCategory, name });
+    beforeEach(() => {
+      settings = { genericGroceryAutocompleteEnabled: true, listCategoryGroupId: GROUP };
+      listResponse = {
+        categoryGroupResponses: [{ categoryGroup: {
+          identifier: GROUP, listId: LIST_ID, defaultCategoryId: 'c-other',
+          categories: [category('c-produce', 'produce', 'Produce'), category('c-canned', 'soups-and-canned-goods', 'Canned'),
+            category('c-other', 'other', 'Other'), category('c-bulk', null, 'Bulk Bins')],
+        } }],
+        categorizationRules: [],
+      };
+    });
+    const byName = ops => Object.fromEntries(ops.map(op => [op.listItem.name, op.listItem]));
+
+    it('classifies each new item by name and maps it to the list\'s category', async () => {
+      await client.addRecipeToList({ id: 'r-chili' });
+      const items = byName(sentOps());
+      assert.equal(items['yellow onions'].categoryMatchId, 'produce');
+      assert.equal(items['yellow onions'].priceMatchupTag, 'yellow-onions');
+      assert.deepEqual(items['yellow onions'].categoryAssignments.map(a => [a.categoryGroupId, a.categoryId]), [[GROUP, 'c-produce']]);
+      assert.equal(items['black beans'].categoryMatchId, 'soups-and-canned-goods');
+      assert.equal(tagLoads, 1);
+    });
+
+    it('a categorization rule for the item name wins', async () => {
+      listResponse.categorizationRules = [{ identifier: 'r1', listId: LIST_ID, categoryGroupId: GROUP, itemName: 'Black Beans', categoryId: 'c-bulk' }];
+      await client.addRecipeToList({ id: 'r-chili' });
+      const beans = byName(sentOps())['black beans'];
+      assert.equal(beans.categoryMatchId, 'bulk-bins');
+      assert.equal(beans.categoryAssignments[0].categoryId, 'c-bulk');
+    });
+
+    it('a favorite or recent item\'s category still overrides the classification', async () => {
+      recents = [{ identifier: 'r', listId: LIST_ID, name: 'yellow onion', categoryMatchId: 'other',
+        categoryAssignments: [{ identifier: 'a', categoryGroupId: GROUP, categoryId: 'c-other' }] }];
+      await client.addRecipeToList({ id: 'r-chili' });
+      const onions = byName(sentOps())['yellow onions'];
+      assert.equal(onions.categoryMatchId, 'other');
+      assert.equal(onions.categoryAssignments[0].categoryId, 'c-other');
+    });
+
+    it('with generic categorization off, the tag data isn\'t loaded and items get the default category', async () => {
+      settings.genericGroceryAutocompleteEnabled = false;
+      await client.addRecipeToList({ id: 'r-chili' });
+      const onions = byName(sentOps())['yellow onions'];
+      assert.equal(tagLoads, 0);
+      assert.equal(onions.priceMatchupTag, null);
+      assert.equal(onions.categoryMatchId, 'other');
+      assert.equal(onions.categoryAssignments[0].categoryId, 'c-other');
+    });
+
+    it('still adds the items when the tag data can\'t be loaded', async () => {
+      client.getTagData = async () => null;
+      const r = await client.addRecipeToList({ id: 'r-chili' });
+      assert.deepEqual(r.results.map(x => x.outcome), ['added', 'added', 'added']);
+      assert.equal(byName(sentOps())['yellow onions'].categoryMatchId, 'other');
+    });
   });
 
   it('links a meal-plan event, taking the recipe from it', async () => {

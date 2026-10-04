@@ -1,0 +1,9446 @@
+{
+  "_source": "Extract of https://www.anylist.com/static/webapp/data/tag_data.json (last-modified Sat, 07 Jun 2025 02:01:28 GMT): only the entries that classifying recipe-list-items.json touches. Regenerate with scripts/extract-tag-fixture.mjs.",
+  "tags": {
+    "adobo-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "adobo": 1,
+        "sauc": 0
+      }
+    },
+    "amchoor-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "amchoor": 1,
+        "powder": 1
+      }
+    },
+    "ancho-chili-pepper": {
+      "rootCategory": "produce",
+      "keywords": {
+        "ancho": 1,
+        "pepper": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "ancho-chili-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "ancho chili powder": 1,
+        "ancho": 0,
+        "chili": 0,
+        "powder": 0
+      }
+    },
+    "anise-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "anis": 1,
+        "seed": 1
+      }
+    },
+    "antacid-and-digestive-aids": {
+      "rootCategory": "health-and-personal-care"
+    },
+    "apples": {
+      "rootCategory": "produce",
+      "keywords": {
+        "appl": 1
+      }
+    },
+    "applesauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "applesauc|appl sauc": 1,
+        "appl": 0,
+        "applesauc": 0,
+        "sauc": 0
+      }
+    },
+    "apricots": {
+      "rootCategory": "produce",
+      "keywords": {
+        "apricot": 1
+      }
+    },
+    "arrowroot-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "arrowroot": 1,
+        "powder": 1
+      }
+    },
+    "artichokes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "artichok": 1
+      }
+    },
+    "asparagus": {
+      "rootCategory": "produce",
+      "keywords": {
+        "asparagus": 1
+      }
+    },
+    "avocados": {
+      "rootCategory": "produce",
+      "keywords": {
+        "avocado": 1
+      }
+    },
+    "baby-bella-mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "babi": 1,
+        "bella": 1,
+        "mushroom": 1
+      }
+    },
+    "baby-cream": {
+      "rootCategory": "baby",
+      "keywords": {
+        "babi": 1,
+        "cream": 1
+      }
+    },
+    "baby-oil": {
+      "rootCategory": "baby",
+      "keywords": {
+        "babi": 1,
+        "oil": 1
+      }
+    },
+    "baby-powder": {
+      "rootCategory": "baby",
+      "keywords": {
+        "babi": 1,
+        "powder": 1
+      }
+    },
+    "baked-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "bake": 1,
+        "bean": 1
+      }
+    },
+    "baking-chips": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "chip": 1
+      }
+    },
+    "baking-chocolate": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "chocol": 1
+      }
+    },
+    "baking-cocoa": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "cocoa": 1
+      }
+    },
+    "baking-cups": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "cup": 1
+      }
+    },
+    "baking-flour": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "flour": 1
+      }
+    },
+    "baking-nuts": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "nut": 1
+      }
+    },
+    "baking-pans": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "pan": 1
+      }
+    },
+    "baking-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "powder": 1
+      }
+    },
+    "baking-soda": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bake": 1,
+        "soda": 1
+      }
+    },
+    "banana-peppers": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "banana": 1,
+        "pepper": 1
+      }
+    },
+    "bananas": {
+      "rootCategory": "produce",
+      "keywords": {
+        "banana": 1
+      }
+    },
+    "bath-oil": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "bath": 1,
+        "oil": 1
+      }
+    },
+    "bay-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "bay leav|bay leaf": 1,
+        "bay": 0,
+        "leaf": 0,
+        "leav": 0
+      }
+    },
+    "bbq-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "sauc": 1,
+        "bbq|barbecu|barbequ": 1,
+        "barbecu": 0,
+        "barbequ": 0,
+        "bbq": 0
+      }
+    },
+    "bean-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "bean": 1,
+        "soup": 1
+      }
+    },
+    "bean-sprouts": {
+      "rootCategory": "produce",
+      "keywords": {
+        "bean": 1,
+        "sprout": 1
+      }
+    },
+    "beans": {
+      "rootCategory": "produce",
+      "keywords": {
+        "bean": 1
+      }
+    },
+    "beef": {
+      "rootCategory": "meat",
+      "keywords": {
+        "beef": 1
+      }
+    },
+    "beef-broth": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "beef": 1,
+        "broth": 1
+      }
+    },
+    "beer": {
+      "rootCategory": "wine-beer-spirits",
+      "keywords": {
+        "beer": 1
+      }
+    },
+    "bell-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "bell": 1,
+        "pepper": 1
+      }
+    },
+    "bernaise-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "bernais": 1,
+        "sauc": 1
+      }
+    },
+    "berries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "berri": 1
+      }
+    },
+    "bird-food": {
+      "rootCategory": "pet-supplies",
+      "keywords": {
+        "bird": 1,
+        "food": 1
+      }
+    },
+    "bird-seed": {
+      "rootCategory": "pet-supplies",
+      "keywords": {
+        "bird": 1,
+        "seed": 1
+      }
+    },
+    "black-bean-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "black": 1,
+        "bean": 1,
+        "sauc": 1
+      }
+    },
+    "black-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "black": 1,
+        "bean": 1
+      }
+    },
+    "black-olives": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "black": 1,
+        "oliv": 1,
+        "pit": 0
+      }
+    },
+    "black-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "black": 1,
+        "pepper": 1
+      }
+    },
+    "black-peppercorn": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "black": 1,
+        "peppercorn": 1
+      }
+    },
+    "black-sea-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "black": 1,
+        "sea": 1,
+        "salt": 1
+      }
+    },
+    "blackberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "blackberri": 1
+      }
+    },
+    "blueberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "blueberri": 1
+      }
+    },
+    "boneless-pork-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "boneless": 1,
+        "pork": 1,
+        "chop": 1
+      }
+    },
+    "boneless-pork-loin-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "boneless": 1,
+        "pork": 1,
+        "loin": 1,
+        "chop": 1
+      }
+    },
+    "boneless-pork-sirloin-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "boneless": 1,
+        "pork": 1,
+        "sirloin": 1,
+        "chop": 1
+      }
+    },
+    "boneless-skinless-chicken-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "boneless": 1,
+        "skinless": 1,
+        "chicken": 1,
+        "breast": 1
+      }
+    },
+    "bottled-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "bottl": 1,
+        "water": 1
+      }
+    },
+    "bread": {
+      "rootCategory": "bakery",
+      "keywords": {
+        "bread": 1
+      }
+    },
+    "broccoli": {
+      "rootCategory": "produce",
+      "keywords": {
+        "broccoli": 1
+      }
+    },
+    "broccoli-florets": {
+      "rootCategory": "produce",
+      "keywords": {
+        "broccoli": 1,
+        "floret": 1
+      }
+    },
+    "broccoli-in-cheese-sauce": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "broccoli": 1,
+        "in": 1,
+        "chees": 1,
+        "sauc": 1
+      }
+    },
+    "broth": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "broth": 1
+      }
+    },
+    "brown-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "brown": 1,
+        "mustard": 1
+      }
+    },
+    "brown-rice": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "brown": 1,
+        "rice": 1
+      }
+    },
+    "brown-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "brown": 1,
+        "sugar": 1
+      }
+    },
+    "brussels-sprouts": {
+      "rootCategory": "produce",
+      "keywords": {
+        "brussel": 1,
+        "sprout": 1
+      }
+    },
+    "buffalo-wing-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "buffalo": 1,
+        "wing": 1,
+        "sauc": 1
+      }
+    },
+    "butter": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "butter": 1
+      }
+    },
+    "butter-and-margarine": {
+      "rootCategory": "dairy"
+    },
+    "button-mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "button": 1,
+        "mushroom": 1
+      }
+    },
+    "campari-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "campari": 1,
+        "tomato": 1
+      }
+    },
+    "candy": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "candi": 1
+      }
+    },
+    "canned-baby-corn": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "babi": 1,
+        "corn": 1
+      }
+    },
+    "canned-bean-sprouts": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "bean": 1,
+        "sprout": 1
+      }
+    },
+    "canned-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "bean": 1
+      }
+    },
+    "canned-black-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "black": 1,
+        "bean": 1
+      }
+    },
+    "canned-black-eye-peas": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "black": 1,
+        "eye": 1,
+        "pea": 1
+      }
+    },
+    "canned-broth": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "broth": 1
+      }
+    },
+    "canned-chicken": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "chicken": 1
+      }
+    },
+    "canned-chili": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "canned-chipotle-chilis": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "chipotl": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "canned-coconut-cream": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "coconut": 1,
+        "cream": 1
+      }
+    },
+    "canned-collard-greens": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "collard": 1,
+        "green": 1
+      }
+    },
+    "canned-corn": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "corn": 1
+      }
+    },
+    "canned-corned-beef": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "corn": 1,
+        "beef": 1
+      }
+    },
+    "canned-fruit": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "fruit": 1
+      }
+    },
+    "canned-garbanzo-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "garbanzo": 1,
+        "bean": 1
+      }
+    },
+    "canned-green-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "green": 1,
+        "bean": 1
+      }
+    },
+    "canned-green-chilis": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "green": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "canned-kidney-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "kidney": 1,
+        "bean": 1
+      }
+    },
+    "canned-lima-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "lima": 1,
+        "bean": 1
+      }
+    },
+    "canned-meat": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "meat": 1
+      }
+    },
+    "canned-mushrooms": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "mushroom": 1
+      }
+    },
+    "canned-navy-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "navi": 1,
+        "bean": 1
+      }
+    },
+    "canned-onions": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "onion": 1
+      }
+    },
+    "canned-peas-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "pea": 1,
+        "bean": 1,
+        "&": 1
+      }
+    },
+    "canned-pineapple": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "pineappl": 1,
+        "can|pineappl slice in|pineappl chunk in": 1,
+        "can": 0,
+        "chunk": 0,
+        "in": 0,
+        "slice": 0
+      }
+    },
+    "canned-pinto-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "pinto": 1,
+        "bean": 1
+      }
+    },
+    "canned-pork-and-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "pork": 1,
+        "and": 1,
+        "bean": 1
+      }
+    },
+    "canned-refried-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "refri": 1,
+        "bean": 1
+      }
+    },
+    "canned-rice-and-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "rice": 1,
+        "and": 1,
+        "bean": 1
+      }
+    },
+    "canned-string-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "string": 1,
+        "bean": 1
+      }
+    },
+    "canned-tomato-paste": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "tomato": 1,
+        "past": 1
+      }
+    },
+    "canned-tomato-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "tomato": 1,
+        "sauc": 1
+      }
+    },
+    "canned-tomatoes": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "tomato": 1
+      }
+    },
+    "canned-vegetables": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "veget": 1
+      }
+    },
+    "canned-water-chestnuts": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "water": 1,
+        "chestnut": 1
+      }
+    },
+    "canned-waxed-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "wax": 1,
+        "bean": 1
+      }
+    },
+    "canned-white-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "white": 1,
+        "bean": 1
+      }
+    },
+    "canned-whole-baby-corn": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "can": 1,
+        "whole": 1,
+        "babi": 1,
+        "corn": 1
+      }
+    },
+    "cannellini-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "cannellini": 1,
+        "bean": 1
+      }
+    },
+    "canola-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "canola": 1,
+        "oil": 1
+      }
+    },
+    "canola-oil-cooking-spray": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "spray": 1,
+        "canola oil": 1,
+        "cook": 0,
+        "canola": 0,
+        "oil": 0
+      }
+    },
+    "caramel-corn": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "caramel": 1,
+        "corn": 1
+      }
+    },
+    "caraway-seeds": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "caraway": 1,
+        "seed": 1
+      }
+    },
+    "carbonated-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "carbon": 1,
+        "water": 1
+      }
+    },
+    "carrots": {
+      "rootCategory": "produce",
+      "keywords": {
+        "carrot": 1
+      }
+    },
+    "cauliflower": {
+      "rootCategory": "produce",
+      "keywords": {
+        "cauliflow": 1
+      }
+    },
+    "cayenne-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cayenn": 1,
+        "pepper": 0
+      }
+    },
+    "celery-seeds": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "celeri": 1,
+        "seed": 1
+      }
+    },
+    "cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "chees": 1,
+        "chili": -1
+      }
+    },
+    "cheese-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "chees": 1,
+        "sauc": 1
+      }
+    },
+    "cherries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "cherri": 1,
+        "coke": -1,
+        "pepsi": -1
+      }
+    },
+    "cherry-peppers": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "cherri": 1,
+        "pepper": 1
+      }
+    },
+    "cherry-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "cherri": 1,
+        "tomato": 1
+      }
+    },
+    "chicken": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1
+      }
+    },
+    "chicken-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "breast": 1
+      }
+    },
+    "chicken-broth": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "broth": 1
+      }
+    },
+    "chicken-chili": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chicken-corn-chowder": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "corn": 1,
+        "chowder": 1
+      }
+    },
+    "chicken-cutlets": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "cutlet": 1
+      }
+    },
+    "chicken-drumsticks": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "drumstick": 1
+      }
+    },
+    "chicken-kabobs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "kabob": 1
+      }
+    },
+    "chicken-legs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken leg": 1,
+        "whole": 0,
+        "chicken": 0,
+        "leg": 0
+      }
+    },
+    "chicken-livers": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "liver": 1
+      }
+    },
+    "chicken-meatballs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "meatbal": 1
+      }
+    },
+    "chicken-noodle-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "noodl": 1,
+        "soup": 1
+      }
+    },
+    "chicken-nuggets": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "nugget": 1,
+        "breast": 0
+      }
+    },
+    "chicken-patties": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "patti": 1
+      }
+    },
+    "chicken-rice-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "rice": 1,
+        "soup": 1
+      }
+    },
+    "chicken-sausage": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "sausag": 1
+      }
+    },
+    "chicken-stock": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chicken": 1,
+        "stock": 1
+      }
+    },
+    "chicken-strips": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "strip": 1
+      }
+    },
+    "chicken-tenders": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "tender": 1
+      }
+    },
+    "chicken-thighs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "thigh": 1
+      }
+    },
+    "chicken-wings": {
+      "rootCategory": "meat",
+      "keywords": {
+        "chicken": 1,
+        "wing": 1
+      }
+    },
+    "chile-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chile": 1,
+        "pepper": 1
+      }
+    },
+    "chili": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chili-dried-mango": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "mango": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chili-no-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chili|chile|chilli": 1,
+        "no bean|without bean": 1,
+        "bean": 0,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0,
+        "no": 0,
+        "without": 0
+      }
+    },
+    "chili-oil": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oil": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chili-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pepper": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chili-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chili powder|chile powder|chilli powder": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0,
+        "powder": 0
+      }
+    },
+    "chili-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "sauc": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chili-with-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "with": 1,
+        "bean": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chilies": {
+      "rootCategory": "produce",
+      "keywords": {
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "chinese-fermented-black-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chines": 1,
+        "ferment": 1,
+        "black": 1,
+        "bean": 1
+      }
+    },
+    "chinese-plum-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "chines": 1,
+        "plum": 1,
+        "sauc": 1
+      }
+    },
+    "chipotle-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chipotl": 1,
+        "pepper": 1
+      }
+    },
+    "chipotle-peppers-in-adobo-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chipotl": 1,
+        "adobo": 1,
+        "pepper": 0,
+        "sauc": 0
+      }
+    },
+    "chipotle-rub": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chipotl": 1,
+        "rub": 1
+      }
+    },
+    "chipotle-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "chipotl": 1,
+        "sauc": 1
+      }
+    },
+    "chips": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "chip": 1
+      }
+    },
+    "chocolate-chip-cookies": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "chocol": 1,
+        "chip": 1,
+        "cooki": 1
+      }
+    },
+    "chocolate-chips": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chocol": 1,
+        "chip": 1
+      }
+    },
+    "chocolate-ice-cream": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "chocol": 1,
+        "ice": 1,
+        "cream": 1
+      }
+    },
+    "chocolate-morsels": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chocol": 1,
+        "morsel": 1,
+        "bake": 0
+      }
+    },
+    "chocolate-whipped-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "chocol": 1,
+        "whip": 1,
+        "cream": 1
+      }
+    },
+    "chopped-chives": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chop": 1,
+        "chive": 1
+      }
+    },
+    "chopped-nuts": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chop": 1,
+        "nut": 1
+      }
+    },
+    "chopped-pecans": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chop": 1,
+        "pecan": 1
+      }
+    },
+    "chopped-suey": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "chop": 1,
+        "suey": 1
+      }
+    },
+    "chopped-walnuts": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chop": 1,
+        "walnut": 1
+      }
+    },
+    "cilantro": {
+      "rootCategory": "produce",
+      "keywords": {
+        "cilantro": 1
+      }
+    },
+    "cilantro-leaf": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cilantro": 1,
+        "leaf": 1
+      }
+    },
+    "clementines": {
+      "rootCategory": "produce",
+      "keywords": {
+        "clementin": 1
+      }
+    },
+    "club-soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "club": 1,
+        "soda": 1
+      }
+    },
+    "cocktail-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "cocktail": 1,
+        "sauc": 1
+      }
+    },
+    "cocoa-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cocoa": 1,
+        "powder": 1
+      }
+    },
+    "coconut-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "coconut": 1,
+        "oil": 1
+      }
+    },
+    "coconut-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "coconut": 1,
+        "water": 1
+      }
+    },
+    "cod": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "cod": 1
+      }
+    },
+    "collard-greens": {
+      "rootCategory": "produce",
+      "keywords": {
+        "collard": 1,
+        "green": 1
+      }
+    },
+    "condensed-cream-of-mushroom-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "condens": 1,
+        "cream": 1,
+        "of": 1,
+        "mushroom": 1,
+        "soup": 1
+      }
+    },
+    "condensed-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "condens": 1,
+        "soup": 1
+      }
+    },
+    "condensed-tomato-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "condens": 1,
+        "tomato": 1,
+        "soup": 1
+      }
+    },
+    "condiments": {
+      "rootCategory": "condiments-oils-and-salad-dressings"
+    },
+    "cookies": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "cooki": 1
+      }
+    },
+    "cooking-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cook": 1,
+        "oil": 1
+      }
+    },
+    "cooking-spray": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "spray": 1,
+        "nonstick|oil|cook": 1,
+        "cook": 0,
+        "nonstick": 0,
+        "oil": 0
+      }
+    },
+    "cooking-stock": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "stock": 1,
+        "cook": 0
+      }
+    },
+    "corn": {
+      "rootCategory": "produce",
+      "keywords": {
+        "corn": 1
+      }
+    },
+    "corn-bread-mix": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn": 1,
+        "bread": 1,
+        "mix": 1
+      }
+    },
+    "corn-chips": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "corn": 1,
+        "chip": 1
+      }
+    },
+    "corn-dogs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "corn": 1,
+        "dog": 1
+      }
+    },
+    "corn-meal": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn meal|cornmeal": 1,
+        "corn": 0,
+        "cornmeal": 0,
+        "meal": 0
+      }
+    },
+    "corn-muffin-mix": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn": 1,
+        "muffin": 1,
+        "mix": 1
+      }
+    },
+    "corn-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn": 1,
+        "oil": 1
+      }
+    },
+    "corn-on-the-cob": {
+      "rootCategory": "produce",
+      "keywords": {
+        "corn": 1,
+        "on": 1,
+        "the": 1,
+        "cob": 1
+      }
+    },
+    "corn-starch": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn starch|cornstarch": 1,
+        "corn": 0,
+        "cornstarch": 0,
+        "starch": 0
+      }
+    },
+    "corn-syrup": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "corn": 1,
+        "syrup": 1
+      }
+    },
+    "corn-tortillas": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "corn": 1,
+        "tortilla": 1
+      }
+    },
+    "corned-beef": {
+      "rootCategory": "meat",
+      "keywords": {
+        "corn": 1,
+        "beef": 1
+      }
+    },
+    "cosmetics": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "cosmet": 1
+      }
+    },
+    "cranberry-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "cranberri": 1,
+        "sauc": 1
+      }
+    },
+    "cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "cream": 1,
+        "cream of wheat": -1
+      }
+    },
+    "cream-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "cream": 1,
+        "chees": 1,
+        "spread": 0
+      }
+    },
+    "cream-of-chicken-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "cream": 1,
+        "of": 1,
+        "chicken": 1,
+        "soup": 1
+      }
+    },
+    "cream-of-tartar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cream": 1,
+        "of": 1,
+        "tartar": 1
+      }
+    },
+    "cream-rinse": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "cream": 1,
+        "rins": 1
+      }
+    },
+    "cream-soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "cream": 1,
+        "soda": 1
+      }
+    },
+    "creamed-corn": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "cream": 1,
+        "corn": 1
+      }
+    },
+    "creamed-rice": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "cream": 1,
+        "rice": 1
+      }
+    },
+    "cremini-mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "cremini": 1,
+        "mushroom": 1
+      }
+    },
+    "crushed-tomatoes": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "crush": 1,
+        "tomato": 1
+      }
+    },
+    "cumin": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cumin": 1
+      }
+    },
+    "curry-paste": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "curri": 1,
+        "past": 1
+      }
+    },
+    "curry-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "curri": 1,
+        "powder": 1
+      }
+    },
+    "de-arbol-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "de": 1,
+        "arbol": 1,
+        "powder": 1
+      }
+    },
+    "denture-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "dentur": 1,
+        "cream": 1
+      }
+    },
+    "diaper-rash-cream": {
+      "rootCategory": "baby",
+      "keywords": {
+        "diaper": 1,
+        "rash": 1,
+        "cream": 1
+      }
+    },
+    "diced-tomatoes": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "dice": 1,
+        "tomato": 1
+      }
+    },
+    "diet-cola": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "diet": 1,
+        "cola": 1
+      }
+    },
+    "diet-pop": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "diet": 1,
+        "pop": 1
+      }
+    },
+    "diet-soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "diet": 1,
+        "soda": 1
+      }
+    },
+    "diet-soft-drink": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "diet": 1,
+        "soft": 1,
+        "drink": 1
+      }
+    },
+    "dijon-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "mustard": 0,
+        "dijon|dijion": 1,
+        "dijion": 0,
+        "dijon": 0
+      }
+    },
+    "dill-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "dill": 1,
+        "seed": 1
+      }
+    },
+    "dip": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "dip": 1
+      }
+    },
+    "dishwashing-powder": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "dishwash": 1,
+        "powder": 1
+      }
+    },
+    "distilled-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "distil": 1,
+        "vinegar": 1
+      }
+    },
+    "distilled-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "distil": 1,
+        "water": 1
+      }
+    },
+    "distilled-white-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "distil": 1,
+        "white": 1,
+        "vinegar": 1
+      }
+    },
+    "drain-opener": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "drain": 1,
+        "open": 1
+      }
+    },
+    "dried-apricots": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "apricot": 1
+      }
+    },
+    "dried-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "dri": 1,
+        "bean": 1
+      }
+    },
+    "dried-black-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "dri": 1,
+        "black": 1,
+        "bean": 1
+      }
+    },
+    "dried-blackberries": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "blackberri": 1
+      }
+    },
+    "dried-blueberries": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "blueberri": 1
+      }
+    },
+    "dried-cherries": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "cherri": 1
+      }
+    },
+    "dried-cilantro": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "dri": 1,
+        "cilantro": 1
+      }
+    },
+    "dried-coconut": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "dri": 1,
+        "coconut": 1
+      }
+    },
+    "dried-fruit": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "fruit": 1
+      }
+    },
+    "dried-kidney-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "dri": 1,
+        "kidney": 1,
+        "bean": 1
+      }
+    },
+    "dried-mango": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "mango": 1
+      }
+    },
+    "dried-pineapple": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "dri": 1,
+        "pineappl": 1
+      }
+    },
+    "dried-pinto-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "dri": 1,
+        "pinto": 1,
+        "bean": 1
+      }
+    },
+    "dry-milk": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "dri": 1,
+        "milk": 1
+      }
+    },
+    "dry-salad-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "dri": 1,
+        "dress": 1,
+        "salad": 0
+      }
+    },
+    "dry-yeast": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "dri": 1,
+        "yeast": 1
+      }
+    },
+    "duck-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "duck": 1,
+        "sauc": 1
+      }
+    },
+    "egg-whites": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "egg": 1,
+        "white": 1
+      }
+    },
+    "enchilada-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "enchilada": 1,
+        "sauc": 1
+      }
+    },
+    "epsom-salt": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "epsom": 1,
+        "salt": 1
+      }
+    },
+    "ethnic": {
+      "rootCategory": ""
+    },
+    "extra-virgin-olive-oil": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "extra": 1,
+        "virgin": 1,
+        "oliv": 1,
+        "oil": 1
+      }
+    },
+    "face-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "face": 1,
+        "cream": 1
+      }
+    },
+    "face-powder": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "face": 1,
+        "powder": 1
+      }
+    },
+    "family-pack-chips": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "famili": 1,
+        "pack": 1,
+        "chip": 1
+      }
+    },
+    "fat-free-cream-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "fat": 1,
+        "free": 1,
+        "cream": 1,
+        "chees": 1
+      }
+    },
+    "fat-free-whipped-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "fat": 1,
+        "free": 1,
+        "whip": 1,
+        "cream": 1
+      }
+    },
+    "fava-beans": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fava": 1,
+        "raw|bean": 1,
+        "bean": 0,
+        "raw": 0
+      }
+    },
+    "fennel-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "fennel": 1,
+        "seed": 1
+      }
+    },
+    "fenugreek-seeds": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "fenugreek": 1,
+        "seed": 1
+      }
+    },
+    "first-aid-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "first": 1,
+        "aid": 1,
+        "cream": 1
+      }
+    },
+    "fish": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "fish": 1
+      }
+    },
+    "fish-oil": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "fish": 1,
+        "oil": 1
+      }
+    },
+    "fish-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "fish": 1,
+        "sauc": 1
+      }
+    },
+    "flavored-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "flavor": 1,
+        "water": 1
+      }
+    },
+    "flax-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "flax": 1,
+        "oil": 1
+      }
+    },
+    "flea-powder": {
+      "rootCategory": "pet-supplies",
+      "keywords": {
+        "flea": 1,
+        "powder": 1
+      }
+    },
+    "fleur-de-sel-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "fleur": 1,
+        "de": 1,
+        "sel": 1,
+        "salt": 1
+      }
+    },
+    "flour-tortillas": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "flour": 1,
+        "tortilla": 1
+      }
+    },
+    "fondue-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "fondu": 1,
+        "sauc": 1
+      }
+    },
+    "foot-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "foot": 1,
+        "cream": 1
+      }
+    },
+    "foundation-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "foundat": 1,
+        "cream": 1
+      }
+    },
+    "foundation-powder": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "foundat": 1,
+        "powder": 1
+      }
+    },
+    "french-onion-dip": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "french": 1,
+        "onion": 1,
+        "dip": 1
+      }
+    },
+    "fresh-apples": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "appl": 1
+      }
+    },
+    "fresh-apricots": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "apricot": 1
+      }
+    },
+    "fresh-artichokes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "artichok": 1
+      }
+    },
+    "fresh-asparagus": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "asparagus": 1
+      }
+    },
+    "fresh-bananas": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "banana": 1
+      }
+    },
+    "fresh-basil": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "basil": 1
+      }
+    },
+    "fresh-berries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "berri": 1
+      }
+    },
+    "fresh-blackberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "blackberri": 1
+      }
+    },
+    "fresh-blueberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "blueberri": 1
+      }
+    },
+    "fresh-boneless-skinless-chicken-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "fresh": 1,
+        "boneless": 1,
+        "skinless": 1,
+        "chicken": 1,
+        "breast": 1
+      }
+    },
+    "fresh-bread": {
+      "rootCategory": "bakery",
+      "keywords": {
+        "fresh": 1,
+        "bread": 1
+      }
+    },
+    "fresh-bread-crumbs": {
+      "rootCategory": "bakery",
+      "keywords": {
+        "fresh": 1,
+        "bread crumb|breadcrumb": 1,
+        "bread": 0,
+        "breadcrumb": 0,
+        "crumb": 0
+      }
+    },
+    "fresh-broccoli": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "broccoli": 1
+      }
+    },
+    "fresh-broccoli-florets": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "broccoli": 1,
+        "floret": 1
+      }
+    },
+    "fresh-brussels-sprouts": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "brussel": 1,
+        "sprout": 1
+      }
+    },
+    "fresh-carrots": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "carrot": 1
+      }
+    },
+    "fresh-cauliflower": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "cauliflow": 1
+      }
+    },
+    "fresh-cherries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "cherri": 1
+      }
+    },
+    "fresh-chicken-leg-quarters": {
+      "rootCategory": "meat",
+      "keywords": {
+        "fresh": 1,
+        "chicken": 1,
+        "leg": 1,
+        "quarter": 1
+      }
+    },
+    "fresh-chilies": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "fresh-chives": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "chive": 1
+      }
+    },
+    "fresh-clementines": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "clementin": 1
+      }
+    },
+    "fresh-collard-greens": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "collard": 1,
+        "green": 1
+      }
+    },
+    "fresh-corn": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "corn": 1
+      }
+    },
+    "fresh-fruit": {
+      "rootCategory": "produce"
+    },
+    "fresh-garlic": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "garlic": 1
+      }
+    },
+    "fresh-green-beans": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "green": 1,
+        "bean": 1
+      }
+    },
+    "fresh-herbs": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "herb": 1
+      }
+    },
+    "fresh-juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "fresh": 1,
+        "juic": 1
+      }
+    },
+    "fresh-mandarins": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "mandarin": 1
+      }
+    },
+    "fresh-mangoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "mango": 1
+      }
+    },
+    "fresh-mint": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "mint": 1
+      }
+    },
+    "fresh-mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "mushroom": 1
+      }
+    },
+    "fresh-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "onion": 1
+      }
+    },
+    "fresh-orange-juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "fresh": 1,
+        "orang": 1,
+        "juic": 1
+      }
+    },
+    "fresh-oranges": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "orang": 1
+      }
+    },
+    "fresh-parsely": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pars": 1,
+        "fresh": 1
+      }
+    },
+    "fresh-pasta": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "fresh": 1,
+        "pasta": 1
+      }
+    },
+    "fresh-peaches": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "peach": 1
+      }
+    },
+    "fresh-pears": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "pear": 1
+      }
+    },
+    "fresh-pineapple": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "pineappl": 1
+      }
+    },
+    "fresh-potatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "potato": 1
+      }
+    },
+    "fresh-raspberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "raspberri": 1
+      }
+    },
+    "fresh-rosemary": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "rosemari": 1
+      }
+    },
+    "fresh-sage": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "sage": 1
+      }
+    },
+    "fresh-spinach": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "spinach": 1
+      }
+    },
+    "fresh-squeezed-lemon-juice": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "lemon": 1,
+        "juic": 1,
+        "squeez": 0
+      }
+    },
+    "fresh-squeezed-lime-juice": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "lime": 1,
+        "juic": 1,
+        "squeez": 0
+      }
+    },
+    "fresh-strawberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "strawberri": 1
+      }
+    },
+    "fresh-sugar-snap-peas": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "sugar": 1,
+        "snap": 1,
+        "pea": 1
+      }
+    },
+    "fresh-sweet-corn": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "sweet": 1,
+        "corn": 1
+      }
+    },
+    "fresh-thyme": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "thyme": 1
+      }
+    },
+    "fresh-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "tomato": 1
+      }
+    },
+    "fresh-vegetables": {
+      "rootCategory": "produce"
+    },
+    "fresh-whole-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "fresh": 1,
+        "whole": 1,
+        "turkey": 1
+      }
+    },
+    "fresh-yams": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresh": 1,
+        "yam": 1
+      }
+    },
+    "fresh-young-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "fresh": 1,
+        "young": 1,
+        "turkey": 1
+      }
+    },
+    "fresno-chiles": {
+      "rootCategory": "produce",
+      "keywords": {
+        "fresno": 1,
+        "chile": 1
+      }
+    },
+    "fried-chicken": {
+      "rootCategory": "meat",
+      "keywords": {
+        "fri": 1,
+        "chicken": 1
+      }
+    },
+    "frozen-apple-juice": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "appl": 1,
+        "juic": 1
+      }
+    },
+    "frozen-artichoke-hearts": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "artichok": 1,
+        "heart": 1
+      }
+    },
+    "frozen-asparagus": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "asparagus": 1
+      }
+    },
+    "frozen-bagels": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bagel": 1
+      }
+    },
+    "frozen-bakery": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bakeri": 1
+      }
+    },
+    "frozen-bean-burgers": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bean": 1,
+        "burger": 1
+      }
+    },
+    "frozen-beans": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bean": 1
+      }
+    },
+    "frozen-beef-patties": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "beef": 1,
+        "patti": 1
+      }
+    },
+    "frozen-bell-peppers": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bell": 1,
+        "pepper": 1
+      }
+    },
+    "frozen-berries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "berri": 1
+      }
+    },
+    "frozen-biscuits": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "biscuit": 1
+      }
+    },
+    "frozen-black-eye-peas": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "black": 1,
+        "eye": 1,
+        "pea": 1
+      }
+    },
+    "frozen-blackberries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "blackberri": 1
+      }
+    },
+    "frozen-blueberries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "blueberri": 1
+      }
+    },
+    "frozen-boneless-skinless-chicken-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "frozen": 1,
+        "boneless": 1,
+        "skinless": 1,
+        "chicken": 1,
+        "breast": 1
+      }
+    },
+    "frozen-bread": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bread": 1
+      }
+    },
+    "frozen-bread-dough": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bread": 1,
+        "dough": 1
+      }
+    },
+    "frozen-breaded-chicken": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "bread": 1,
+        "chicken": 1
+      }
+    },
+    "frozen-breakfast": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "breakfast": 1
+      }
+    },
+    "frozen-breakfast-sandwiches": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "breakfast": 1,
+        "sandwich": 1
+      }
+    },
+    "frozen-broccoli": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "broccoli": 1,
+        "floret": 0
+      }
+    },
+    "frozen-brussel-sprouts": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "brussel": 1,
+        "sprout": 1
+      }
+    },
+    "frozen-buffalo-wings": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "buffalo": 1,
+        "wing": 1
+      }
+    },
+    "frozen-burritos": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "burrito": 1
+      }
+    },
+    "frozen-butter-beans": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "butter": 1,
+        "bean": 1
+      }
+    },
+    "frozen-cake": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cake": 1
+      }
+    },
+    "frozen-calamari": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "calamari": 1
+      }
+    },
+    "frozen-carrots": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "carrot": 1
+      }
+    },
+    "frozen-cauliflower": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cauliflow": 1
+      }
+    },
+    "frozen-cavatelli": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cavatelli": 1
+      }
+    },
+    "frozen-cheese-sticks": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "chees": 1,
+        "stick": 1
+      }
+    },
+    "frozen-cheeseburger": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cheeseburg": 1
+      }
+    },
+    "frozen-cherries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cherri": 1
+      }
+    },
+    "frozen-chicken": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "chicken": 1
+      }
+    },
+    "frozen-chicken-patties": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "chicken": 1,
+        "patti": 1
+      }
+    },
+    "frozen-chicken-wings": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "chicken": 1,
+        "wing": 1
+      }
+    },
+    "frozen-cinnamon-rolls": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cinnamon": 1,
+        "roll": 1
+      }
+    },
+    "frozen-clams": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "clam": 1
+      }
+    },
+    "frozen-cobbler": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cobbler": 1
+      }
+    },
+    "frozen-collard-greens": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "collard": 1,
+        "green": 1
+      }
+    },
+    "frozen-cookie-dough": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cooki": 1,
+        "dough": 1
+      }
+    },
+    "frozen-cookies": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cooki": 1
+      }
+    },
+    "frozen-corn": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "corn": 1
+      }
+    },
+    "frozen-crab": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "crab": 1
+      }
+    },
+    "frozen-crab-cakes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "crab": 1,
+        "cake": 1
+      }
+    },
+    "frozen-cranberries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cranberri": 1
+      }
+    },
+    "frozen-cream-substitute": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "cream": 1,
+        "substitut": 1
+      }
+    },
+    "frozen-croissants": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "croissant": 1
+      }
+    },
+    "frozen-dessert": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "dessert": 1
+      }
+    },
+    "frozen-dinner-rolls": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "dinner": 1,
+        "roll": 1
+      }
+    },
+    "frozen-dinners": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "dinner": 1
+      }
+    },
+    "frozen-dip": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "dip": 1
+      }
+    },
+    "frozen-donuts": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "donut": 1
+      }
+    },
+    "frozen-entrees": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "entre": 1
+      }
+    },
+    "frozen-fish": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "fish": 1
+      }
+    },
+    "frozen-fish-fillets": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "fish": 1,
+        "fillet": 1
+      }
+    },
+    "frozen-fish-sticks": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "fish": 1,
+        "stick": 1,
+        "frozen": 0
+      }
+    },
+    "frozen-french-toast": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "french": 1,
+        "toast": 1
+      }
+    },
+    "frozen-fruit": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "fruit": 1
+      }
+    },
+    "frozen-fruit-bars": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "fruit": 1,
+        "bar": 1,
+        "frozen": 1
+      }
+    },
+    "frozen-garlic-bread": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "garlic": 1,
+        "bread": 1
+      }
+    },
+    "frozen-grapefruit-juice": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "grapefruit": 1,
+        "juic": 1
+      }
+    },
+    "frozen-green-beans": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "green": 1,
+        "bean": 1
+      }
+    },
+    "frozen-hamburgers": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "hamburg": 1
+      }
+    },
+    "frozen-hash-browns": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "hash": 1,
+        "brown": 1
+      }
+    },
+    "frozen-italian-dinners": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "italian": 1,
+        "dinner": 1
+      }
+    },
+    "frozen-italian-sausage": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "italian": 1,
+        "sausag": 1
+      }
+    },
+    "frozen-juice": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "juic": 1
+      }
+    },
+    "frozen-lasagna": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "lasagna": 1
+      }
+    },
+    "frozen-lima-beans": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "lima": 1,
+        "bean": 1
+      }
+    },
+    "frozen-lobster": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "lobster": 1
+      }
+    },
+    "frozen-mashed-potatoes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "mash": 1,
+        "potato": 1
+      }
+    },
+    "frozen-matzah-balls": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "matzah": 1,
+        "ball": 1
+      }
+    },
+    "frozen-meals": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "meal": 1
+      }
+    },
+    "frozen-meat": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "meat": 1
+      }
+    },
+    "frozen-meatballs": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "meatbal": 1
+      }
+    },
+    "frozen-mexican-dinners": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "mexican": 1,
+        "dinner": 1
+      }
+    },
+    "frozen-microwave-meals": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "microwav": 1,
+        "meal": 1
+      }
+    },
+    "frozen-mixed-berries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "mix": 1,
+        "berri": 1
+      }
+    },
+    "frozen-mixed-fruit": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "mix": 1,
+        "fruit": 1
+      }
+    },
+    "frozen-mushrooms": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "mushroom": 1
+      }
+    },
+    "frozen-okra": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "okra": 1
+      }
+    },
+    "frozen-omelettes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "omelett": 1
+      }
+    },
+    "frozen-onions": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "onion": 1
+      }
+    },
+    "frozen-orange-juice": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "orang": 1,
+        "juic": 1
+      }
+    },
+    "frozen-oriental-dinners": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "orient": 1,
+        "dinner": 1
+      }
+    },
+    "frozen-pancakes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pancak": 1
+      }
+    },
+    "frozen-pasta": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pasta": 1
+      }
+    },
+    "frozen-pastries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pastri": 1
+      }
+    },
+    "frozen-peaches": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "peach": 1
+      }
+    },
+    "frozen-peas": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pea": 1
+      }
+    },
+    "frozen-peas-and-carrots": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pea": 1,
+        "carrot": 1
+      }
+    },
+    "frozen-pie": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pie": 1
+      }
+    },
+    "frozen-pizza": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pizza": 1
+      }
+    },
+    "frozen-pizza-bagel": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pizza": 1,
+        "bagel": 1
+      }
+    },
+    "frozen-pizza-bread": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pizza": 1,
+        "bread": 1
+      }
+    },
+    "frozen-pizza-crust": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pizza": 1,
+        "crust": 1
+      }
+    },
+    "frozen-pizza-rolls": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pizza": 1,
+        "roll": 1
+      }
+    },
+    "frozen-portabella-mushrooms": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "portabella": 1,
+        "mushroom": 1
+      }
+    },
+    "frozen-pot-pie": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "pot pie": 1,
+        "frozen": 1,
+        "pie": 0,
+        "pot": 0
+      }
+    },
+    "frozen-potato-blintzes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "potato": 1,
+        "blintz": 1
+      }
+    },
+    "frozen-potato-pancakes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "potato": 1,
+        "pancak": 1
+      }
+    },
+    "frozen-potatoes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "potato": 1
+      }
+    },
+    "frozen-poultry": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "poultri": 1
+      }
+    },
+    "frozen-pretzels": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "pretzel": 1
+      }
+    },
+    "frozen-raspberries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "raspberri": 1
+      }
+    },
+    "frozen-sandwiches": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "sandwich": 1
+      }
+    },
+    "frozen-seafood": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "seafood": 1
+      }
+    },
+    "frozen-shrimp": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "shrimp": 1
+      }
+    },
+    "frozen-spinach": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "spinach": 1
+      }
+    },
+    "frozen-spring-rolls": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "spring": 1,
+        "roll": 1
+      }
+    },
+    "frozen-squash": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "squash": 1
+      }
+    },
+    "frozen-squid": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "squid": 1
+      }
+    },
+    "frozen-stir-fry": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "stir": 1,
+        "fri": 1
+      }
+    },
+    "frozen-strawberries": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "strawberri": 1
+      }
+    },
+    "frozen-subs": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "sub": 1
+      }
+    },
+    "frozen-succotash": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "succotash": 1
+      }
+    },
+    "frozen-sweet-potatoes": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "sweet": 1,
+        "potato": 1
+      }
+    },
+    "frozen-tater-tots": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "tater": 1,
+        "tot": 1
+      }
+    },
+    "frozen-tenderloins": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "tenderloin": 1
+      }
+    },
+    "frozen-tortellini": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "tortellini": 1
+      }
+    },
+    "frozen-turkey": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "turkey": 1
+      }
+    },
+    "frozen-turkey-burgers": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "turkey": 1,
+        "burger": 1
+      }
+    },
+    "frozen-vegetable-juice": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "veget": 1,
+        "juic": 1
+      }
+    },
+    "frozen-vegetables": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "veget": 1
+      }
+    },
+    "frozen-waffles": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "waffl": 1,
+        "frozen": 1
+      }
+    },
+    "frozen-whipped-topping": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "whip": 1,
+        "top": 1
+      }
+    },
+    "frozen-whole-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "frozen": 1,
+        "whole": 1,
+        "turkey": 1
+      }
+    },
+    "frozen-yogurt": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "frozen": 1,
+        "yogurt": 1
+      }
+    },
+    "frozen-young-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "frozen": 1,
+        "young": 1,
+        "turkey": 1
+      }
+    },
+    "fruit": {
+      "rootCategory": ""
+    },
+    "garbanzo-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "garbanzo": 1,
+        "bean": 1
+      }
+    },
+    "garlic": {
+      "rootCategory": "produce",
+      "keywords": {
+        "garlic": 1
+      }
+    },
+    "garlic-and-herb-seasoning": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "garlic": 1,
+        "and": 1,
+        "herb": 1,
+        "season": 1
+      }
+    },
+    "garlic-bread": {
+      "rootCategory": "bakery",
+      "keywords": {
+        "garlic": 1,
+        "bread": 1
+      }
+    },
+    "garlic-cloves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "garlic": 1,
+        "clove": 1
+      }
+    },
+    "garlic-paste": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "garlic": 1,
+        "past": 1
+      }
+    },
+    "garlic-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "garlic": 1,
+        "powder": 1
+      }
+    },
+    "garlic-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "garlic": 1,
+        "salt": 1
+      }
+    },
+    "garlic-stalks": {
+      "rootCategory": "produce",
+      "keywords": {
+        "garlic": 1,
+        "stalk": 1
+      }
+    },
+    "gourmet-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "gourmet": 1,
+        "mustard": 1
+      }
+    },
+    "granulated-garlic": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "granul": 1,
+        "garlic": 1
+      }
+    },
+    "granulated-onion": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "granul": 1,
+        "onion": 1
+      }
+    },
+    "granulated-sea-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "granul": 1,
+        "sea": 1,
+        "salt": 1
+      }
+    },
+    "granulated-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "granul": 1,
+        "sugar": 1
+      }
+    },
+    "grape-seed-extract": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "grape": 1,
+        "seed": 1,
+        "extract": 1
+      }
+    },
+    "grape-soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "grape": 1,
+        "soda": 1
+      }
+    },
+    "grape-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "grape": 1,
+        "tomato": 1
+      }
+    },
+    "grapes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "grape": 1
+      }
+    },
+    "grapeseed-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "oil": 1,
+        "grapese|grape seed": 1,
+        "grape": 0,
+        "grapese": 0,
+        "seed": 0
+      }
+    },
+    "green-beans": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "bean": 1
+      }
+    },
+    "green-bell-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "pepper": 1,
+        "bell": 0
+      }
+    },
+    "green-cabbage": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "cabbag": 1
+      }
+    },
+    "green-chard": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "chard": 1
+      }
+    },
+    "green-chili-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "chili|chile|chilli": 1,
+        "pepper": 0,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "green-leaf-lettuce": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "leaf": 1,
+        "lettuc": 1
+      }
+    },
+    "green-olives": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "green": 1,
+        "oliv": 1,
+        "pit": 0
+      }
+    },
+    "green-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "onion": 1
+      }
+    },
+    "green-seedless-grapes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1,
+        "seedless": 1,
+        "grape": 1
+      }
+    },
+    "green-taco-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "green": 1,
+        "taco": 1,
+        "sauc": 1
+      }
+    },
+    "greens": {
+      "rootCategory": "produce",
+      "keywords": {
+        "green": 1
+      }
+    },
+    "ground-allspice": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "allspic": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-bay-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "ground|powder": 1,
+        "bay leaf|bay leav": 1,
+        "bay": 0,
+        "ground": 0,
+        "leaf": 0,
+        "leav": 0,
+        "powder": 0
+      }
+    },
+    "ground-beef": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "beef": 1
+      }
+    },
+    "ground-beef-patties": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "beef": 1,
+        "patti": 1
+      }
+    },
+    "ground-cardamom": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cardamom": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-celery-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "celeri": 1,
+        "seed": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-chicken": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "chicken": 1
+      }
+    },
+    "ground-chipotle-chile": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "chipotl": 1,
+        "chile": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-chuck": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "chuck": 1
+      }
+    },
+    "ground-cloves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "clove": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-coriander-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "coriand": 1,
+        "seed": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-cumin-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cumin": 1,
+        "seed": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-epazote-herb": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "epazot": 1,
+        "herb": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-fennel-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "fennel": 1,
+        "seed": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-flaxseed": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "ground": 1,
+        "flaxse": 1
+      }
+    },
+    "ground-ginger": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "ginger": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-jalapeno-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "jalapeno": 1,
+        "pepper": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-lamb": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "lamb": 1
+      }
+    },
+    "ground-meat": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "meat": 1
+      }
+    },
+    "ground-mustard": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "mustard": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-nutmeg": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "nutmeg": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-pork": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "pork": 1
+      }
+    },
+    "ground-rosemary-leaf": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "rosemari": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-round": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "round": 1
+      }
+    },
+    "ground-sirloin": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "sirloin": 1
+      }
+    },
+    "ground-thyme-leaf": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "thyme": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "turkey": 1
+      }
+    },
+    "ground-turmeric": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "turmer": 1,
+        "ground|powder": 1,
+        "ground": 0,
+        "powder": 0
+      }
+    },
+    "ground-veal": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ground": 1,
+        "veal": 1
+      }
+    },
+    "guajillo-chiles": {
+      "rootCategory": "produce",
+      "keywords": {
+        "guajillo": 1,
+        "chile": 1
+      }
+    },
+    "habanero-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "habanero": 1,
+        "pepper": 1
+      }
+    },
+    "habanero-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "habanero": 1,
+        "powder": 1
+      }
+    },
+    "hair-care": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "hair": 1,
+        "care": 1
+      }
+    },
+    "hair-oil": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "hair": 1,
+        "oil": 1
+      }
+    },
+    "half-and-half": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "half and half|half & half": 1,
+        "&": 0,
+        "and": 0,
+        "half": 0
+      }
+    },
+    "ham": {
+      "rootCategory": "meat",
+      "keywords": {
+        "ham": 1
+      }
+    },
+    "hand-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "hand": 1,
+        "cream": 1
+      }
+    },
+    "hatch-chili-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "hatch": 1,
+        "pepper": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "health-supplements": {
+      "rootCategory": "health-and-personal-care"
+    },
+    "heavy-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "heavi": 1,
+        "cream": 1
+      }
+    },
+    "hemorrhoid-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "hemorrhoid": 1,
+        "cream": 1
+      }
+    },
+    "herbs": {
+      "rootCategory": "cooking-and-baking"
+    },
+    "hoisin-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "hoisin": 1,
+        "sauc": 1
+      }
+    },
+    "hollandaise-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "hollandais": 1,
+        "sauc": 1
+      }
+    },
+    "honey-baked-ham": {
+      "rootCategory": "meat",
+      "keywords": {
+        "honey": 1,
+        "bake": 1,
+        "ham": 1
+      }
+    },
+    "honey-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "honey": 1,
+        "mustard": 1
+      }
+    },
+    "honey-mustard-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "honey": 1,
+        "mustard": 1,
+        "dress": 1,
+        "salad": 0
+      }
+    },
+    "horseradish-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "horseradish": 1,
+        "sauc": 1
+      }
+    },
+    "hot-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "hot": 1,
+        "mustard": 1
+      }
+    },
+    "hot-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "hot sauc": 1,
+        "hot": 0,
+        "sauc": 0
+      }
+    },
+    "hot-water-bottle": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "hot": 1,
+        "water": 1,
+        "bottl": 1
+      }
+    },
+    "hulled-sunflower-seeds": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "hull": 1,
+        "sunflow": 1,
+        "seed": 1
+      }
+    },
+    "ice-cream": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1
+      }
+    },
+    "ice-cream-bars": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "bar": 1
+      }
+    },
+    "ice-cream-cake": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "cake": 1
+      }
+    },
+    "ice-cream-cones": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "cone": 1
+      }
+    },
+    "ice-cream-cups": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "cup": 1
+      }
+    },
+    "ice-cream-novelties": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "novelti": 1
+      }
+    },
+    "ice-cream-sandwiches": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "ice": 1,
+        "cream": 1,
+        "sandwich": 1
+      }
+    },
+    "indian-corn": {
+      "rootCategory": "produce",
+      "keywords": {
+        "indian": 1,
+        "corn": 1
+      }
+    },
+    "jalapeno-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "jalapeno": 1,
+        "pepper": 0
+      }
+    },
+    "jelly": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "jelli": 1
+      }
+    },
+    "jelly-beans": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "jelli": 1,
+        "bean": 1
+      }
+    },
+    "juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "juic": 1,
+        "in juic": -1,
+        "with juic": -1,
+        "slice": -1
+      }
+    },
+    "kabobs": {
+      "rootCategory": "meat",
+      "keywords": {
+        "kabob": 1
+      }
+    },
+    "kettle-corn": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "kettl": 1,
+        "corn": 1
+      }
+    },
+    "key-lime-juice": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "key": 1,
+        "lime": 1,
+        "juic": 1
+      }
+    },
+    "kidney-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "kidney": 1,
+        "bean": 1
+      }
+    },
+    "kosher-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "kosher": 1,
+        "salt": 1
+      }
+    },
+    "lamb": {
+      "rootCategory": "meat",
+      "keywords": {
+        "lamb": 1
+      }
+    },
+    "lamb-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "lamb": 1,
+        "chop": 1
+      }
+    },
+    "lamb-loin-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "lamb": 1,
+        "loin": 1,
+        "chop": 1
+      }
+    },
+    "laundry-detergent": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "laundri": 1,
+        "deterg": 1
+      }
+    },
+    "laundry-powder": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "laundri": 1,
+        "powder": 1
+      }
+    },
+    "lettuce": {
+      "rootCategory": "produce",
+      "keywords": {
+        "lettuc": 1
+      }
+    },
+    "light-beer": {
+      "rootCategory": "wine-beer-spirits",
+      "keywords": {
+        "light": 1,
+        "beer": 1
+      }
+    },
+    "lightbulb": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "light bulb|lightbulb": 1,
+        "bulb": 0,
+        "light": 0,
+        "lightbulb": 0
+      }
+    },
+    "lime-juice": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "lime juic": 1,
+        "juic": 0,
+        "lime": 0
+      }
+    },
+    "limes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "lime": 1
+      }
+    },
+    "low-calorie-mayonnaise": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "low": 1,
+        "calori": 1,
+        "mayonais|mayonnais": 1,
+        "mayonais": 0,
+        "mayonnais": 0
+      }
+    },
+    "low-calorie-pancakes": {
+      "rootCategory": "breakfast-and-cereal",
+      "keywords": {
+        "low": 1,
+        "calori": 1,
+        "pancak": 1
+      }
+    },
+    "low-calorie-salad-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "low": 1,
+        "calori": 1,
+        "dress": 1,
+        "salad": 0
+      }
+    },
+    "low-calorie-syrup": {
+      "rootCategory": "breakfast-and-cereal",
+      "keywords": {
+        "low": 1,
+        "calori": 1,
+        "syrup": 1
+      }
+    },
+    "low-fat-popcorn": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "low": 1,
+        "fat": 1,
+        "popcorn": 1
+      }
+    },
+    "macaroni-and-cheese": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "macaroni and chees|macaroni & chees": 1,
+        "&": 0,
+        "and": 0,
+        "chees": 0,
+        "macaroni": 0
+      }
+    },
+    "mangoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "mango": 1
+      }
+    },
+    "marinara-sauce": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "marinara": 1,
+        "sauc": 1
+      }
+    },
+    "marjoram-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "marjoram leav|marjoram leaf": 1,
+        "leaf": 0,
+        "leav": 0,
+        "marjoram": 0
+      }
+    },
+    "masala-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "masala": 1,
+        "powder": 1
+      }
+    },
+    "meat-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "meat": 1,
+        "sauc": 1
+      }
+    },
+    "mexican-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "mexican": 1,
+        "sauc": 1
+      }
+    },
+    "mexican-tomato-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "mexican": 1,
+        "tomato": 1,
+        "sauc": 1
+      }
+    },
+    "milk": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "milk": 1
+      }
+    },
+    "milk-low-fat": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "milk": 1,
+        "low": 1,
+        "fat": 1
+      }
+    },
+    "minced-garlic": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "minc": 1,
+        "garlic": 1
+      }
+    },
+    "minced-onions": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "minc": 1,
+        "onion": 1
+      }
+    },
+    "minced-roasted-garlic": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "minc": 1,
+        "roast": 1,
+        "garlic": 1
+      }
+    },
+    "mineral-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "miner": 1,
+        "water": 1
+      }
+    },
+    "mixed-vegetables": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "mix": 1,
+        "veget": 1
+      }
+    },
+    "monterey-jack-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "monterey": 1,
+        "jack": 1,
+        "chees": 1
+      }
+    },
+    "mushroom-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "mushroom": 1,
+        "sauc": 1
+      }
+    },
+    "mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "mushroom": 1
+      }
+    },
+    "mustache-and-beard-color": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "mustach": 1,
+        "and": 1,
+        "beard": 1,
+        "color": 1
+      }
+    },
+    "mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "mustard": 1
+      }
+    },
+    "mustard-greens": {
+      "rootCategory": "produce",
+      "keywords": {
+        "mustard": 1,
+        "green": 1
+      }
+    },
+    "mustard-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "mustard": 1,
+        "powder": 1
+      }
+    },
+    "mustard-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "mustard": 1,
+        "seed": 1
+      }
+    },
+    "newburg-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "newburg": 1,
+        "sauc": 1
+      }
+    },
+    "non-flavored-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "non": 1,
+        "flavor": 1,
+        "oil": 1,
+        "non-flavor": 1
+      }
+    },
+    "nuts-and-trail-mix": {
+      "rootCategory": "snacks-cookies-and-candy"
+    },
+    "oil": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oil": 1
+      }
+    },
+    "oil-and-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oil": 1,
+        "and": 1,
+        "vinegar": 1
+      }
+    },
+    "okra": {
+      "rootCategory": "produce",
+      "keywords": {
+        "okra": 1
+      }
+    },
+    "old-bay-seasoning": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "old": 1,
+        "bay": 1,
+        "season": 1
+      }
+    },
+    "olive-oil": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oliv": 1,
+        "oil": 1
+      }
+    },
+    "olive-oil-cooking-spray": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "spray": 1,
+        "oliv oil": 1,
+        "cook": 0,
+        "oil": 0,
+        "oliv": 0
+      }
+    },
+    "olives": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oliv": 1
+      }
+    },
+    "onion-dip": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "onion": 1,
+        "dip": 1
+      }
+    },
+    "onion-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "onion": 1,
+        "powder": 1
+      }
+    },
+    "onion-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "onion": 1,
+        "salt": 1
+      }
+    },
+    "onion-soup-mix": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "onion": 1,
+        "soup": 1,
+        "mix": 1
+      }
+    },
+    "onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "onion": 1
+      }
+    },
+    "oral-care": {
+      "rootCategory": "health-and-personal-care"
+    },
+    "orange-blossom-water": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "orang": 1,
+        "blossom": 1,
+        "water": 1
+      }
+    },
+    "orange-juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "orang": 1,
+        "juic": 1,
+        "juic of": -1
+      }
+    },
+    "orange-soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "orang": 1,
+        "soda": 1
+      }
+    },
+    "oranges": {
+      "rootCategory": "produce",
+      "keywords": {
+        "orang": 1
+      }
+    },
+    "oregano": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "oregano": 1
+      }
+    },
+    "organic-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "organ": 1,
+        "sugar": 1
+      }
+    },
+    "oriental-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "orient": 1,
+        "sauc": 1
+      }
+    },
+    "orris-root-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "orri": 1,
+        "root": 1,
+        "powder": 1
+      }
+    },
+    "oyster-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "oyster": 1,
+        "sauc": 1
+      }
+    },
+    "pain-relief": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "pain": 1,
+        "relief": 1
+      }
+    },
+    "palm-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "palm": 1,
+        "oil": 1
+      }
+    },
+    "parsley": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "parsley": 1,
+        "dri": 0
+      }
+    },
+    "pasilla-chiles": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pasilla": 1,
+        "chile": 1
+      }
+    },
+    "pasta": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "pasta": 1
+      }
+    },
+    "pasta-sauce": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "pasta": 1,
+        "sauc": 1
+      }
+    },
+    "peaches": {
+      "rootCategory": "produce",
+      "keywords": {
+        "peach": 1
+      }
+    },
+    "peanut-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "peanut": 1,
+        "oil": 1
+      }
+    },
+    "peanut-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "peanut": 1,
+        "sauc": 1
+      }
+    },
+    "pears": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pear": 1
+      }
+    },
+    "peas": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pea": 1
+      }
+    },
+    "pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "pepper": 1,
+        "dr.": -1,
+        "dr": -1
+      }
+    },
+    "pepper-jack-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "pepper": 1,
+        "jack": 1,
+        "chees": 0
+      }
+    },
+    "peppercorn-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "peppercorn": 1,
+        "sauc": 1
+      }
+    },
+    "peppercorns": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "pepper corn|peppercorn": 1,
+        "corn": 0,
+        "pepper": 0,
+        "peppercorn": 0
+      }
+    },
+    "pesto-sauce": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "pesto": 1,
+        "sauc": 0
+      }
+    },
+    "pickled-jalapenos": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "pickl": 1,
+        "jalapeno": 1
+      }
+    },
+    "pickled-onion": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "pickl": 1,
+        "onion": 1
+      }
+    },
+    "pickling-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "pickl": 1,
+        "salt": 1
+      }
+    },
+    "pineapple": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pineappl": 1,
+        "juic": -1
+      }
+    },
+    "pinto-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "pinto": 1,
+        "bean": 1
+      }
+    },
+    "pizza": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "pizza": 1
+      }
+    },
+    "pizza-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "pizza": 1,
+        "sauc": 1
+      }
+    },
+    "plum-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "plum": 1,
+        "tomato": 1
+      }
+    },
+    "poblano-pepper": {
+      "rootCategory": "produce",
+      "keywords": {
+        "poblano": 1,
+        "pepper": 1
+      }
+    },
+    "pomegranate-seeds": {
+      "rootCategory": "produce",
+      "keywords": {
+        "pomegran": 1,
+        "seed": 1
+      }
+    },
+    "pop": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "pop": 1,
+        "pop tart": -1
+      }
+    },
+    "popcorn": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "popcorn": 1
+      }
+    },
+    "poppy-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "poppi": 1,
+        "seed": 1
+      }
+    },
+    "poppy-seed-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "poppi": 1,
+        "seed": 1,
+        "dress": 1,
+        "salad": 0
+      }
+    },
+    "pork": {
+      "rootCategory": "meat",
+      "keywords": {
+        "pork": 1
+      }
+    },
+    "pork-chop-seasoning": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "pork": 1,
+        "chop": 1,
+        "season": 1
+      }
+    },
+    "pork-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "pork": 1,
+        "chop": 1
+      }
+    },
+    "pork-loin-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "pork": 1,
+        "loin": 1,
+        "chop": 1
+      }
+    },
+    "pork-sausage": {
+      "rootCategory": "meat",
+      "keywords": {
+        "pork": 1,
+        "sausag": 1,
+        "ground": 0
+      }
+    },
+    "potato-chips": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "potato": 1,
+        "chip": 1
+      }
+    },
+    "potatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "potato": 1
+      }
+    },
+    "poultry": {
+      "rootCategory": "meat",
+      "keywords": {
+        "poultri": 1
+      }
+    },
+    "powdered-cleaner": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "powder": 1,
+        "cleaner": 1
+      }
+    },
+    "powdered-lemon-peel": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "powder": 1,
+        "lemon": 1,
+        "peel": 1
+      }
+    },
+    "powdered-milk": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "powder": 1,
+        "milk": 1
+      }
+    },
+    "powdered-orange-peel": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "powder": 1,
+        "orang": 1,
+        "peel": 1
+      }
+    },
+    "powdered-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "powder": 1,
+        "sugar": 1
+      }
+    },
+    "protein-powder": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "protein": 1,
+        "powder": 1
+      }
+    },
+    "pumpkin-seeds": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "pumpkin": 1,
+        "seed": 1
+      }
+    },
+    "raspberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "raspberri": 1
+      }
+    },
+    "ready-to-bake-cookies": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "readi": 1,
+        "to": 1,
+        "bake": 1,
+        "cooki": 1
+      }
+    },
+    "ready-to-bake-rolls": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "readi": 1,
+        "to": 1,
+        "bake": 1,
+        "roll": 1
+      }
+    },
+    "red-bell-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "bell": 1,
+        "pepper": 1
+      }
+    },
+    "red-cabbage": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "cabbag": 1
+      }
+    },
+    "red-chard": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "chard": 1
+      }
+    },
+    "red-chili-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "chili|chile|chilli": 1,
+        "pepper": 0,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "red-curry-paste": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "red": 1,
+        "curri": 1,
+        "past": 1
+      }
+    },
+    "red-delicious-apples": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "delici": 1,
+        "appl": 1
+      }
+    },
+    "red-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "onion": 1
+      }
+    },
+    "red-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "red": 1,
+        "pepper": 1
+      }
+    },
+    "red-pepper-flakes": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "hot|red|chili": 1,
+        "pepper flake": 1,
+        "chili": 0,
+        "flake": 0,
+        "hot": 0,
+        "pepper": 0,
+        "red": 0
+      }
+    },
+    "red-pepper-jelly": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "red": 1,
+        "pepper": 1,
+        "jelli": 1
+      }
+    },
+    "red-potatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "potato": 1
+      }
+    },
+    "red-seedless-grapes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "red": 1,
+        "seedless": 1,
+        "grape": 1
+      }
+    },
+    "red-snapper": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "red": 1,
+        "snapper": 1
+      }
+    },
+    "red-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "red": 1,
+        "vinegar": 1
+      }
+    },
+    "red-wine": {
+      "rootCategory": "wine-beer-spirits",
+      "keywords": {
+        "red": 1,
+        "wine": 1
+      }
+    },
+    "red-wine-barbecue-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "red": 1,
+        "wine": 1,
+        "barbecu": 1,
+        "sauc": 1
+      }
+    },
+    "red-wine-salad-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "dress": 1,
+        "salad": 0,
+        "red wine": 1,
+        "red": 0,
+        "wine": 0
+      }
+    },
+    "red-wine-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "red": 1,
+        "wine": 1,
+        "vinegar": 1
+      }
+    },
+    "refried-beans": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "refri": 1,
+        "bean": 1
+      }
+    },
+    "rice": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "rice": 1
+      }
+    },
+    "roasted-peanut-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "roast": 1,
+        "peanut": 1,
+        "oil": 1
+      }
+    },
+    "roasted-peppers": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "roast": 1,
+        "pepper": 1
+      }
+    },
+    "roasted-sweet-corn": {
+      "rootCategory": "produce",
+      "keywords": {
+        "roast": 1,
+        "sweet": 1,
+        "corn": 1
+      }
+    },
+    "roma-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "roma": 1,
+        "tomato": 1
+      }
+    },
+    "rotisserie-turkey-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "rotisseri": 1,
+        "turkey": 1,
+        "breast": 1
+      }
+    },
+    "safflower-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "safflow": 1,
+        "oil": 1
+      }
+    },
+    "salad": {
+      "rootCategory": "produce",
+      "keywords": {
+        "salad": 1
+      }
+    },
+    "salad-dressing": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "salad dress": 1,
+        "dress": 0,
+        "salad": 0
+      }
+    },
+    "salad-greens": {
+      "rootCategory": "produce",
+      "keywords": {
+        "salad": 1,
+        "green": 1
+      }
+    },
+    "salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "salt": 1
+      }
+    },
+    "salt-and-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "salt": 1,
+        "pepper": 1
+      }
+    },
+    "salt-cod": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "salt": 1,
+        "cod": 1
+      }
+    },
+    "salt-cod-fillet": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "salt": 1,
+        "cod": 1,
+        "fillet": 1
+      }
+    },
+    "salt-pork": {
+      "rootCategory": "meat",
+      "keywords": {
+        "salt pork": 1,
+        "pork": 0,
+        "salt": 0
+      }
+    },
+    "salt-substitute": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "salt": 1,
+        "substitut": 1
+      }
+    },
+    "salt-water-softener": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "salt": 1,
+        "water": 1,
+        "soften": 1
+      }
+    },
+    "salted-butter": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "salt": 1,
+        "butter": 1
+      }
+    },
+    "sausage": {
+      "rootCategory": "meat",
+      "keywords": {
+        "sausag": 1
+      }
+    },
+    "scallions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "scallion": 1,
+        "green": 0
+      }
+    },
+    "sea-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sea": 1,
+        "salt": 1
+      }
+    },
+    "seafood-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "seafood": 1,
+        "sauc": 1
+      }
+    },
+    "seeds": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "seed": 1
+      }
+    },
+    "seltzer-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "seltzer": 1,
+        "water": 1
+      }
+    },
+    "serrano-chiles": {
+      "rootCategory": "produce",
+      "keywords": {
+        "serrano": 1,
+        "chile": 1
+      }
+    },
+    "sesame-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sesam": 1,
+        "oil": 1
+      }
+    },
+    "sesame-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sesam": 1,
+        "seed": 1
+      }
+    },
+    "shaving-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "shave": 1,
+        "cream": 1
+      }
+    },
+    "shaving-needs": {
+      "rootCategory": "health-and-personal-care"
+    },
+    "shellfish": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "shellfish": 1
+      }
+    },
+    "shiitake-mushrooms": {
+      "rootCategory": "produce",
+      "keywords": {
+        "shiitak": 1,
+        "mushroom": 1
+      }
+    },
+    "shredded-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "shred": 1,
+        "chees": 1
+      }
+    },
+    "shredded-coconut": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "shred": 1,
+        "coconut": 1,
+        "sweeten": 0
+      }
+    },
+    "shredded-oats": {
+      "rootCategory": "breakfast-and-cereal",
+      "keywords": {
+        "shred": 1,
+        "oat": 1
+      }
+    },
+    "shrimp": {
+      "rootCategory": "seafood",
+      "keywords": {
+        "shrimp": 1
+      }
+    },
+    "silver-cream": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "silver": 1,
+        "cream": 1
+      }
+    },
+    "skin-cream": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "skin": 1,
+        "cream": 1
+      }
+    },
+    "sliced-cheese": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "slice": 1,
+        "chees": 1
+      }
+    },
+    "smoked-sea-salt": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "smoke": 1,
+        "sea": 1,
+        "salt": 1
+      }
+    },
+    "snacks": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "snack": 1
+      }
+    },
+    "soda": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "soda": 1
+      }
+    },
+    "soda-pop": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "soda": 1,
+        "pop": 1
+      }
+    },
+    "soft-drink": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "soft": 1,
+        "drink": 1
+      }
+    },
+    "solvent-drain-cleaners": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "solvent": 1,
+        "drain": 1,
+        "cleaner": 1,
+        "&": 1
+      }
+    },
+    "soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "soup": 1
+      }
+    },
+    "soup-mix": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "soup": 1,
+        "mix": 1
+      }
+    },
+    "sour-candy": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "sour": 1,
+        "candi": 1
+      }
+    },
+    "sour-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "sour": 1,
+        "cream": 1
+      }
+    },
+    "soy-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "soy": 1,
+        "sauc": 1
+      }
+    },
+    "soybean-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "soybean": 1,
+        "oil": 1
+      }
+    },
+    "spaghetti-sauce": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "spaghetti": 1,
+        "sauc": 1
+      }
+    },
+    "sparkling-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "sparkl": 1,
+        "water": 1
+      }
+    },
+    "spearmint-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "spearmint leav|spearmint leaf": 1,
+        "leaf": 0,
+        "leav": 0,
+        "spearmint": 0
+      }
+    },
+    "spices-and-herbs": {
+      "rootCategory": "cooking-and-baking"
+    },
+    "spicy-mushrooms": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "spici": 1,
+        "mushroom": 1
+      }
+    },
+    "spinach": {
+      "rootCategory": "produce",
+      "keywords": {
+        "spinach": 1
+      }
+    },
+    "split-chicken-breasts": {
+      "rootCategory": "meat",
+      "keywords": {
+        "split": 1,
+        "chicken": 1,
+        "breast": 1
+      }
+    },
+    "spring-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "spring": 1,
+        "onion": 1
+      }
+    },
+    "spring-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "spring": 1,
+        "water": 1
+      }
+    },
+    "squash": {
+      "rootCategory": "produce",
+      "keywords": {
+        "squash": 1
+      }
+    },
+    "stadium-mustard": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "stadium": 1,
+        "mustard": 1
+      }
+    },
+    "steak-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "steak": 1,
+        "sauc": 1
+      }
+    },
+    "stewed-tomatoes": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "stew": 1,
+        "tomato": 1
+      }
+    },
+    "strawberries": {
+      "rootCategory": "produce",
+      "keywords": {
+        "strawberri": 1
+      }
+    },
+    "strawberry-ice-cream": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "strawberri": 1,
+        "ice": 1,
+        "cream": 1
+      }
+    },
+    "sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sugar": 1
+      }
+    },
+    "sugar-blend": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sugar": 1,
+        "blend": 1
+      }
+    },
+    "sugar-cones": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "sugar": 1,
+        "cone": 1
+      }
+    },
+    "sugar-snap-peas": {
+      "rootCategory": "produce",
+      "keywords": {
+        "sugar": 1,
+        "snap": 1,
+        "pea": 1
+      }
+    },
+    "sugar-substitute": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sugar": 1,
+        "substitut": 1
+      }
+    },
+    "sun-dried-tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "sun": 1,
+        "dri": 1,
+        "tomato": 1
+      }
+    },
+    "sunflower-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "sunflow": 1,
+        "oil": 1
+      }
+    },
+    "sunflower-seeds": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "sunflow": 1,
+        "seed": 1
+      }
+    },
+    "sweet-and-sour-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "sweet": 1,
+        "and": 1,
+        "sour": 1,
+        "sauc": 1
+      }
+    },
+    "sweet-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "sweet": 1,
+        "onion": 1
+      }
+    },
+    "szechuan-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "szechuan": 1,
+        "pepper": 1
+      }
+    },
+    "szechuan-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "szechuan": 1,
+        "sauc": 1
+      }
+    },
+    "taco-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "taco": 1,
+        "sauc": 1
+      }
+    },
+    "talcum-powder": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "talcum": 1,
+        "powder": 1
+      }
+    },
+    "tarragon-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "tarragon leaf|tarragon leav": 1,
+        "leaf": 0,
+        "leav": 0,
+        "tarragon": 0
+      }
+    },
+    "tartar-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "tartar": 1,
+        "sauc": 1
+      }
+    },
+    "teriyaki-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "teriyaki": 1,
+        "sauc": 1
+      }
+    },
+    "thai-palm-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "thai": 1,
+        "palm": 1,
+        "sugar": 1
+      }
+    },
+    "toasted-onion": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "toast": 1,
+        "onion": 1
+      }
+    },
+    "tomato-juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "tomato": 1,
+        "juic": 1
+      }
+    },
+    "tomato-paste": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "tomato": 1,
+        "past": 1
+      }
+    },
+    "tomato-puree": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "tomato": 1,
+        "pure": 1
+      }
+    },
+    "tomato-sauce": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "tomato": 1,
+        "sauc": 1
+      }
+    },
+    "tomato-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "tomato": 1,
+        "soup": 1
+      }
+    },
+    "tomatoes": {
+      "rootCategory": "produce",
+      "keywords": {
+        "tomato": 1
+      }
+    },
+    "tonic-water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "tonic": 1,
+        "water": 1
+      }
+    },
+    "tortilla-chips": {
+      "rootCategory": "snacks-cookies-and-candy",
+      "keywords": {
+        "tortilla": 1,
+        "chip": 1
+      }
+    },
+    "tortillas": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "tortilla": 1
+      }
+    },
+    "turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "turkey": 1
+      }
+    },
+    "turkey-breast": {
+      "rootCategory": "meat",
+      "keywords": {
+        "turkey": 1,
+        "breast": 1
+      }
+    },
+    "turkey-chili": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "turkey": 1,
+        "chili|chile|chilli": 1,
+        "chile": 0,
+        "chili": 0,
+        "chilli": 0
+      }
+    },
+    "vanilla-beans": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "vanilla": 1,
+        "bean": 1
+      }
+    },
+    "vanilla-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "vanilla": 1,
+        "powder": 1
+      }
+    },
+    "vanilla-sugar": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "vanilla": 1,
+        "sugar": 1
+      }
+    },
+    "veal": {
+      "rootCategory": "meat",
+      "keywords": {
+        "veal": 1
+      }
+    },
+    "veal-chops": {
+      "rootCategory": "meat",
+      "keywords": {
+        "veal": 1,
+        "chop": 1
+      }
+    },
+    "vegetable-broth": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "veget": 1,
+        "broth": 1
+      }
+    },
+    "vegetable-juice": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "veget": 1,
+        "juic": 1
+      }
+    },
+    "vegetable-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "veget": 1,
+        "oil": 1
+      }
+    },
+    "vegetable-oil-cooking-spray": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "spray": 1,
+        "veget oil": 1,
+        "cook": 0,
+        "oil": 0,
+        "veget": 0
+      }
+    },
+    "vegetable-soup": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "veget": 1,
+        "soup": 1
+      }
+    },
+    "vegetable-stock": {
+      "rootCategory": "soups-and-canned-goods",
+      "keywords": {
+        "veget": 1,
+        "stock": 1
+      }
+    },
+    "vegetable-tray": {
+      "rootCategory": "produce",
+      "keywords": {
+        "veget": 1,
+        "tray": 1
+      }
+    },
+    "vegetables": {
+      "rootCategory": ""
+    },
+    "vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "vinegar": 1
+      }
+    },
+    "waffles": {
+      "rootCategory": "frozen-foods",
+      "keywords": {
+        "waffl": 1
+      }
+    },
+    "walnut-oil": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "walnut": 1,
+        "oil": 1
+      }
+    },
+    "wasabi-powder": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "wasabi": 1,
+        "powder": 1
+      }
+    },
+    "water": {
+      "rootCategory": "beverages",
+      "keywords": {
+        "water": 1
+      }
+    },
+    "water-softener": {
+      "rootCategory": "household-and-cleaning",
+      "keywords": {
+        "water": 1,
+        "soften": 1
+      }
+    },
+    "whey-powder": {
+      "rootCategory": "health-and-personal-care",
+      "keywords": {
+        "whey": 1,
+        "powder": 1
+      }
+    },
+    "whipped-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "whip": 1,
+        "cream": 1
+      }
+    },
+    "whipping-cream": {
+      "rootCategory": "dairy",
+      "keywords": {
+        "whip": 1,
+        "cream": 1
+      }
+    },
+    "white-bread": {
+      "rootCategory": "bakery",
+      "keywords": {
+        "white": 1,
+        "bread": 1
+      }
+    },
+    "white-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "white": 1,
+        "onion": 1
+      }
+    },
+    "white-pepper": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "white": 1,
+        "pepper": 1
+      }
+    },
+    "white-rice": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "white rice": 1,
+        "rice": 0,
+        "white": 0
+      }
+    },
+    "white-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "white": 1,
+        "sauc": 1
+      }
+    },
+    "white-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "white": 1,
+        "vinegar": 1
+      }
+    },
+    "white-wine": {
+      "rootCategory": "wine-beer-spirits",
+      "keywords": {
+        "white": 1,
+        "wine": 1
+      }
+    },
+    "white-wine-vinegar": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "white": 1,
+        "wine": 1,
+        "vinegar": 1
+      }
+    },
+    "whole-bay-leaves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "whole": 1,
+        "bay leaf|bay leav": 1,
+        "bay": 0,
+        "leaf": 0,
+        "leav": 0
+      }
+    },
+    "whole-celery-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "whole": 0,
+        "celeri seed": 1,
+        "ground": -1,
+        "celeri": 0,
+        "seed": 0
+      }
+    },
+    "whole-chicken": {
+      "rootCategory": "meat",
+      "keywords": {
+        "whole": 1,
+        "chicken": 1,
+        "breast": -1
+      }
+    },
+    "whole-cloves": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "clove": 1,
+        "whole": 0
+      }
+    },
+    "whole-coriander-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "coriand seed": 1,
+        "whole": 0,
+        "ground": -1,
+        "coriand": 0,
+        "seed": 0
+      }
+    },
+    "whole-cumin-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "cumin seed": 1,
+        "whole": 0,
+        "ground": -1,
+        "cumin": 0,
+        "seed": 0
+      }
+    },
+    "whole-cut-up-chicken": {
+      "rootCategory": "meat",
+      "keywords": {
+        "whole": 1,
+        "cut": 1,
+        "up": 1,
+        "chicken": 1
+      }
+    },
+    "whole-fennel-seed": {
+      "rootCategory": "cooking-and-baking",
+      "keywords": {
+        "fennel seed": 1,
+        "whole": 0,
+        "ground": -1,
+        "fennel": 0,
+        "seed": 0
+      }
+    },
+    "whole-turkey": {
+      "rootCategory": "meat",
+      "keywords": {
+        "whole": 1,
+        "turkey": 1
+      }
+    },
+    "whole-wheat-tortillas": {
+      "rootCategory": "grains-pasta-and-side-dishes",
+      "keywords": {
+        "whole": 1,
+        "wheat": 1,
+        "tortilla": 1
+      }
+    },
+    "wine": {
+      "rootCategory": "wine-beer-spirits",
+      "keywords": {
+        "wine": 1
+      }
+    },
+    "worcestershire-sauce": {
+      "rootCategory": "condiments-oils-and-salad-dressings",
+      "keywords": {
+        "sauc": 1,
+        "worcest|worcestershir": 1,
+        "worcest": 0,
+        "worcestershir": 0
+      }
+    },
+    "yams": {
+      "rootCategory": "produce",
+      "keywords": {
+        "yam": 1
+      }
+    },
+    "yellow-bell-peppers": {
+      "rootCategory": "produce",
+      "keywords": {
+        "yellow": 1,
+        "bell": 1,
+        "pepper": 1
+      }
+    },
+    "yellow-onions": {
+      "rootCategory": "produce",
+      "keywords": {
+        "yellow": 1,
+        "onion": 1
+      }
+    },
+    "yellow-squash": {
+      "rootCategory": "produce",
+      "keywords": {
+        "yellow": 1,
+        "squash": 1
+      }
+    }
+  },
+  "impliedTags": {
+    "adobo-sauce": [
+      "ethnic"
+    ],
+    "amchoor-powder": [
+      "spices-and-herbs"
+    ],
+    "ancho-chili-pepper": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "ancho-chili-powder": [
+      "spices-and-herbs"
+    ],
+    "anise-seed": [
+      "spices-and-herbs"
+    ],
+    "apples": [
+      "fruit"
+    ],
+    "apricots": [
+      "fruit"
+    ],
+    "arrowroot-powder": [
+      "spices-and-herbs"
+    ],
+    "artichokes": [
+      "vegetables"
+    ],
+    "asparagus": [
+      "vegetables"
+    ],
+    "avocados": [
+      "fresh-fruit",
+      "fruit"
+    ],
+    "baby-bella-mushrooms": [
+      "mushrooms",
+      "vegetables"
+    ],
+    "baked-beans": [
+      "canned-beans"
+    ],
+    "bananas": [
+      "fruit"
+    ],
+    "bay-leaves": [
+      "spices-and-herbs"
+    ],
+    "bbq-sauce": [
+      "condiments"
+    ],
+    "bean-soup": [
+      "soup"
+    ],
+    "bean-sprouts": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "beans": [
+      "vegetables"
+    ],
+    "beef-broth": [
+      "broth"
+    ],
+    "bell-peppers": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "berries": [
+      "fruit"
+    ],
+    "bird-seed": [
+      "bird-food"
+    ],
+    "black-olives": [
+      "condiments",
+      "olives"
+    ],
+    "black-pepper": [
+      "spices-and-herbs"
+    ],
+    "black-peppercorn": [
+      "spices-and-herbs"
+    ],
+    "black-sea-salt": [
+      "spices-and-herbs"
+    ],
+    "blackberries": [
+      "berries",
+      "fruit"
+    ],
+    "blueberries": [
+      "berries",
+      "fruit"
+    ],
+    "boneless-pork-chops": [
+      "pork",
+      "pork-chops"
+    ],
+    "boneless-pork-loin-chops": [
+      "pork",
+      "pork-chops"
+    ],
+    "boneless-pork-sirloin-chops": [
+      "pork",
+      "pork-chops"
+    ],
+    "boneless-skinless-chicken-breast": [
+      "chicken",
+      "chicken-breast",
+      "poultry"
+    ],
+    "bottled-water": [
+      "water"
+    ],
+    "broccoli": [
+      "vegetables"
+    ],
+    "broccoli-florets": [
+      "vegetables"
+    ],
+    "broccoli-in-cheese-sauce": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "brown-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "brown-rice": [
+      "rice"
+    ],
+    "brussels-sprouts": [
+      "vegetables"
+    ],
+    "butter": [
+      "butter-and-margarine"
+    ],
+    "button-mushrooms": [
+      "mushrooms",
+      "vegetables"
+    ],
+    "campari-tomatoes": [
+      "fresh-tomatoes",
+      "fresh-vegetables",
+      "tomatoes",
+      "vegetables"
+    ],
+    "canned-baby-corn": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-bean-sprouts": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-black-beans": [
+      "black-beans",
+      "canned-beans"
+    ],
+    "canned-black-eye-peas": [
+      "canned-beans"
+    ],
+    "canned-broth": [
+      "broth"
+    ],
+    "canned-chicken": [
+      "canned-meat"
+    ],
+    "canned-chili": [
+      "chili"
+    ],
+    "canned-collard-greens": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-corn": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-corned-beef": [
+      "canned-meat"
+    ],
+    "canned-fruit": [
+      "fruit"
+    ],
+    "canned-garbanzo-beans": [
+      "canned-beans",
+      "garbanzo-beans"
+    ],
+    "canned-green-beans": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-kidney-beans": [
+      "beans",
+      "canned-beans",
+      "kidney-beans",
+      "vegetables"
+    ],
+    "canned-lima-beans": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-mushrooms": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-navy-beans": [
+      "canned-beans"
+    ],
+    "canned-onions": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-peas-beans": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-pineapple": [
+      "canned-fruit",
+      "fruit",
+      "pineapple"
+    ],
+    "canned-pinto-beans": [
+      "beans",
+      "canned-beans",
+      "pinto-beans",
+      "vegetables"
+    ],
+    "canned-refried-beans": [
+      "beans",
+      "canned-beans",
+      "refried-beans",
+      "vegetables"
+    ],
+    "canned-string-beans": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-tomato-paste": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-tomato-sauce": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-tomatoes": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-vegetables": [
+      "vegetables"
+    ],
+    "canned-water-chestnuts": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-waxed-beans": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "canned-white-beans": [
+      "canned-beans"
+    ],
+    "canned-whole-baby-corn": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "cannellini-beans": [
+      "beans",
+      "vegetables"
+    ],
+    "canola-oil": [
+      "cooking-oil"
+    ],
+    "canola-oil-cooking-spray": [
+      "cooking-spray"
+    ],
+    "caramel-corn": [
+      "snacks"
+    ],
+    "caraway-seeds": [
+      "spices-and-herbs"
+    ],
+    "carbonated-water": [
+      "water"
+    ],
+    "carrots": [
+      "vegetables"
+    ],
+    "cauliflower": [
+      "vegetables"
+    ],
+    "cayenne-pepper": [
+      "spices-and-herbs"
+    ],
+    "celery-seeds": [
+      "spices-and-herbs"
+    ],
+    "cherries": [
+      "fruit"
+    ],
+    "cherry-tomatoes": [
+      "tomatoes",
+      "vegetables"
+    ],
+    "chicken": [
+      "poultry"
+    ],
+    "chicken-breast": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-broth": [
+      "broth"
+    ],
+    "chicken-chili": [
+      "chili"
+    ],
+    "chicken-corn-chowder": [
+      "soup"
+    ],
+    "chicken-cutlets": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-drumsticks": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-kabobs": [
+      "chicken",
+      "kabobs",
+      "poultry"
+    ],
+    "chicken-legs": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-livers": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-meatballs": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-noodle-soup": [
+      "soup"
+    ],
+    "chicken-nuggets": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-patties": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-rice-soup": [
+      "soup"
+    ],
+    "chicken-sausage": [
+      "sausage"
+    ],
+    "chicken-stock": [
+      "cooking-stock"
+    ],
+    "chicken-strips": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-tenders": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-thighs": [
+      "chicken",
+      "poultry"
+    ],
+    "chicken-wings": [
+      "chicken",
+      "poultry"
+    ],
+    "chile-pepper": [
+      "spices-and-herbs"
+    ],
+    "chili-dried-mango": [
+      "dried-fruit",
+      "fruit",
+      "mangoes"
+    ],
+    "chili-no-beans": [
+      "chili"
+    ],
+    "chili-peppers": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "chili-powder": [
+      "spices-and-herbs"
+    ],
+    "chili-with-beans": [
+      "chili"
+    ],
+    "chilies": [
+      "vegetables"
+    ],
+    "chipotle-pepper": [
+      "spices-and-herbs"
+    ],
+    "chipotle-rub": [
+      "spices-and-herbs"
+    ],
+    "chocolate-chip-cookies": [
+      "cookies"
+    ],
+    "chocolate-ice-cream": [
+      "ice-cream"
+    ],
+    "chopped-chives": [
+      "spices-and-herbs"
+    ],
+    "chopped-nuts": [
+      "baking-nuts"
+    ],
+    "chopped-pecans": [
+      "baking-nuts"
+    ],
+    "chopped-walnuts": [
+      "baking-nuts"
+    ],
+    "cilantro": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "cilantro-leaf": [
+      "spices-and-herbs"
+    ],
+    "clementines": [
+      "fresh-fruit",
+      "fruit"
+    ],
+    "club-soda": [
+      "pop",
+      "soda",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "cocktail-sauce": [
+      "condiments"
+    ],
+    "coconut-oil": [
+      "cooking-oil"
+    ],
+    "cod": [
+      "fish"
+    ],
+    "collard-greens": [
+      "vegetables"
+    ],
+    "condensed-cream-of-mushroom-soup": [
+      "condensed-soup",
+      "soup"
+    ],
+    "condensed-soup": [
+      "soup"
+    ],
+    "condensed-tomato-soup": [
+      "condensed-soup",
+      "soup"
+    ],
+    "corn": [
+      "vegetables"
+    ],
+    "corn-chips": [
+      "chips"
+    ],
+    "corn-oil": [
+      "cooking-oil"
+    ],
+    "corn-on-the-cob": [
+      "corn",
+      "fresh-corn",
+      "fresh-sweet-corn",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "corn-tortillas": [
+      "ethnic",
+      "tortillas"
+    ],
+    "corned-beef": [
+      "beef"
+    ],
+    "cream-cheese": [
+      "cheese"
+    ],
+    "cream-of-chicken-soup": [
+      "soup"
+    ],
+    "cream-of-tartar": [
+      "spices-and-herbs"
+    ],
+    "cream-soda": [
+      "pop",
+      "soda",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "creamed-corn": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "cremini-mushrooms": [
+      "mushrooms",
+      "vegetables"
+    ],
+    "crushed-tomatoes": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "cumin": [
+      "spices-and-herbs"
+    ],
+    "curry-paste": [
+      "ethnic"
+    ],
+    "curry-powder": [
+      "spices-and-herbs"
+    ],
+    "de-arbol-powder": [
+      "spices-and-herbs"
+    ],
+    "denture-cream": [
+      "oral-care"
+    ],
+    "diced-tomatoes": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "diet-cola": [
+      "diet-pop",
+      "diet-soda",
+      "diet-soft-drink"
+    ],
+    "diet-pop": [
+      "diet-cola",
+      "diet-soda",
+      "diet-soft-drink"
+    ],
+    "diet-soda": [
+      "diet-cola",
+      "diet-pop",
+      "diet-soft-drink"
+    ],
+    "diet-soft-drink": [
+      "diet-cola",
+      "diet-pop",
+      "diet-soda"
+    ],
+    "dijon-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "dill-seed": [
+      "spices-and-herbs"
+    ],
+    "distilled-vinegar": [
+      "vinegar"
+    ],
+    "distilled-water": [
+      "water"
+    ],
+    "distilled-white-vinegar": [
+      "distilled-vinegar",
+      "vinegar"
+    ],
+    "dried-apricots": [
+      "apricots",
+      "dried-fruit",
+      "fruit"
+    ],
+    "dried-black-beans": [
+      "black-beans",
+      "dried-beans"
+    ],
+    "dried-blackberries": [
+      "dried-fruit",
+      "fruit"
+    ],
+    "dried-blueberries": [
+      "dried-fruit",
+      "fruit"
+    ],
+    "dried-cherries": [
+      "cherries",
+      "dried-fruit",
+      "fruit"
+    ],
+    "dried-cilantro": [
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "dried-fruit": [
+      "fruit"
+    ],
+    "dried-kidney-beans": [
+      "beans",
+      "dried-beans",
+      "kidney-beans",
+      "vegetables"
+    ],
+    "dried-mango": [
+      "dried-fruit",
+      "fruit",
+      "mangoes"
+    ],
+    "dried-pineapple": [
+      "dried-fruit",
+      "fruit"
+    ],
+    "dried-pinto-beans": [
+      "beans",
+      "dried-beans",
+      "pinto-beans",
+      "vegetables"
+    ],
+    "dry-salad-dressing": [
+      "condiments",
+      "salad-dressing"
+    ],
+    "duck-sauce": [
+      "condiments"
+    ],
+    "enchilada-sauce": [
+      "condiments"
+    ],
+    "extra-virgin-olive-oil": [
+      "olive-oil"
+    ],
+    "face-cream": [
+      "cosmetics"
+    ],
+    "face-powder": [
+      "cosmetics"
+    ],
+    "family-pack-chips": [
+      "chips"
+    ],
+    "fennel-seed": [
+      "spices-and-herbs"
+    ],
+    "fenugreek-seeds": [
+      "spices-and-herbs"
+    ],
+    "first-aid-cream": [
+      "pain-relief"
+    ],
+    "fish-oil": [
+      "health-supplements"
+    ],
+    "fish-sauce": [
+      "ethnic"
+    ],
+    "flavored-water": [
+      "water"
+    ],
+    "flax-oil": [
+      "cooking-oil"
+    ],
+    "fleur-de-sel-salt": [
+      "spices-and-herbs"
+    ],
+    "flour-tortillas": [
+      "ethnic",
+      "tortillas"
+    ],
+    "foundation-cream": [
+      "cosmetics"
+    ],
+    "foundation-powder": [
+      "cosmetics"
+    ],
+    "french-onion-dip": [
+      "dip"
+    ],
+    "fresh-apples": [
+      "apples",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-apricots": [
+      "apricots",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-artichokes": [
+      "artichokes",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-asparagus": [
+      "asparagus",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-bananas": [
+      "bananas",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-basil": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-berries": [
+      "berries",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-blackberries": [
+      "berries",
+      "blackberries",
+      "fresh-berries",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-blueberries": [
+      "berries",
+      "blueberries",
+      "fresh-berries",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-boneless-skinless-chicken-breast": [
+      "boneless-skinless-chicken-breast",
+      "chicken",
+      "chicken-breast",
+      "poultry"
+    ],
+    "fresh-broccoli": [
+      "broccoli",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-broccoli-florets": [
+      "broccoli-florets",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-brussels-sprouts": [
+      "brussels-sprouts",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-carrots": [
+      "carrots",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-cauliflower": [
+      "cauliflower",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-cherries": [
+      "cherries",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-chicken-leg-quarters": [
+      "chicken",
+      "poultry"
+    ],
+    "fresh-chilies": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-chives": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-clementines": [
+      "clementines",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "fresh-collard-greens": [
+      "collard-greens",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-corn": [
+      "corn",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-fruit": [
+      "fruit"
+    ],
+    "fresh-garlic": [
+      "fresh-vegetables",
+      "garlic",
+      "vegetables"
+    ],
+    "fresh-green-beans": [
+      "fresh-vegetables",
+      "green-beans",
+      "vegetables"
+    ],
+    "fresh-herbs": [
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-juice": [
+      "juice"
+    ],
+    "fresh-mandarins": [
+      "fresh-fruit",
+      "fresh-oranges",
+      "fruit",
+      "oranges"
+    ],
+    "fresh-mangoes": [
+      "fresh-fruit",
+      "fruit",
+      "mangoes"
+    ],
+    "fresh-mint": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-mushrooms": [
+      "fresh-vegetables",
+      "mushrooms",
+      "vegetables"
+    ],
+    "fresh-onions": [
+      "fresh-vegetables",
+      "onions",
+      "vegetables"
+    ],
+    "fresh-orange-juice": [
+      "fresh-juice",
+      "juice",
+      "orange-juice"
+    ],
+    "fresh-oranges": [
+      "fresh-fruit",
+      "fruit",
+      "oranges"
+    ],
+    "fresh-parsely": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-pasta": [
+      "pasta"
+    ],
+    "fresh-peaches": [
+      "fresh-fruit",
+      "fruit",
+      "peaches"
+    ],
+    "fresh-pears": [
+      "fresh-fruit",
+      "fruit",
+      "pears"
+    ],
+    "fresh-pineapple": [
+      "fresh-fruit",
+      "fruit",
+      "pineapple"
+    ],
+    "fresh-potatoes": [
+      "fresh-vegetables",
+      "potatoes",
+      "vegetables"
+    ],
+    "fresh-raspberries": [
+      "berries",
+      "fresh-berries",
+      "fresh-fruit",
+      "fruit",
+      "raspberries"
+    ],
+    "fresh-rosemary": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-sage": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-spinach": [
+      "fresh-vegetables",
+      "spinach",
+      "vegetables"
+    ],
+    "fresh-strawberries": [
+      "berries",
+      "fresh-berries",
+      "fresh-fruit",
+      "fruit",
+      "strawberries"
+    ],
+    "fresh-sugar-snap-peas": [
+      "fresh-vegetables",
+      "sugar-snap-peas",
+      "vegetables"
+    ],
+    "fresh-sweet-corn": [
+      "corn",
+      "corn-on-the-cob",
+      "fresh-corn",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fresh-thyme": [
+      "fresh-herbs",
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "fresh-tomatoes": [
+      "fresh-vegetables",
+      "tomatoes",
+      "vegetables"
+    ],
+    "fresh-vegetables": [
+      "vegetables"
+    ],
+    "fresh-whole-turkey": [
+      "poultry",
+      "turkey",
+      "whole-turkey"
+    ],
+    "fresh-yams": [
+      "fresh-vegetables",
+      "vegetables",
+      "yams"
+    ],
+    "fresh-young-turkey": [
+      "fresh-whole-turkey",
+      "poultry",
+      "turkey",
+      "whole-turkey"
+    ],
+    "fresno-chiles": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "fried-chicken": [
+      "chicken",
+      "poultry"
+    ],
+    "frozen-apple-juice": [
+      "frozen-juice"
+    ],
+    "frozen-artichoke-hearts": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-asparagus": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-beef-patties": [
+      "frozen-meat"
+    ],
+    "frozen-bell-peppers": [
+      "vegetables"
+    ],
+    "frozen-berries": [
+      "berries",
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-black-eye-peas": [
+      "frozen-beans"
+    ],
+    "frozen-blackberries": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-blueberries": [
+      "berries",
+      "blueberries",
+      "frozen-berries",
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-boneless-skinless-chicken-breast": [
+      "boneless-skinless-chicken-breast",
+      "chicken",
+      "chicken-breast",
+      "poultry"
+    ],
+    "frozen-breaded-chicken": [
+      "frozen-meat"
+    ],
+    "frozen-broccoli": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-brussel-sprouts": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-buffalo-wings": [
+      "frozen-meat"
+    ],
+    "frozen-butter-beans": [
+      "frozen-beans"
+    ],
+    "frozen-calamari": [
+      "frozen-seafood"
+    ],
+    "frozen-carrots": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-cauliflower": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-cavatelli": [
+      "frozen-pasta"
+    ],
+    "frozen-cheeseburger": [
+      "frozen-meat"
+    ],
+    "frozen-cherries": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-chicken": [
+      "frozen-meat"
+    ],
+    "frozen-chicken-patties": [
+      "frozen-meat"
+    ],
+    "frozen-chicken-wings": [
+      "frozen-meat"
+    ],
+    "frozen-clams": [
+      "frozen-seafood"
+    ],
+    "frozen-collard-greens": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-corn": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-crab": [
+      "frozen-seafood"
+    ],
+    "frozen-crab-cakes": [
+      "frozen-seafood"
+    ],
+    "frozen-cranberries": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-fish": [
+      "frozen-seafood"
+    ],
+    "frozen-fish-fillets": [
+      "frozen-seafood"
+    ],
+    "frozen-fish-sticks": [
+      "frozen-seafood"
+    ],
+    "frozen-fruit": [
+      "fruit"
+    ],
+    "frozen-fruit-bars": [
+      "ice-cream-novelties"
+    ],
+    "frozen-grapefruit-juice": [
+      "frozen-juice"
+    ],
+    "frozen-green-beans": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-hamburgers": [
+      "frozen-meat"
+    ],
+    "frozen-italian-sausage": [
+      "frozen-meat"
+    ],
+    "frozen-lima-beans": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-lobster": [
+      "frozen-seafood"
+    ],
+    "frozen-meatballs": [
+      "frozen-meat"
+    ],
+    "frozen-mixed-berries": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-mixed-fruit": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-mushrooms": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-okra": [
+      "frozen-vegetables",
+      "okra",
+      "vegetables"
+    ],
+    "frozen-onions": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-orange-juice": [
+      "frozen-juice"
+    ],
+    "frozen-peaches": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-peas": [
+      "frozen-vegetables",
+      "peas",
+      "vegetables"
+    ],
+    "frozen-peas-and-carrots": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-pizza": [
+      "pizza"
+    ],
+    "frozen-pizza-bagel": [
+      "pizza"
+    ],
+    "frozen-pizza-bread": [
+      "pizza"
+    ],
+    "frozen-pizza-crust": [
+      "pizza"
+    ],
+    "frozen-pizza-rolls": [
+      "pizza"
+    ],
+    "frozen-portabella-mushrooms": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-poultry": [
+      "frozen-meat"
+    ],
+    "frozen-raspberries": [
+      "berries",
+      "frozen-berries",
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-shrimp": [
+      "frozen-seafood",
+      "shellfish",
+      "shrimp"
+    ],
+    "frozen-spinach": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-squash": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-squid": [
+      "frozen-seafood"
+    ],
+    "frozen-strawberries": [
+      "frozen-fruit",
+      "fruit"
+    ],
+    "frozen-succotash": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "frozen-tenderloins": [
+      "frozen-meat"
+    ],
+    "frozen-tortellini": [
+      "frozen-pasta"
+    ],
+    "frozen-turkey": [
+      "frozen-meat"
+    ],
+    "frozen-turkey-burgers": [
+      "frozen-meat"
+    ],
+    "frozen-vegetable-juice": [
+      "frozen-juice"
+    ],
+    "frozen-vegetables": [
+      "vegetables"
+    ],
+    "frozen-waffles": [
+      "waffles"
+    ],
+    "frozen-whole-turkey": [
+      "poultry",
+      "turkey",
+      "whole-turkey"
+    ],
+    "frozen-young-turkey": [
+      "frozen-whole-turkey",
+      "poultry",
+      "turkey",
+      "whole-turkey"
+    ],
+    "garlic": [
+      "vegetables"
+    ],
+    "garlic-and-herb-seasoning": [
+      "spices-and-herbs"
+    ],
+    "garlic-cloves": [
+      "spices-and-herbs"
+    ],
+    "garlic-paste": [
+      "spices-and-herbs"
+    ],
+    "garlic-powder": [
+      "spices-and-herbs"
+    ],
+    "garlic-salt": [
+      "spices-and-herbs"
+    ],
+    "gourmet-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "granulated-garlic": [
+      "spices-and-herbs"
+    ],
+    "granulated-onion": [
+      "spices-and-herbs"
+    ],
+    "granulated-sea-salt": [
+      "spices-and-herbs"
+    ],
+    "grape-seed-extract": [
+      "health-supplements"
+    ],
+    "grape-soda": [
+      "pop",
+      "soda",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "grape-tomatoes": [
+      "fresh-tomatoes",
+      "fresh-vegetables",
+      "tomatoes",
+      "vegetables"
+    ],
+    "grapes": [
+      "fresh-fruit",
+      "fruit"
+    ],
+    "grapeseed-oil": [
+      "cooking-oil"
+    ],
+    "green-beans": [
+      "vegetables"
+    ],
+    "green-bell-peppers": [
+      "bell-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "green-cabbage": [
+      "vegetables"
+    ],
+    "green-chard": [
+      "fresh-vegetables",
+      "greens",
+      "vegetables"
+    ],
+    "green-chili-peppers": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "green-leaf-lettuce": [
+      "fresh-vegetables",
+      "lettuce",
+      "vegetables"
+    ],
+    "green-olives": [
+      "condiments",
+      "olives"
+    ],
+    "green-onions": [
+      "fresh-onions",
+      "fresh-vegetables",
+      "onions",
+      "vegetables"
+    ],
+    "green-seedless-grapes": [
+      "fresh-fruit",
+      "fruit",
+      "grapes"
+    ],
+    "greens": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "ground-allspice": [
+      "spices-and-herbs"
+    ],
+    "ground-bay-leaves": [
+      "spices-and-herbs"
+    ],
+    "ground-beef": [
+      "beef"
+    ],
+    "ground-beef-patties": [
+      "beef"
+    ],
+    "ground-cardamom": [
+      "spices-and-herbs"
+    ],
+    "ground-celery-seed": [
+      "spices-and-herbs"
+    ],
+    "ground-chicken": [
+      "chicken",
+      "poultry"
+    ],
+    "ground-chipotle-chile": [
+      "spices-and-herbs"
+    ],
+    "ground-chuck": [
+      "beef"
+    ],
+    "ground-cloves": [
+      "spices-and-herbs"
+    ],
+    "ground-coriander-seed": [
+      "spices-and-herbs"
+    ],
+    "ground-cumin-seed": [
+      "spices-and-herbs"
+    ],
+    "ground-epazote-herb": [
+      "spices-and-herbs"
+    ],
+    "ground-fennel-seed": [
+      "spices-and-herbs"
+    ],
+    "ground-flaxseed": [
+      "antacid-and-digestive-aids"
+    ],
+    "ground-ginger": [
+      "spices-and-herbs"
+    ],
+    "ground-jalapeno-pepper": [
+      "spices-and-herbs"
+    ],
+    "ground-lamb": [
+      "lamb"
+    ],
+    "ground-mustard": [
+      "spices-and-herbs"
+    ],
+    "ground-nutmeg": [
+      "spices-and-herbs"
+    ],
+    "ground-pork": [
+      "pork"
+    ],
+    "ground-rosemary-leaf": [
+      "spices-and-herbs"
+    ],
+    "ground-round": [
+      "beef",
+      "ground-beef"
+    ],
+    "ground-sirloin": [
+      "beef",
+      "ground-beef"
+    ],
+    "ground-thyme-leaf": [
+      "spices-and-herbs"
+    ],
+    "ground-turkey": [
+      "poultry",
+      "turkey"
+    ],
+    "ground-turmeric": [
+      "spices-and-herbs"
+    ],
+    "ground-veal": [
+      "beef",
+      "veal"
+    ],
+    "guajillo-chiles": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "habanero-peppers": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "habanero-powder": [
+      "spices-and-herbs"
+    ],
+    "hair-oil": [
+      "hair-care"
+    ],
+    "ham": [
+      "pork"
+    ],
+    "hatch-chili-peppers": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "herbs": [
+      "spices-and-herbs"
+    ],
+    "honey-baked-ham": [
+      "ham",
+      "pork"
+    ],
+    "honey-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "honey-mustard-dressing": [
+      "condiments",
+      "mustard"
+    ],
+    "horseradish-sauce": [
+      "condiments"
+    ],
+    "hot-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "hot-sauce": [
+      "condiments"
+    ],
+    "hulled-sunflower-seeds": [
+      "nuts-and-trail-mix",
+      "seeds",
+      "sunflower-seeds"
+    ],
+    "ice-cream-bars": [
+      "ice-cream-novelties"
+    ],
+    "ice-cream-cake": [
+      "ice-cream-novelties"
+    ],
+    "ice-cream-sandwiches": [
+      "ice-cream-novelties"
+    ],
+    "jalapeno-peppers": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "jelly-beans": [
+      "candy"
+    ],
+    "kidney-beans": [
+      "beans",
+      "vegetables"
+    ],
+    "kosher-salt": [
+      "pepper",
+      "salt",
+      "salt-and-pepper",
+      "spices-and-herbs"
+    ],
+    "lamb-chops": [
+      "lamb"
+    ],
+    "lamb-loin-chops": [
+      "lamb"
+    ],
+    "laundry-powder": [
+      "laundry-detergent"
+    ],
+    "lettuce": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "light-beer": [
+      "beer"
+    ],
+    "limes": [
+      "fresh-fruit",
+      "fruit"
+    ],
+    "low-calorie-mayonnaise": [
+      "condiments"
+    ],
+    "low-calorie-salad-dressing": [
+      "condiments",
+      "salad-dressing"
+    ],
+    "low-fat-popcorn": [
+      "popcorn"
+    ],
+    "mangoes": [
+      "fruit"
+    ],
+    "marinara-sauce": [
+      "pasta-sauce"
+    ],
+    "marjoram-leaves": [
+      "spices-and-herbs"
+    ],
+    "masala-powder": [
+      "ethnic",
+      "spices-and-herbs"
+    ],
+    "milk-low-fat": [
+      "milk"
+    ],
+    "minced-garlic": [
+      "spices-and-herbs"
+    ],
+    "minced-onions": [
+      "spices-and-herbs"
+    ],
+    "minced-roasted-garlic": [
+      "spices-and-herbs"
+    ],
+    "mineral-water": [
+      "water"
+    ],
+    "mixed-vegetables": [
+      "frozen-vegetables",
+      "vegetables"
+    ],
+    "monterey-jack-cheese": [
+      "cheese"
+    ],
+    "mushrooms": [
+      "vegetables"
+    ],
+    "mustache-and-beard-color": [
+      "hair-care"
+    ],
+    "mustard": [
+      "condiments"
+    ],
+    "mustard-greens": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "mustard-powder": [
+      "spices-and-herbs"
+    ],
+    "mustard-seed": [
+      "spices-and-herbs"
+    ],
+    "non-flavored-oil": [
+      "cooking-oil"
+    ],
+    "oil": [
+      "cooking-oil"
+    ],
+    "oil-and-vinegar": [
+      "condiments",
+      "salad-dressing"
+    ],
+    "okra": [
+      "vegetables"
+    ],
+    "old-bay-seasoning": [
+      "spices-and-herbs"
+    ],
+    "olive-oil-cooking-spray": [
+      "cooking-spray"
+    ],
+    "olives": [
+      "condiments"
+    ],
+    "onion-powder": [
+      "spices-and-herbs"
+    ],
+    "onion-salt": [
+      "spices-and-herbs"
+    ],
+    "onion-soup-mix": [
+      "soup",
+      "soup-mix"
+    ],
+    "onions": [
+      "vegetables"
+    ],
+    "orange-blossom-water": [
+      "ethnic"
+    ],
+    "orange-juice": [
+      "juice"
+    ],
+    "orange-soda": [
+      "pop",
+      "soda",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "oranges": [
+      "fruit"
+    ],
+    "oregano": [
+      "spices-and-herbs"
+    ],
+    "orris-root-powder": [
+      "spices-and-herbs"
+    ],
+    "palm-oil": [
+      "cooking-oil"
+    ],
+    "parsley": [
+      "herbs",
+      "spices-and-herbs"
+    ],
+    "pasilla-chiles": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "peaches": [
+      "fruit"
+    ],
+    "peanut-oil": [
+      "cooking-oil"
+    ],
+    "pears": [
+      "fruit"
+    ],
+    "peas": [
+      "vegetables"
+    ],
+    "pepper": [
+      "salt-and-pepper",
+      "spices-and-herbs"
+    ],
+    "pepper-jack-cheese": [
+      "cheese"
+    ],
+    "peppercorns": [
+      "spices-and-herbs"
+    ],
+    "pesto-sauce": [
+      "pasta-sauce"
+    ],
+    "pickled-onion": [
+      "vegetables"
+    ],
+    "pickling-salt": [
+      "spices-and-herbs"
+    ],
+    "pineapple": [
+      "fruit"
+    ],
+    "pinto-beans": [
+      "beans",
+      "vegetables"
+    ],
+    "plum-tomatoes": [
+      "tomatoes",
+      "vegetables"
+    ],
+    "poblano-pepper": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "pop": [
+      "soda",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "poppy-seed": [
+      "spices-and-herbs"
+    ],
+    "poppy-seed-dressing": [
+      "condiments",
+      "salad-dressing"
+    ],
+    "pork-chop-seasoning": [
+      "spices-and-herbs"
+    ],
+    "pork-chops": [
+      "pork"
+    ],
+    "pork-loin-chops": [
+      "pork",
+      "pork-chops"
+    ],
+    "pork-sausage": [
+      "pork",
+      "sausage"
+    ],
+    "potato-chips": [
+      "chips"
+    ],
+    "potatoes": [
+      "vegetables"
+    ],
+    "powdered-lemon-peel": [
+      "spices-and-herbs"
+    ],
+    "powdered-orange-peel": [
+      "spices-and-herbs"
+    ],
+    "pumpkin-seeds": [
+      "nuts-and-trail-mix",
+      "seeds"
+    ],
+    "raspberries": [
+      "berries",
+      "fruit"
+    ],
+    "red-bell-peppers": [
+      "bell-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "red-cabbage": [
+      "vegetables"
+    ],
+    "red-chard": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "red-chili-peppers": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "red-curry-paste": [
+      "curry-paste",
+      "ethnic"
+    ],
+    "red-delicious-apples": [
+      "apples",
+      "fresh-apples",
+      "fresh-fruit",
+      "fruit"
+    ],
+    "red-onions": [
+      "vegetables"
+    ],
+    "red-pepper": [
+      "spices-and-herbs"
+    ],
+    "red-pepper-flakes": [
+      "spices-and-herbs"
+    ],
+    "red-pepper-jelly": [
+      "jelly"
+    ],
+    "red-potatoes": [
+      "fresh-potatoes",
+      "fresh-vegetables",
+      "potatoes",
+      "vegetables"
+    ],
+    "red-seedless-grapes": [
+      "fresh-fruit",
+      "fruit",
+      "grapes"
+    ],
+    "red-snapper": [
+      "fish"
+    ],
+    "red-vinegar": [
+      "vinegar"
+    ],
+    "red-wine": [
+      "wine"
+    ],
+    "red-wine-salad-dressing": [
+      "condiments",
+      "salad-dressing"
+    ],
+    "red-wine-vinegar": [
+      "vinegar"
+    ],
+    "refried-beans": [
+      "beans",
+      "vegetables"
+    ],
+    "roasted-peanut-oil": [
+      "cooking-oil",
+      "peanut-oil"
+    ],
+    "roasted-sweet-corn": [
+      "corn",
+      "fresh-corn",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "roma-tomatoes": [
+      "fresh-tomatoes",
+      "fresh-vegetables",
+      "tomatoes",
+      "vegetables"
+    ],
+    "rotisserie-turkey-breast": [
+      "poultry",
+      "turkey",
+      "turkey-breast"
+    ],
+    "safflower-oil": [
+      "cooking-oil"
+    ],
+    "salad": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "salad-dressing": [
+      "condiments"
+    ],
+    "salad-greens": [
+      "fresh-vegetables",
+      "salad",
+      "vegetables"
+    ],
+    "salt": [
+      "salt-and-pepper",
+      "spices-and-herbs"
+    ],
+    "salt-and-pepper": [
+      "pepper",
+      "salt",
+      "spices-and-herbs"
+    ],
+    "salt-cod": [
+      "cod",
+      "fish"
+    ],
+    "salt-cod-fillet": [
+      "cod",
+      "fish",
+      "salt-cod"
+    ],
+    "salt-substitute": [
+      "spices-and-herbs"
+    ],
+    "salted-butter": [
+      "butter",
+      "butter-and-margarine"
+    ],
+    "scallions": [
+      "fresh-vegetables",
+      "spring-onions",
+      "vegetables"
+    ],
+    "sea-salt": [
+      "spices-and-herbs"
+    ],
+    "seeds": [
+      "nuts-and-trail-mix"
+    ],
+    "seltzer-water": [
+      "water"
+    ],
+    "serrano-chiles": [
+      "chili-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "sesame-oil": [
+      "cooking-oil"
+    ],
+    "sesame-seed": [
+      "spices-and-herbs"
+    ],
+    "shaving-cream": [
+      "shaving-needs"
+    ],
+    "shiitake-mushrooms": [
+      "mushrooms",
+      "vegetables"
+    ],
+    "shredded-cheese": [
+      "cheese"
+    ],
+    "shrimp": [
+      "shellfish"
+    ],
+    "sliced-cheese": [
+      "cheese"
+    ],
+    "smoked-sea-salt": [
+      "spices-and-herbs"
+    ],
+    "soda": [
+      "pop",
+      "soda-pop",
+      "soft-drink"
+    ],
+    "soda-pop": [
+      "pop",
+      "soda",
+      "soft-drink"
+    ],
+    "soft-drink": [
+      "pop",
+      "soda",
+      "soda-pop"
+    ],
+    "soup-mix": [
+      "soup"
+    ],
+    "sour-candy": [
+      "candy"
+    ],
+    "soy-sauce": [
+      "condiments"
+    ],
+    "sparkling-water": [
+      "water"
+    ],
+    "spearmint-leaves": [
+      "spices-and-herbs"
+    ],
+    "spinach": [
+      "vegetables"
+    ],
+    "split-chicken-breasts": [
+      "chicken",
+      "chicken-breast",
+      "poultry"
+    ],
+    "spring-onions": [
+      "fresh-vegetables",
+      "scallions",
+      "vegetables"
+    ],
+    "spring-water": [
+      "water"
+    ],
+    "squash": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "stadium-mustard": [
+      "condiments",
+      "mustard"
+    ],
+    "steak-sauce": [
+      "condiments"
+    ],
+    "stewed-tomatoes": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "strawberries": [
+      "berries",
+      "fruit"
+    ],
+    "strawberry-ice-cream": [
+      "ice-cream"
+    ],
+    "sugar-snap-peas": [
+      "vegetables"
+    ],
+    "sun-dried-tomatoes": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "sunflower-oil": [
+      "cooking-oil"
+    ],
+    "sunflower-seeds": [
+      "nuts-and-trail-mix",
+      "seeds"
+    ],
+    "sweet-and-sour-sauce": [
+      "condiments"
+    ],
+    "sweet-onions": [
+      "vegetables"
+    ],
+    "tarragon-leaves": [
+      "spices-and-herbs"
+    ],
+    "toasted-onion": [
+      "spices-and-herbs"
+    ],
+    "tomato-paste": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "tomato-puree": [
+      "canned-tomatoes",
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "tomato-sauce": [
+      "canned-vegetables",
+      "vegetables"
+    ],
+    "tomato-soup": [
+      "soup"
+    ],
+    "tomatoes": [
+      "vegetables"
+    ],
+    "tonic-water": [
+      "water"
+    ],
+    "tortillas": [
+      "ethnic"
+    ],
+    "turkey": [
+      "poultry"
+    ],
+    "turkey-breast": [
+      "poultry",
+      "turkey"
+    ],
+    "turkey-chili": [
+      "chili"
+    ],
+    "veal": [
+      "beef"
+    ],
+    "veal-chops": [
+      "beef",
+      "veal"
+    ],
+    "vegetable-broth": [
+      "broth"
+    ],
+    "vegetable-oil": [
+      "cooking-oil"
+    ],
+    "vegetable-oil-cooking-spray": [
+      "cooking-spray"
+    ],
+    "vegetable-soup": [
+      "soup"
+    ],
+    "vegetable-stock": [
+      "cooking-stock"
+    ],
+    "vegetable-tray": [
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "waffles": [
+      "frozen-waffles"
+    ],
+    "walnut-oil": [
+      "cooking-oil"
+    ],
+    "wasabi-powder": [
+      "spices-and-herbs"
+    ],
+    "white-bread": [
+      "bread"
+    ],
+    "white-onions": [
+      "fresh-onions",
+      "fresh-vegetables",
+      "onions",
+      "vegetables"
+    ],
+    "white-pepper": [
+      "spices-and-herbs"
+    ],
+    "white-rice": [
+      "rice"
+    ],
+    "white-vinegar": [
+      "vinegar"
+    ],
+    "white-wine": [
+      "wine"
+    ],
+    "white-wine-vinegar": [
+      "vinegar"
+    ],
+    "whole-bay-leaves": [
+      "spices-and-herbs"
+    ],
+    "whole-celery-seed": [
+      "spices-and-herbs"
+    ],
+    "whole-chicken": [
+      "chicken",
+      "poultry"
+    ],
+    "whole-cloves": [
+      "spices-and-herbs"
+    ],
+    "whole-coriander-seed": [
+      "spices-and-herbs"
+    ],
+    "whole-cumin-seed": [
+      "spices-and-herbs"
+    ],
+    "whole-cut-up-chicken": [
+      "chicken",
+      "poultry"
+    ],
+    "whole-fennel-seed": [
+      "spices-and-herbs"
+    ],
+    "whole-wheat-tortillas": [
+      "ethnic",
+      "tortillas"
+    ],
+    "yams": [
+      "vegetables"
+    ],
+    "yellow-bell-peppers": [
+      "bell-peppers",
+      "fresh-vegetables",
+      "vegetables"
+    ],
+    "yellow-onions": [
+      "fresh-onions",
+      "fresh-vegetables",
+      "onions",
+      "vegetables"
+    ],
+    "yellow-squash": [
+      "fresh-vegetables",
+      "squash",
+      "vegetables"
+    ]
+  },
+  "tagKeywordsIndex": {
+    "adobo": [
+      "adobo-sauce",
+      "chipotle-peppers-in-adobo-sauce"
+    ],
+    "and": [
+      "garlic-and-herb-seasoning",
+      "oil-and-vinegar",
+      "canned-rice-and-beans",
+      "half-and-half",
+      "macaroni-and-cheese",
+      "mustache-and-beard-color",
+      "canned-pork-and-beans",
+      "sweet-and-sour-sauce"
+    ],
+    "avocado": [
+      "avocados"
+    ],
+    "bake": [
+      "baking-powder",
+      "baking-soda",
+      "baking-nuts",
+      "baking-chocolate",
+      "baking-cocoa",
+      "baking-cups",
+      "baking-chips",
+      "baking-pans",
+      "ready-to-bake-cookies",
+      "honey-baked-ham",
+      "ready-to-bake-rolls",
+      "baked-beans",
+      "baking-flour",
+      "chocolate-morsels"
+    ],
+    "bay": [
+      "ground-bay-leaves",
+      "bay-leaves",
+      "old-bay-seasoning",
+      "whole-bay-leaves"
+    ],
+    "bean": [
+      "green-beans",
+      "dried-black-beans",
+      "canned-black-beans",
+      "canned-navy-beans",
+      "bean-soup",
+      "frozen-bean-burgers",
+      "black-beans",
+      "chinese-fermented-black-beans",
+      "canned-beans",
+      "canned-green-beans",
+      "canned-kidney-beans",
+      "canned-rice-and-beans",
+      "black-bean-sauce",
+      "fava-beans",
+      "canned-lima-beans",
+      "bean-sprouts",
+      "canned-pork-and-beans",
+      "canned-waxed-beans",
+      "vanilla-beans",
+      "chili-no-beans",
+      "jelly-beans",
+      "canned-peas-beans",
+      "dried-pinto-beans",
+      "canned-pinto-beans",
+      "garbanzo-beans",
+      "frozen-butter-beans",
+      "frozen-green-beans",
+      "beans",
+      "cannellini-beans",
+      "pinto-beans",
+      "frozen-lima-beans",
+      "canned-white-beans",
+      "dried-kidney-beans",
+      "canned-string-beans",
+      "fresh-green-beans",
+      "canned-refried-beans",
+      "kidney-beans",
+      "canned-garbanzo-beans",
+      "frozen-beans",
+      "refried-beans",
+      "chili-with-beans",
+      "canned-bean-sprouts",
+      "baked-beans",
+      "dried-beans"
+    ],
+    "bell": [
+      "green-bell-peppers",
+      "frozen-bell-peppers",
+      "red-bell-peppers",
+      "bell-peppers",
+      "yellow-bell-peppers"
+    ],
+    "black": [
+      "black-peppercorn",
+      "dried-black-beans",
+      "canned-black-beans",
+      "black-beans",
+      "chinese-fermented-black-beans",
+      "black-bean-sauce",
+      "black-pepper",
+      "black-olives",
+      "frozen-black-eye-peas",
+      "black-sea-salt",
+      "canned-black-eye-peas"
+    ],
+    "boneless": [
+      "boneless-pork-sirloin-chops",
+      "boneless-pork-chops",
+      "boneless-skinless-chicken-breast",
+      "fresh-boneless-skinless-chicken-breast",
+      "boneless-pork-loin-chops",
+      "frozen-boneless-skinless-chicken-breast"
+    ],
+    "breast": [
+      "rotisserie-turkey-breast",
+      "whole-chicken",
+      "chicken-nuggets",
+      "split-chicken-breasts",
+      "boneless-skinless-chicken-breast",
+      "fresh-boneless-skinless-chicken-breast",
+      "turkey-breast",
+      "chicken-breast",
+      "frozen-boneless-skinless-chicken-breast"
+    ],
+    "broth": [
+      "broth",
+      "vegetable-broth",
+      "beef-broth",
+      "chicken-broth",
+      "canned-broth"
+    ],
+    "brown": [
+      "brown-sugar",
+      "frozen-hash-browns",
+      "brown-rice",
+      "brown-mustard"
+    ],
+    "chicken": [
+      "chicken-chili",
+      "frozen-chicken",
+      "fresh-chicken-leg-quarters",
+      "chicken-legs",
+      "chicken-tenders",
+      "frozen-breaded-chicken",
+      "chicken-corn-chowder",
+      "chicken-livers",
+      "frozen-chicken-wings",
+      "chicken-broth",
+      "canned-chicken",
+      "whole-chicken",
+      "chicken-nuggets",
+      "chicken-sausage",
+      "split-chicken-breasts",
+      "boneless-skinless-chicken-breast",
+      "chicken-wings",
+      "chicken-cutlets",
+      "chicken-strips",
+      "chicken-rice-soup",
+      "chicken-kabobs",
+      "fresh-boneless-skinless-chicken-breast",
+      "fried-chicken",
+      "chicken",
+      "whole-cut-up-chicken",
+      "chicken-stock",
+      "frozen-chicken-patties",
+      "cream-of-chicken-soup",
+      "chicken-meatballs",
+      "chicken-thighs",
+      "chicken-patties",
+      "chicken-breast",
+      "frozen-boneless-skinless-chicken-breast",
+      "chicken-drumsticks",
+      "ground-chicken",
+      "chicken-noodle-soup"
+    ],
+    "chile": [
+      "chicken-chili",
+      "red-chili-peppers",
+      "chili-dried-mango",
+      "ancho-chili-pepper",
+      "chili-sauce",
+      "chilies",
+      "canned-chipotle-chilis",
+      "chili",
+      "fresh-chilies",
+      "chili-oil",
+      "turkey-chili",
+      "hatch-chili-peppers",
+      "canned-green-chilis",
+      "chile-pepper",
+      "green-chili-peppers",
+      "chili-no-beans",
+      "ground-chipotle-chile",
+      "chili-peppers",
+      "serrano-chiles",
+      "guajillo-chiles",
+      "pasilla-chiles",
+      "canned-chili",
+      "fresno-chiles",
+      "chili-with-beans",
+      "chili-powder"
+    ],
+    "chili": [
+      "chicken-chili",
+      "red-chili-peppers",
+      "chili-dried-mango",
+      "ancho-chili-pepper",
+      "chili-sauce",
+      "chilies",
+      "canned-chipotle-chilis",
+      "chili",
+      "cheese",
+      "fresh-chilies",
+      "chili-oil",
+      "turkey-chili",
+      "hatch-chili-peppers",
+      "canned-green-chilis",
+      "green-chili-peppers",
+      "chili-no-beans",
+      "chili-peppers",
+      "red-pepper-flakes",
+      "ancho-chili-powder",
+      "canned-chili",
+      "chili-with-beans",
+      "chili-powder"
+    ],
+    "chip": [
+      "chips",
+      "tortilla-chips",
+      "potato-chips",
+      "corn-chips",
+      "chocolate-chip-cookies",
+      "family-pack-chips",
+      "chocolate-chips",
+      "baking-chips"
+    ],
+    "chipotl": [
+      "chipotle-rub",
+      "canned-chipotle-chilis",
+      "ground-chipotle-chile",
+      "chipotle-pepper",
+      "chipotle-sauce",
+      "chipotle-peppers-in-adobo-sauce"
+    ],
+    "chop": [
+      "chopped-suey",
+      "boneless-pork-sirloin-chops",
+      "chopped-walnuts",
+      "chopped-chives",
+      "veal-chops",
+      "pork-chop-seasoning",
+      "boneless-pork-chops",
+      "lamb-loin-chops",
+      "lamb-chops",
+      "chopped-nuts",
+      "chopped-pecans",
+      "boneless-pork-loin-chops",
+      "pork-loin-chops",
+      "pork-chops"
+    ],
+    "cilantro": [
+      "dried-cilantro",
+      "cilantro-leaf",
+      "cilantro"
+    ],
+    "clove": [
+      "garlic-cloves",
+      "whole-cloves",
+      "ground-cloves"
+    ],
+    "corn": [
+      "frozen-corn",
+      "canned-whole-baby-corn",
+      "peppercorns",
+      "corn-oil",
+      "chicken-corn-chowder",
+      "corn-chips",
+      "roasted-sweet-corn",
+      "corn-dogs",
+      "corned-beef",
+      "creamed-corn",
+      "indian-corn",
+      "canned-baby-corn",
+      "fresh-corn",
+      "caramel-corn",
+      "corn-bread-mix",
+      "fresh-sweet-corn",
+      "corn",
+      "corn-syrup",
+      "corn-on-the-cob",
+      "canned-corned-beef",
+      "corn-starch",
+      "kettle-corn",
+      "corn-meal",
+      "canned-corn",
+      "corn-muffin-mix",
+      "corn-tortillas"
+    ],
+    "cream": [
+      "foundation-cream",
+      "ice-cream-cake",
+      "cream-of-tartar",
+      "ice-cream-sandwiches",
+      "shaving-cream",
+      "creamed-rice",
+      "ice-cream-cups",
+      "ice-cream-cones",
+      "condensed-cream-of-mushroom-soup",
+      "skin-cream",
+      "canned-coconut-cream",
+      "ice-cream",
+      "chocolate-ice-cream",
+      "hemorrhoid-cream",
+      "whipped-cream",
+      "diaper-rash-cream",
+      "ice-cream-novelties",
+      "ice-cream-bars",
+      "cream-soda",
+      "face-cream",
+      "silver-cream",
+      "hand-cream",
+      "cream-cheese",
+      "creamed-corn",
+      "heavy-cream",
+      "whipping-cream",
+      "chocolate-whipped-cream",
+      "baby-cream",
+      "cream-of-chicken-soup",
+      "cream-rinse",
+      "cream",
+      "frozen-cream-substitute",
+      "first-aid-cream",
+      "foot-cream",
+      "strawberry-ice-cream",
+      "fat-free-cream-cheese",
+      "fat-free-whipped-cream",
+      "sour-cream",
+      "denture-cream"
+    ],
+    "crush": [
+      "crushed-tomatoes"
+    ],
+    "cumin": [
+      "ground-cumin-seed",
+      "whole-cumin-seed",
+      "cumin"
+    ],
+    "drain": [
+      "solvent-drain-cleaners",
+      "drain-opener"
+    ],
+    "dri": [
+      "dried-black-beans",
+      "dried-pineapple",
+      "chili-dried-mango",
+      "dry-yeast",
+      "sun-dried-tomatoes",
+      "dried-coconut",
+      "dry-salad-dressing",
+      "parsley",
+      "dried-cilantro",
+      "dried-fruit",
+      "dried-pinto-beans",
+      "dried-blueberries",
+      "dry-milk",
+      "dried-apricots",
+      "dried-mango",
+      "dried-kidney-beans",
+      "dried-cherries",
+      "dried-blackberries",
+      "dried-beans"
+    ],
+    "fresh": [
+      "fresh-broccoli-florets",
+      "fresh-mushrooms",
+      "fresh-spinach",
+      "fresh-cherries",
+      "fresh-parsely",
+      "fresh-berries",
+      "fresh-chicken-leg-quarters",
+      "fresh-yams",
+      "fresh-pears",
+      "fresh-bread",
+      "fresh-clementines",
+      "fresh-bread-crumbs",
+      "fresh-tomatoes",
+      "fresh-collard-greens",
+      "fresh-bananas",
+      "fresh-mint",
+      "fresh-rosemary",
+      "fresh-strawberries",
+      "fresh-blackberries",
+      "fresh-potatoes",
+      "fresh-onions",
+      "fresh-apricots",
+      "fresh-carrots",
+      "fresh-whole-turkey",
+      "fresh-thyme",
+      "fresh-chilies",
+      "fresh-chives",
+      "fresh-juice",
+      "fresh-oranges",
+      "fresh-garlic",
+      "fresh-young-turkey",
+      "fresh-blueberries",
+      "fresh-basil",
+      "fresh-pasta",
+      "fresh-cauliflower",
+      "fresh-pineapple",
+      "fresh-brussels-sprouts",
+      "fresh-orange-juice",
+      "fresh-sugar-snap-peas",
+      "fresh-broccoli",
+      "fresh-corn",
+      "fresh-mandarins",
+      "fresh-sweet-corn",
+      "fresh-squeezed-lemon-juice",
+      "fresh-asparagus",
+      "fresh-boneless-skinless-chicken-breast",
+      "fresh-green-beans",
+      "fresh-raspberries",
+      "fresh-apples",
+      "fresh-artichokes",
+      "fresh-peaches",
+      "fresh-sage",
+      "fresh-herbs",
+      "fresh-squeezed-lime-juice",
+      "fresh-mangoes"
+    ],
+    "frozen": [
+      "frozen-pasta",
+      "frozen-pizza-bagel",
+      "frozen-beef-patties",
+      "frozen-cookie-dough",
+      "frozen-corn",
+      "frozen-yogurt",
+      "frozen-chicken",
+      "frozen-dip",
+      "frozen-biscuits",
+      "frozen-blueberries",
+      "frozen-calamari",
+      "frozen-entrees",
+      "frozen-bean-burgers",
+      "frozen-pizza-rolls",
+      "frozen-mexican-dinners",
+      "frozen-pancakes",
+      "frozen-cheeseburger",
+      "frozen-bagels",
+      "frozen-shrimp",
+      "frozen-squid",
+      "frozen-collard-greens",
+      "frozen-cinnamon-rolls",
+      "frozen-bread-dough",
+      "frozen-oriental-dinners",
+      "frozen-potato-blintzes",
+      "frozen-pot-pie",
+      "frozen-broccoli",
+      "frozen-lasagna",
+      "frozen-mixed-fruit",
+      "frozen-cake",
+      "frozen-breaded-chicken",
+      "frozen-omelettes",
+      "frozen-dinner-rolls",
+      "frozen-vegetables",
+      "frozen-brussel-sprouts",
+      "frozen-pastries",
+      "frozen-crab-cakes",
+      "frozen-poultry",
+      "frozen-young-turkey",
+      "frozen-artichoke-hearts",
+      "frozen-onions",
+      "frozen-fish",
+      "frozen-cookies",
+      "frozen-fruit",
+      "frozen-hamburgers",
+      "frozen-blackberries",
+      "frozen-strawberries",
+      "frozen-chicken-wings",
+      "frozen-peaches",
+      "frozen-black-eye-peas",
+      "frozen-clams",
+      "frozen-peas-and-carrots",
+      "frozen-mushrooms",
+      "frozen-fruit-bars",
+      "frozen-tater-tots",
+      "frozen-pretzels",
+      "frozen-succotash",
+      "frozen-whole-turkey",
+      "frozen-bell-peppers",
+      "frozen-dinners",
+      "frozen-apple-juice",
+      "frozen-cheese-sticks",
+      "frozen-bakery",
+      "frozen-italian-dinners",
+      "frozen-turkey-burgers",
+      "frozen-okra",
+      "frozen-meat",
+      "frozen-spinach",
+      "frozen-breakfast-sandwiches",
+      "frozen-potato-pancakes",
+      "frozen-potatoes",
+      "frozen-croissants",
+      "frozen-cranberries",
+      "frozen-microwave-meals",
+      "frozen-dessert",
+      "frozen-buffalo-wings",
+      "frozen-pizza-crust",
+      "frozen-pizza-bread",
+      "frozen-squash",
+      "frozen-fish-sticks",
+      "frozen-waffles",
+      "frozen-fish-fillets",
+      "frozen-stir-fry",
+      "frozen-donuts",
+      "frozen-butter-beans",
+      "frozen-matzah-balls",
+      "frozen-peas",
+      "frozen-pizza",
+      "frozen-berries",
+      "frozen-crab",
+      "frozen-spring-rolls",
+      "frozen-green-beans",
+      "frozen-hash-browns",
+      "frozen-pie",
+      "frozen-orange-juice",
+      "frozen-lima-beans",
+      "frozen-raspberries",
+      "frozen-bread",
+      "frozen-chicken-patties",
+      "frozen-burritos",
+      "frozen-mixed-berries",
+      "frozen-vegetable-juice",
+      "frozen-seafood",
+      "frozen-grapefruit-juice",
+      "frozen-cream-substitute",
+      "frozen-tenderloins",
+      "frozen-cobbler",
+      "frozen-garlic-bread",
+      "frozen-carrots",
+      "frozen-beans",
+      "frozen-asparagus",
+      "frozen-meals",
+      "frozen-cherries",
+      "frozen-portabella-mushrooms",
+      "frozen-breakfast",
+      "frozen-cauliflower",
+      "frozen-juice",
+      "frozen-italian-sausage",
+      "frozen-whipped-topping",
+      "frozen-french-toast",
+      "frozen-tortellini",
+      "frozen-boneless-skinless-chicken-breast",
+      "frozen-cavatelli",
+      "frozen-subs",
+      "frozen-sweet-potatoes",
+      "frozen-turkey",
+      "frozen-meatballs",
+      "frozen-lobster",
+      "frozen-mashed-potatoes",
+      "frozen-sandwiches"
+    ],
+    "garlic": [
+      "garlic-and-herb-seasoning",
+      "minced-roasted-garlic",
+      "garlic-cloves",
+      "garlic-powder",
+      "garlic-bread",
+      "fresh-garlic",
+      "garlic-paste",
+      "minced-garlic",
+      "frozen-garlic-bread",
+      "granulated-garlic",
+      "garlic",
+      "garlic-salt",
+      "garlic-stalks"
+    ],
+    "green": [
+      "green-beans",
+      "green-seedless-grapes",
+      "green-bell-peppers",
+      "green-taco-sauce",
+      "canned-green-beans",
+      "frozen-collard-greens",
+      "greens",
+      "scallions",
+      "fresh-collard-greens",
+      "green-cabbage",
+      "salad-greens",
+      "green-chard",
+      "canned-green-chilis",
+      "green-chili-peppers",
+      "green-leaf-lettuce",
+      "collard-greens",
+      "mustard-greens",
+      "frozen-green-beans",
+      "fresh-green-beans",
+      "green-onions",
+      "green-olives",
+      "canned-collard-greens"
+    ],
+    "ground": [
+      "whole-celery-seed",
+      "ground-bay-leaves",
+      "ground-cumin-seed",
+      "ground-rosemary-leaf",
+      "ground-coriander-seed",
+      "ground-mustard",
+      "ground-ginger",
+      "ground-allspice",
+      "ground-chuck",
+      "ground-celery-seed",
+      "pork-sausage",
+      "ground-sirloin",
+      "whole-coriander-seed",
+      "ground-fennel-seed",
+      "ground-nutmeg",
+      "whole-cumin-seed",
+      "ground-round",
+      "ground-chipotle-chile",
+      "ground-lamb",
+      "ground-turkey",
+      "ground-meat",
+      "ground-beef",
+      "whole-fennel-seed",
+      "ground-turmeric",
+      "ground-veal",
+      "ground-pork",
+      "ground-beef-patties",
+      "ground-cloves",
+      "ground-thyme-leaf",
+      "ground-epazote-herb",
+      "ground-cardamom",
+      "ground-chicken",
+      "ground-jalapeno-pepper",
+      "ground-flaxseed"
+    ],
+    "in": [
+      "broccoli-in-cheese-sauce",
+      "canned-pineapple"
+    ],
+    "jack": [
+      "pepper-jack-cheese",
+      "monterey-jack-cheese"
+    ],
+    "jalapeno": [
+      "pickled-jalapenos",
+      "jalapeno-peppers",
+      "ground-jalapeno-pepper"
+    ],
+    "kosher": [
+      "kosher-salt"
+    ],
+    "leav": [
+      "ground-bay-leaves",
+      "marjoram-leaves",
+      "bay-leaves",
+      "spearmint-leaves",
+      "whole-bay-leaves",
+      "tarragon-leaves"
+    ],
+    "light": [
+      "light-beer",
+      "lightbulb"
+    ],
+    "lime": [
+      "key-lime-juice",
+      "limes",
+      "lime-juice",
+      "fresh-squeezed-lime-juice"
+    ],
+    "low": [
+      "low-calorie-mayonnaise",
+      "low-calorie-syrup",
+      "milk-low-fat",
+      "low-fat-popcorn",
+      "low-calorie-pancakes",
+      "low-calorie-salad-dressing"
+    ],
+    "monterey": [
+      "monterey-jack-cheese"
+    ],
+    "mushroom": [
+      "fresh-mushrooms",
+      "condensed-cream-of-mushroom-soup",
+      "button-mushrooms",
+      "mushroom-sauce",
+      "canned-mushrooms",
+      "mushrooms",
+      "frozen-mushrooms",
+      "spicy-mushrooms",
+      "baby-bella-mushrooms",
+      "frozen-portabella-mushrooms",
+      "shiitake-mushrooms",
+      "cremini-mushrooms"
+    ],
+    "mustard": [
+      "dijon-mustard",
+      "hot-mustard",
+      "ground-mustard",
+      "honey-mustard",
+      "mustard",
+      "honey-mustard-dressing",
+      "stadium-mustard",
+      "mustard-greens",
+      "mustard-seed",
+      "mustard-powder",
+      "brown-mustard",
+      "gourmet-mustard"
+    ],
+    "oil": [
+      "non-flavored-oil",
+      "vegetable-oil",
+      "palm-oil",
+      "grapeseed-oil",
+      "coconut-oil",
+      "cooking-oil",
+      "oil-and-vinegar",
+      "corn-oil",
+      "bath-oil",
+      "vegetable-oil-cooking-spray",
+      "chili-oil",
+      "sunflower-oil",
+      "cooking-spray",
+      "hair-oil",
+      "canola-oil",
+      "canola-oil-cooking-spray",
+      "baby-oil",
+      "fish-oil",
+      "soybean-oil",
+      "sesame-oil",
+      "flax-oil",
+      "walnut-oil",
+      "extra-virgin-olive-oil",
+      "olive-oil-cooking-spray",
+      "olive-oil",
+      "roasted-peanut-oil",
+      "peanut-oil",
+      "oil",
+      "safflower-oil"
+    ],
+    "onion": [
+      "onion-salt",
+      "pickled-onion",
+      "spring-onions",
+      "canned-onions",
+      "red-onions",
+      "fresh-onions",
+      "yellow-onions",
+      "frozen-onions",
+      "sweet-onions",
+      "toasted-onion",
+      "onion-soup-mix",
+      "granulated-onion",
+      "french-onion-dip",
+      "onion-dip",
+      "green-onions",
+      "onions",
+      "onion-powder",
+      "minced-onions",
+      "white-onions"
+    ],
+    "oregano": [
+      "oregano"
+    ],
+    "pepper": [
+      "pepper-jack-cheese",
+      "green-bell-peppers",
+      "red-chili-peppers",
+      "poblano-pepper",
+      "ancho-chili-pepper",
+      "jalapeno-peppers",
+      "roasted-peppers",
+      "peppercorns",
+      "szechuan-pepper",
+      "black-pepper",
+      "cherry-peppers",
+      "hatch-chili-peppers",
+      "red-pepper",
+      "chile-pepper",
+      "frozen-bell-peppers",
+      "green-chili-peppers",
+      "habanero-peppers",
+      "red-bell-peppers",
+      "chipotle-pepper",
+      "salt-and-pepper",
+      "chili-peppers",
+      "red-pepper-flakes",
+      "cayenne-pepper",
+      "white-pepper",
+      "pepper",
+      "chipotle-peppers-in-adobo-sauce",
+      "bell-peppers",
+      "red-pepper-jelly",
+      "banana-peppers",
+      "yellow-bell-peppers",
+      "ground-jalapeno-pepper"
+    ],
+    "powder": [
+      "ground-bay-leaves",
+      "ground-cumin-seed",
+      "face-powder",
+      "baking-powder",
+      "arrowroot-powder",
+      "wasabi-powder",
+      "ground-rosemary-leaf",
+      "ground-coriander-seed",
+      "ground-mustard",
+      "habanero-powder",
+      "ground-ginger",
+      "vanilla-powder",
+      "dishwashing-powder",
+      "ground-allspice",
+      "ground-celery-seed",
+      "garlic-powder",
+      "laundry-powder",
+      "foundation-powder",
+      "ground-fennel-seed",
+      "ground-nutmeg",
+      "protein-powder",
+      "powdered-milk",
+      "ground-chipotle-chile",
+      "powdered-lemon-peel",
+      "powdered-orange-peel",
+      "cocoa-powder",
+      "orris-root-powder",
+      "de-arbol-powder",
+      "flea-powder",
+      "talcum-powder",
+      "ancho-chili-powder",
+      "ground-turmeric",
+      "whey-powder",
+      "masala-powder",
+      "mustard-powder",
+      "ground-cloves",
+      "curry-powder",
+      "powdered-sugar",
+      "chili-powder",
+      "ground-thyme-leaf",
+      "amchoor-powder",
+      "ground-epazote-herb",
+      "onion-powder",
+      "ground-cardamom",
+      "baby-powder",
+      "ground-jalapeno-pepper",
+      "powdered-cleaner"
+    ],
+    "red": [
+      "red-chili-peppers",
+      "red-seedless-grapes",
+      "red-onions",
+      "red-delicious-apples",
+      "red-pepper",
+      "red-wine-barbecue-sauce",
+      "red-vinegar",
+      "red-bell-peppers",
+      "red-cabbage",
+      "red-curry-paste",
+      "red-snapper",
+      "red-pepper-flakes",
+      "red-wine-vinegar",
+      "red-wine-salad-dressing",
+      "red-chard",
+      "red-wine",
+      "red-potatoes",
+      "red-pepper-jelly"
+    ],
+    "salt": [
+      "salted-butter",
+      "onion-salt",
+      "sea-salt",
+      "salt-cod-fillet",
+      "salt-water-softener",
+      "salt-cod",
+      "salt-substitute",
+      "kosher-salt",
+      "salt-pork",
+      "black-sea-salt",
+      "salt",
+      "salt-and-pepper",
+      "epsom-salt",
+      "smoked-sea-salt",
+      "granulated-sea-salt",
+      "pickling-salt",
+      "fleur-de-sel-salt",
+      "garlic-salt"
+    ],
+    "sauc": [
+      "adobo-sauce",
+      "enchilada-sauce",
+      "teriyaki-sauce",
+      "taco-sauce",
+      "szechuan-sauce",
+      "bbq-sauce",
+      "worcestershire-sauce",
+      "cocktail-sauce",
+      "green-taco-sauce",
+      "applesauce",
+      "pizza-sauce",
+      "tartar-sauce",
+      "chili-sauce",
+      "buffalo-wing-sauce",
+      "black-bean-sauce",
+      "steak-sauce",
+      "mushroom-sauce",
+      "bernaise-sauce",
+      "cranberry-sauce",
+      "newburg-sauce",
+      "tomato-sauce",
+      "fish-sauce",
+      "hollandaise-sauce",
+      "marinara-sauce",
+      "red-wine-barbecue-sauce",
+      "sweet-and-sour-sauce",
+      "oyster-sauce",
+      "pesto-sauce",
+      "soy-sauce",
+      "mexican-tomato-sauce",
+      "seafood-sauce",
+      "broccoli-in-cheese-sauce",
+      "mexican-sauce",
+      "horseradish-sauce",
+      "hot-sauce",
+      "oriental-sauce",
+      "pasta-sauce",
+      "meat-sauce",
+      "hoisin-sauce",
+      "spaghetti-sauce",
+      "chinese-plum-sauce",
+      "fondue-sauce",
+      "chipotle-sauce",
+      "peanut-sauce",
+      "duck-sauce",
+      "chipotle-peppers-in-adobo-sauce",
+      "peppercorn-sauce",
+      "canned-tomato-sauce",
+      "cheese-sauce",
+      "white-sauce"
+    ],
+    "seed": [
+      "whole-celery-seed",
+      "ground-cumin-seed",
+      "dill-seed",
+      "poppy-seed-dressing",
+      "ground-coriander-seed",
+      "grapeseed-oil",
+      "fenugreek-seeds",
+      "sesame-seed",
+      "ground-celery-seed",
+      "anise-seed",
+      "bird-seed",
+      "whole-coriander-seed",
+      "grape-seed-extract",
+      "pomegranate-seeds",
+      "ground-fennel-seed",
+      "hulled-sunflower-seeds",
+      "whole-cumin-seed",
+      "caraway-seeds",
+      "sunflower-seeds",
+      "seeds",
+      "whole-fennel-seed",
+      "fennel-seed",
+      "mustard-seed",
+      "pumpkin-seeds",
+      "poppy-seed",
+      "celery-seeds"
+    ],
+    "shred": [
+      "shredded-oats",
+      "shredded-cheese",
+      "shredded-coconut"
+    ],
+    "skinless": [
+      "boneless-skinless-chicken-breast",
+      "fresh-boneless-skinless-chicken-breast",
+      "frozen-boneless-skinless-chicken-breast"
+    ],
+    "slice": [
+      "sliced-cheese",
+      "juice",
+      "canned-pineapple"
+    ],
+    "soda": [
+      "baking-soda",
+      "grape-soda",
+      "soda",
+      "cream-soda",
+      "orange-soda",
+      "soda-pop",
+      "diet-soda",
+      "club-soda"
+    ],
+    "sour": [
+      "sweet-and-sour-sauce",
+      "sour-candy",
+      "sour-cream"
+    ],
+    "sugar": [
+      "sugar",
+      "vanilla-sugar",
+      "sugar-cones",
+      "sugar-snap-peas",
+      "brown-sugar",
+      "sugar-substitute",
+      "sugar-blend",
+      "thai-palm-sugar",
+      "fresh-sugar-snap-peas",
+      "granulated-sugar",
+      "powdered-sugar",
+      "organic-sugar"
+    ],
+    "tomato": [
+      "campari-tomatoes",
+      "tomatoes",
+      "tomato-juice",
+      "diced-tomatoes",
+      "fresh-tomatoes",
+      "grape-tomatoes",
+      "roma-tomatoes",
+      "tomato-puree",
+      "sun-dried-tomatoes",
+      "tomato-paste",
+      "tomato-sauce",
+      "plum-tomatoes",
+      "mexican-tomato-sauce",
+      "canned-tomatoes",
+      "condensed-tomato-soup",
+      "cherry-tomatoes",
+      "tomato-soup",
+      "stewed-tomatoes",
+      "canned-tomato-paste",
+      "crushed-tomatoes",
+      "canned-tomato-sauce"
+    ],
+    "tortilla": [
+      "tortilla-chips",
+      "tortillas",
+      "whole-wheat-tortillas",
+      "flour-tortillas",
+      "corn-tortillas"
+    ],
+    "veget": [
+      "vegetable-tray",
+      "vegetable-oil",
+      "vegetable-broth",
+      "frozen-vegetables",
+      "vegetable-oil-cooking-spray",
+      "mixed-vegetables",
+      "canned-vegetables",
+      "vegetable-stock",
+      "vegetable-soup",
+      "frozen-vegetable-juice",
+      "vegetable-juice"
+    ],
+    "water": [
+      "carbonated-water",
+      "water-softener",
+      "distilled-water",
+      "water",
+      "salt-water-softener",
+      "flavored-water",
+      "sparkling-water",
+      "spring-water",
+      "mineral-water",
+      "canned-water-chestnuts",
+      "bottled-water",
+      "orange-blossom-water",
+      "seltzer-water",
+      "coconut-water",
+      "hot-water-bottle",
+      "tonic-water"
+    ],
+    "white": [
+      "white-wine-vinegar",
+      "distilled-white-vinegar",
+      "white-rice",
+      "white-wine",
+      "egg-whites",
+      "canned-white-beans",
+      "white-pepper",
+      "white-vinegar",
+      "white-bread",
+      "white-onions",
+      "white-sauce"
+    ],
+    "yellow": [
+      "yellow-onions",
+      "yellow-squash",
+      "yellow-bell-peppers"
+    ]
+  }
+}

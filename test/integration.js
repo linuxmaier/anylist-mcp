@@ -782,6 +782,12 @@ try {
           }
           const beans = await byName('zz-mcp-test beans');
           if (beans._pb.packageSizePb?.rawPackageSize !== '15 oz. can') throw new Error('beans lost their package size');
+          // Never-bought items are categorized from AnyList's tag data, like the app does (#20).
+          const onions = await byName('zz-mcp-test onions');
+          if (onions._pb.priceMatchupTag !== 'onions' || onions._pb.categoryMatchId !== 'produce') {
+            throw new Error(`onions categorized as ${onions._pb.priceMatchupTag}/${onions._pb.categoryMatchId}, expected onions/produce`);
+          }
+          if (!onions.categoryAssignments?.length) throw new Error('onions have no category assignment');
           return text.split('\n')[0];
         });
 
