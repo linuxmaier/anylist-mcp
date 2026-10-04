@@ -65,3 +65,13 @@ reason = "tmp@0.0.33, dev-only via @anthropic-ai/mcpb -> @inquirer/editor; only 
 id = "GHSA-ph9p-34f9-6g65"
 ignoreUntil = 2026-12-31
 reason = "tmp@0.0.33, dev-only via @anthropic-ai/mcpb -> @inquirer/editor; only used by interactive mcpb prompts, never by 'mcpb pack' or the server."
+
+[[IgnoredVulns]]
+id = "GHSA-ch52-4w7c-c8xp"
+ignoreUntil = 2026-11-30
+reason = "http-cache-semantics@4.2.0 via anylist-js -> got@11 -> cacheable-request. got only consults it when a `cache` option is passed; anylist-js never passes one, and the server is not a shared HTTP cache. No fixed version yet (2026-10-04)."
+
+[[IgnoredVulns]]
+id = "GHSA-86w9-cpqp-85rv"
+ignoreUntil = 2026-11-30
+reason = "node-forge@1.4.0, dev-only via @anthropic-ai/mcpb, which uses it to sign .mcpb bundles, not to verify signatures. Not in the server or either install mode. No fixed version yet (2026-10-04)."
