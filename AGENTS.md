@@ -31,6 +31,9 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - AnyList clients run **without anylist-js's WebSocket**: it keeps its auth token in a static field, so two accounts in one process would mix them. `connect()` fetches lists on every call instead (#19), about 200 ms.
   - `GET /healthz` answers without a JWT and without contacting AnyList.
   - Upstream's `src/http/` is not used by hosted mode, so its open draft advisory (GHSA-wmwp-r9gj-hp23) doesn't apply. Leave `src/http/` as it is to keep upstream merges simple.
+  - **Image:** `docker/hosted.Dockerfile` (base pinned by digest, `npm ci --omit=optional --omit=dev`, runs as `node`, `TZ=America/Chicago`, tokens cached in `/tmp`). Its build context is the allowlist in `docker/hosted.Dockerfile.dockerignore`, which leaves out `src/http/`. It must run with a read-only root filesystem and a tmpfs on `/tmp`. Build locally: `docker build -f docker/hosted.Dockerfile -t anylist-mcp-hosted:dev .` (submodule checked out).
+  - **Release:** `.github/workflows/hosted-image.yml` builds the image on PRs and `main`, and **pushes it only from the `production` branch** to `ghcr.io/linuxmaier/anylist-mcp-hosted` (tags: the commit SHA and `production`). Day-to-day work merges to `main`; to deploy, push `main` to `production` (`git push origin main:production`, or a PR into `production`). home-server then picks up the new digest.
+  - **Never push to `production` without the owner asking.** It's the deploy.
 - **HTTP (optional, upstream's):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README). Not used by this fork.
 - The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
 
@@ -93,6 +96,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
 - **GitHub Actions:**
   - Pin every action to a full commit SHA with a `# vX.Y.Z` comment.
   - Keep `permissions: contents: read` and `persist-credentials: false`.
+    - The one exception: the `publish` job in `hosted-image.yml` has `packages: write`, and runs only on `production`. Don't widen it or add it anywhere else.
   - `zizmor` and `actionlint` must pass.
 
 ## Before proposing a commit
