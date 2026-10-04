@@ -66,6 +66,42 @@ export function withIngredientIds(ingredients, previous = []) {
   });
 }
 
+// PBCalendarEventType values other than MealPlanCalendarEvent (0).
+const QUEUE_EVENT = 1;
+const TEMPLATE_EVENT = 2;
+const FAVORITE_EVENT = 3;
+
+/**
+ * Recompute a meal-plan event's sort indexes the way the AnyList app does
+ * (aioanylist `_refresh_event_sort_index`, `set_event_date`, `set_event_label`).
+ * A new event (`old` null), or one moved to another day or label, goes last in
+ * its group: `orderAddedSortIndex` = the group's highest + 1. A move clears
+ * `labelSortIndex`, except a label change on a queue or favorite event.
+ * Otherwise the event is left alone (#22).
+ *
+ * @param {object} event - modified in place
+ * @param {object|null} old - the stored event before the change
+ * @param {object[]} events - every stored event (may include `event` itself)
+ */
+export function refreshEventSortIndex(event, old, events) {
+  const type = event.eventType ?? 0;
+  if (old) {
+    const dayChanged = type === TEMPLATE_EVENT
+      ? (event.templateDayId ?? null) !== (old.templateDayId ?? null)
+      : (event.date ?? null) !== (old.date ?? null);
+    const labelChanged = (event.labelId ?? null) !== (old.labelId ?? null);
+    if (!dayChanged && !labelChanged) return;
+    if (dayChanged || (type !== QUEUE_EVENT && type !== FAVORITE_EVENT)) event.labelSortIndex = null;
+  }
+  const inGroup = e => {
+    if (type === QUEUE_EVENT || type === FAVORITE_EVENT) return (e.eventType ?? 0) === type;
+    if (type === TEMPLATE_EVENT) return e.templateDayId === event.templateDayId;
+    return (e.eventType ?? 0) === type && e.date === event.date;
+  };
+  const others = events.filter(e => e.identifier !== event.identifier && inGroup(e));
+  event.orderAddedSortIndex = Math.max(-1, ...others.map(e => e.orderAddedSortIndex ?? 0)) + 1;
+}
+
 function describeCollection(recipes) {
   return c => {
     const ids = c.recipeIds || [];
@@ -844,7 +880,10 @@ class AnyListClient {
       throw new Error('Not connected. Call connect() first.');
     }
     try {
-      const eventObj = { date: new Date(`${date}T12:00:00`) };
+      const { events } = (await this.client._getUserData(true)).mealPlanningCalendarResponse;
+      const sort = { date, labelId };
+      refreshEventSortIndex(sort, null, events);
+      const eventObj = { date: new Date(`${date}T12:00:00`), orderAddedSortIndex: sort.orderAddedSortIndex };
       if (title) eventObj.title = title;
       if (recipeId) eventObj.recipeId = recipeId;
       if (labelId) eventObj.labelId = labelId;
@@ -889,6 +928,7 @@ class AnyListClient {
       if (!event.title && !event.recipeId) {
         throw new Error('Event must keep a title or a recipe');
       }
+      refreshEventSortIndex(event, stored, events);
 
       const op = new PBCalendarOperation();
       op.setMetadata({ operationId: uuid(), handlerId: 'update-event', userId: this.client.uid });
