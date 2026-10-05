@@ -32,7 +32,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - `GET /healthz` answers without a JWT and without contacting AnyList.
   - Upstream's `src/http/` is not used by hosted mode, so its open draft advisory (GHSA-wmwp-r9gj-hp23) doesn't apply. Leave `src/http/` as it is to keep upstream merges simple.
   - **Image:** `docker/hosted.Dockerfile` (base pinned by digest, `npm ci --omit=optional --omit=dev`, runs as `node`, `TZ=America/Chicago`, tokens cached in `/tmp`). Its build context is the allowlist in `docker/hosted.Dockerfile.dockerignore`, which leaves out `src/http/`. It must run with a read-only root filesystem and a tmpfs on `/tmp`. Build locally: `docker build -f docker/hosted.Dockerfile -t anylist-mcp-hosted:dev .` (submodule checked out).
-  - **Release:** `.github/workflows/hosted-image.yml` builds the image on PRs and `main`, and **pushes it only from the `production` branch** to `ghcr.io/linuxmaier/anylist-mcp-hosted` (tags: the commit SHA and `production`). Day-to-day work merges to `main`; to deploy, push `main` to `production` (`git push origin main:production`, or a PR into `production`). home-server then picks up the new digest.
+  - **Release:** `.github/workflows/hosted-image.yml` builds the image on PRs and `main`, and **pushes it only from the `production` branch** to `ghcr.io/linuxmaier/anylist-mcp-hosted` (tags: the commit SHA and `production`). Day-to-day work merges to `main`; to deploy, push `main` to `production` (`git push origin main:production`, or a PR into `production`). The workflow's `release` job then pins the new digest in home-server with a PR it merges once home-server's CI passes, which deploys it within a few minutes (home-server ADR 0013).
   - **Never push to `production` without the owner asking.** It's the deploy.
 - **HTTP (optional, upstream's):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README). Not used by this fork.
 - The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`, `src/tag-data.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
@@ -101,6 +101,7 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - Pin every action to a full commit SHA with a `# vX.Y.Z` comment.
   - Keep `permissions: contents: read` and `persist-credentials: false`.
     - The one exception: the `publish` job in `hosted-image.yml` has `packages: write`, and runs only on `production`. Don't widen it or add it anywhere else.
+    - The `release` job in `hosted-image.yml` uses the `home-server-release` GitHub App's key, which can push to and merge in linuxmaier/home-server. The key is a secret of the `home-server-release` environment, which only `production` may use. Never reference it from another job or environment.
   - `zizmor` and `actionlint` must pass.
 
 ## Before proposing a commit

@@ -5,6 +5,13 @@ name: Hosted image
 # commit SHA and `production`, for the home-server platform to pin by digest: pushing
 # to production is what deploys.
 #
+# After a publish, the release job deploys it: it opens a PR in linuxmaier/home-server that pins
+# the new digest in apps/anylist/compose.yml, waits for home-server's CI, and merges it, which
+# starts home-server's Deploy workflow (home-server ADR 0013). It acts as the home-server-release
+# GitHub App, installed only on home-server. The app's key is a secret of the home-server-release
+# environment, which only the production branch can use. The job does nothing until the
+# HOME_SERVER_APP_CLIENT_ID repository variable is set.
+#
 # Uses the runner's Docker CLI rather than docker/* actions: the repo allows only
 # GitHub-owned actions (plus jdx/mise-action).
 
@@ -43,6 +50,8 @@ jobs:
     name: Build and publish
     if: github.ref == 'refs/heads/production'
     runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.digest.outputs.digest }}
     # The only job allowed to write packages, and it runs only on production.
     permissions:
       contents: read # checkout
@@ -71,3 +80,124 @@ jobs:
           docker push "$IMAGE:$SHA"
           docker push "$IMAGE:production"
           docker logout ghcr.io
+      - name: Digest
+        id: digest
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          # The registry's manifest digest for the tag: what home-server pins.
+          digest=$(docker buildx imagetools inspect "$IMAGE:$SHA" --format '{{json .Manifest}}' | jq -r .digest)
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]] || { echo "::error::No digest for $IMAGE:$SHA"; exit 1; }
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+          echo "Pushed \`$IMAGE:production@$digest\`" >> "$GITHUB_STEP_SUMMARY"
+
+  release:
+    name: Deploy to home-server
+    needs: publish
+    if: github.ref == 'refs/heads/production' && vars.HOME_SERVER_APP_CLIENT_ID != ''
+    runs-on: ubuntu-latest
+    # Holds the app's private key; only the production branch may use it.
+    environment: home-server-release
+    # Acts only through the app's token for home-server; needs nothing from this repo.
+    permissions: {}
+    # Home-server's CI takes a couple of minutes; this is the wait plus slack.
+    timeout-minutes: 20
+    env:
+      DIGEST: ${{ needs.publish.outputs.digest }}
+      APP_NAME: anylist
+      BRANCH: anylist-release
+      FILE: apps/anylist/compose.yml
+      PATTERN: '(anylist-mcp-hosted:production@)sha256:[0-9a-f]{64}'
+    steps:
+      - name: Token for home-server
+        id: token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.HOME_SERVER_APP_CLIENT_ID }}
+          private-key: ${{ secrets.HOME_SERVER_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: home-server
+          permission-contents: write
+          permission-pull-requests: write
+          permission-checks: read
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.repository_owner }}/home-server
+          token: ${{ steps.token.outputs.token }}
+          persist-credentials: false
+
+      - name: Pin the new digest
+        id: pin
+        run: |
+          if ! grep -Eq "$PATTERN" "$FILE"; then
+            echo "::error::No image line matching $PATTERN in home-server's $FILE"
+            exit 1
+          fi
+          sed -Ei "s/$PATTERN/\\1$DIGEST/" "$FILE"
+          if git diff --quiet; then
+            echo "home-server already runs $DIGEST" >> "$GITHUB_STEP_SUMMARY"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open the release PR
+        if: steps.pin.outputs.changed == 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          SLUG: ${{ steps.token.outputs.app-slug }}
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        run: |
+          user_id=$(gh api "/users/${SLUG}%5Bbot%5D" --jq .id)
+          git config user.name "${SLUG}[bot]"
+          git config user.email "${user_id}+${SLUG}[bot]@users.noreply.github.com"
+          # One branch for every release, rebuilt from home-server's main each time. Runs are
+          # serialized by the workflow's concurrency group, so a release whose CI failed is simply
+          # replaced by the next one. The checkout keeps no credentials, so push with the token.
+          git switch -C "$BRANCH"
+          git commit -am "$APP_NAME: deploy ${SOURCE_SHA:0:7}"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY_OWNER}/home-server.git" "$BRANCH"
+          title="$APP_NAME: deploy ${SOURCE_SHA:0:7}"
+          open_pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$open_pr" ]; then
+            gh pr create --head "$BRANCH" --base main --title "$title" \
+              --body "Pins the $APP_NAME image built from ${SOURCE_URL}. Opened by the ${GITHUB_REPOSITORY} Hosted image workflow, which merges it once CI passes."
+          else
+            # REST, not `gh pr edit`: that fails on repos with Projects (classic) deprecation errors.
+            gh api -X PATCH "repos/{owner}/{repo}/pulls/$open_pr" -f title="$title" >/dev/null
+          fi
+          echo "number=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')" >> "$GITHUB_OUTPUT"
+          echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for home-server CI, then merge
+        if: steps.pin.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          NUMBER: ${{ steps.pr.outputs.number }}
+          HEAD: ${{ steps.pr.outputs.head }}
+        run: |
+          # REST only. `gh pr checks` also reads each check's workflow run, which needs Actions
+          # permission the app doesn't have, and `gh pr merge` can hit Projects (classic) errors.
+          # Check runs need only Checks: read.
+          runs="repos/{owner}/{repo}/commits/$HEAD/check-runs?per_page=100"
+          for _ in $(seq 60); do
+            sleep 15
+            total=$(gh api "$runs" --jq '.total_count')
+            pending=$(gh api "$runs" --jq '[.check_runs[] | select(.status != "completed")] | length')
+            [ "$total" -gt 0 ] && [ "$pending" -eq 0 ] && break
+          done
+          failed=$(gh api "$runs" --jq '[.check_runs[] | select(.status == "completed"
+            and (.conclusion | IN("success", "skipped", "neutral") | not)) | .name] | join(", ")')
+          pending=$(gh api "$runs" --jq '[.check_runs[] | select(.status != "completed")] | length')
+          if [ -n "$failed" ] || [ "$pending" -ne 0 ] || [ "$total" -eq 0 ]; then
+            echo "::error::home-server checks didn't pass (failed: ${failed:-none}; pending: $pending; total: $total)"
+            exit 1
+          fi
+          # sha: GitHub refuses the merge if the branch moved after CI checked this commit.
+          gh api -X PUT "repos/{owner}/{repo}/pulls/$NUMBER/merge" \
+            -f merge_method=squash -f sha="$HEAD" >/dev/null
+          gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$BRANCH" >/dev/null || true
+          echo "Merged home-server PR #$NUMBER; home-server's Deploy workflow takes it from here." >> "$GITHUB_STEP_SUMMARY"
