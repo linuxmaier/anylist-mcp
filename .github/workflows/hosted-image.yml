@@ -7,7 +7,8 @@ name: Hosted image
 #
 # After a publish, the release job deploys it: it opens a PR in linuxmaier/home-server that pins
 # the new digest in apps/anylist/compose.yml, waits for home-server's CI, and merges it, which
-# starts home-server's Deploy workflow (home-server ADR 0013). It acts as the home-server-release
+# starts home-server's Deploy workflow (home-server ADR 0013), and then waits for that Deploy, so
+# the run fails if the release doesn't reach the host. It acts as the home-server-release
 # GitHub App, installed only on home-server. The app's key is a secret of the home-server-release
 # environment, which only the production branch can use. The job does nothing until the
 # HOME_SERVER_APP_CLIENT_ID repository variable is set.
@@ -100,8 +101,8 @@ jobs:
     environment: home-server-release
     # Acts only through the app's token for home-server; needs nothing from this repo.
     permissions: {}
-    # Home-server's CI takes a couple of minutes; this is the wait plus slack.
-    timeout-minutes: 20
+    # Home-server's CI and then its Deploy take a few minutes each; this is both waits plus slack.
+    timeout-minutes: 40
     env:
       DIGEST: ${{ needs.publish.outputs.digest }}
       APP_NAME: anylist
@@ -174,6 +175,7 @@ jobs:
 
       - name: Wait for home-server CI, then merge
         if: steps.pin.outputs.changed == 'true'
+        id: merge
         env:
           GH_TOKEN: ${{ steps.token.outputs.token }}
           NUMBER: ${{ steps.pr.outputs.number }}
@@ -197,7 +199,41 @@ jobs:
             exit 1
           fi
           # sha: GitHub refuses the merge if the branch moved after CI checked this commit.
-          gh api -X PUT "repos/{owner}/{repo}/pulls/$NUMBER/merge" \
-            -f merge_method=squash -f sha="$HEAD" >/dev/null
+          merged=$(gh api -X PUT "repos/{owner}/{repo}/pulls/$NUMBER/merge" \
+            -f merge_method=squash -f sha="$HEAD" --jq .sha)
           gh api -X DELETE "repos/{owner}/{repo}/git/refs/heads/$BRANCH" >/dev/null || true
-          echo "Merged home-server PR #$NUMBER; home-server's Deploy workflow takes it from here." >> "$GITHUB_STEP_SUMMARY"
+          echo "sha=$merged" >> "$GITHUB_OUTPUT"
+          echo "Merged home-server PR #$NUMBER as ${merged:0:7}." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Wait for home-server's Deploy
+        if: steps.pin.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          MERGED: ${{ steps.merge.outputs.sha }}
+        run: |
+          # The merge starts home-server's CI and Deploy workflows. Deploy's last job is named `host`
+          # (home-server .github/workflows/deploy.yml); its check run on the merge commit says whether
+          # the release reached the host. Check runs need only Checks: read.
+          runs="repos/{owner}/{repo}/commits/$MERGED/check-runs?per_page=100"
+          started=$(date +%s)
+          while :; do
+            sleep 20
+            elapsed=$(( $(date +%s) - started ))
+            total=$(gh api "$runs" --jq '.total_count')
+            # GitHub occasionally drops a push event, and then nothing runs (seen 2026-10-05).
+            if [ "$total" -eq 0 ] && [ "$elapsed" -ge 300 ]; then
+              echo "::error::Nothing started on home-server's merge commit ${MERGED:0:7} in 5 minutes. GitHub may have dropped the push event: run home-server's Deploy workflow by hand."
+              exit 1
+            fi
+            host=$(gh api "$runs" --jq '[.check_runs[] | select(.name == "host" and .status == "completed") | .conclusion][0] // empty')
+            [ -n "$host" ] && break
+            if [ "$elapsed" -ge 900 ]; then
+              echo "::error::home-server's Deploy hasn't finished on ${MERGED:0:7} after 15 minutes. If no Deploy run exists for it, run the workflow by hand."
+              exit 1
+            fi
+          done
+          if [ "$host" != "success" ]; then
+            echo "::error::home-server's Deploy didn't succeed (host job: $host). The release is merged but not running; see the Deploy run in home-server."
+            exit 1
+          fi
+          echo "home-server's Deploy finished: the release is running." >> "$GITHUB_STEP_SUMMARY"
