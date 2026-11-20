@@ -15,7 +15,8 @@ const LIST_ID = '11111111111141118111111111111111';
 
 /** The named parts of a multipart/form-data body. */
 function parseMultipart(contentType, body) {
-  const boundary = /boundary=(.+)$/.exec(contentType || '')?.[1];
+  const marker = (contentType || '').indexOf('boundary=');
+  const boundary = marker === -1 ? null : contentType.slice(marker + 'boundary='.length);
   const parts = {};
   if (!boundary) return parts;
   const delimiter = Buffer.from(`--${boundary}`);
