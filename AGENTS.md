@@ -28,14 +28,14 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - Every `/mcp` request needs a valid `Cf-Access-Jwt-Assertion`, verified in `src/hosted/access-jwt.js` (RS256, `iss`, `aud`, `exp`, `nbf`) even though cloudflared checks it too: other containers on the platform network can reach the app directly.
   - The JWT's email picks the AnyList account (`src/hosted/accounts.js`): `ANYLIST_ACCOUNTS=andrew,hanna` plus `ANYLIST_<NAME>_EMAIL`, `_USERNAME`, `_PASSWORD`, `_LIST` for each. Also `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `ANYLIST_TOKEN_DIR`, and optionally `PORT` (8000). The values are SOPS secrets in home-server; never put them anywhere else.
   - An MCP session belongs to the account that created it. Unknown or foreign sessions get 404, so clients start a new one.
-  - AnyList clients run **without anylist-js's WebSocket**: it keeps its auth token in a static field, so two accounts in one process would mix them. `connect()` fetches lists on every call instead (#19), about 200 ms.
+  - Each account has its own `AnyListClient`, so it also has its own request guard (snapshot, download limit, 429 cooldown; see "Request volume").
   - `GET /healthz` answers without a JWT and without contacting AnyList.
   - Upstream's `src/http/` is not used by hosted mode, so its open draft advisory (GHSA-wmwp-r9gj-hp23) doesn't apply. Leave `src/http/` as it is to keep upstream merges simple.
   - **Image:** `docker/hosted.Dockerfile` (base pinned by digest, `npm ci --omit=optional --omit=dev`, runs as `node`, `TZ=America/Chicago`, tokens cached in `/tmp`). Its build context is the allowlist in `docker/hosted.Dockerfile.dockerignore`, which leaves out `src/http/`. It must run with a read-only root filesystem and a tmpfs on `/tmp`. Build locally: `docker build -f docker/hosted.Dockerfile -t anylist-mcp-hosted:dev .` (submodule checked out).
   - **Release:** `.github/workflows/hosted-image.yml` builds the image on PRs and `main`, and **pushes it only from the `production` branch** to `ghcr.io/linuxmaier/anylist-mcp-hosted` (tags: the commit SHA and `production`). Day-to-day work merges to `main`; to deploy, push `main` to `production` (`git push origin main:production`, or a PR into `production`). The workflow's `release` job then pins the new digest in home-server with a PR it merges once home-server's CI passes, which deploys it within a few minutes (home-server ADR 0013).
   - **Never push to `production` without the owner asking.** It's the deploy.
 - **HTTP (optional, upstream's):** `npm ci`. It runs `src/http/index.js` (Docker plus a Cloudflare Tunnel; see README). Not used by this fork.
-- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`, `src/tag-data.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
+- The HTTP-only packages are `optionalDependencies` in `package.json`. The stdio and hosted code paths (`src/server.js`, `src/hosted/`, `src/tools/`, `src/anylist-client.js`, `src/recipe-normalizer.js`, `src/recipe-to-list/`, `src/tag-data.js`, `src/request-guard.js`) must never import from `src/http/` or from any optional dependency. CI's `stdio-only` job enforces this, and `test/hosted/boundary.test.js` checks `src/hosted/`.
 
 ## How the code talks to AnyList
 
@@ -45,20 +45,28 @@ This fork exists so upstream code is reviewed before it runs with the owner's An
   - `addRecipeToList`
 - **Prefer a wrapper fix to an anylist-js change.** Every anylist-js change widens the gap with upstream. Change anylist-js only when the wrapper can't avoid the bug; `Item._encode` dropping fields (anylist-js#3) was such a case.
 - **Protocol reference:** [aioanylist](https://github.com/BookCatKid/aioanylist) (MIT) mirrors AnyList's web client. Check handler names and payload shapes there before inventing them, then confirm live on disposable objects. It isn't always right: `src/recipe-to-list/` documents 4 places where the real app differs.
+- **Request volume (#44):** AnyList suspended the owner's account in 2026-11 for heavy use from this server. Every full read is `data/user-data/get`, which downloads the **whole account** (all lists, recipes and the meal plan). `src/request-guard.js` sits between anylist-js and the network:
+  - full reads reuse a snapshot for up to 60 s unless something was written since; overlapping reads share one fetch
+  - a read whose result decides what gets written uses `_freshUserData()` (snapshot at most 5 s old, so normally the one this call's `connect()` just made)
+  - at most 20 full downloads per 10 min per account, after which requests are refused locally
+  - after a 429 nothing is sent (login and token refresh included) until `Retry-After` has passed, 1 h if none is given; nothing is retried automatically
+  - anylist-js's WebSocket is never opened: every push from the app triggered a full download, and its auth token is a static field shared by all accounts.
+  - Don't add calls that bypass the guard, add polling or background refreshes, or retry on failure. `test/anylist-client-requests.test.js` counts requests per tool path; extend it when adding a read. Conditional sync (304s) is #45.
 - **Pitfalls that already bit us:**
   - **Units:** recipe `prepTime`/`cookTime` are stored in **seconds**. The tools speak minutes and convert only at the tool boundary.
   - **Dates:** meal-plan dates are stored as `YYYY-MM-DD` strings. Don't round-trip them through `new Date()`, which shifts them a day west of UTC. The owner is on CDT. Compute "today" in local time.
   - **Names:** look up recipes and collections with `resolveOne` (by ID, with an error on ambiguous names), never `Array.find` by name. The account has duplicate names.
-  - **Stale list:** anylist-js replaces its List objects on every refresh. `targetList` is looked up by ID for that reason, and `connect()` refetches lists whenever the WebSocket isn't open (#19). Don't cache List or Item objects across calls. Anything that reads and then writes a list should still refresh it first, as `addRecipeToList` does.
+  - **Stale list:** anylist-js replaces its List objects on every refresh. `targetList` is looked up by ID for that reason, and `connect()` asks for lists on every call (#19), served from the guard's snapshot when it's recent. Don't cache List or Item objects across calls. Anything that reads and then writes a list should use `_freshUserData()` first, as `addRecipeToList` does.
 - **`src/recipe-to-list/`:** a Porter2 stemmer, a quantity/package parser, deterministic item IDs matching the app's, and the app's categorizer (`categorize.js`: item name → grocery tag → list category, honouring the list's categorization rules). The golden tests (`test/fixtures/recipe-list-items.json`) must stay at 37/37 for both item IDs and categories. If a change breaks them, the app's behaviour wins.
   - The categorizer's tag data comes from AnyList at runtime (`src/tag-data.js`). Offline tests use `test/fixtures/tag-data-extract.json`, a slice of it; regenerate that with `node scripts/extract-tag-fixture.mjs` if AnyList's tag data changes. `test/fixtures/test-list-categories.json` holds Test List's category groups.
 
 ## Live testing
 
+- Live suites load AnyList for real (see "Request volume"). Run one only when a change needs it, never in a loop, and not at all while AnyList is rate-limiting the account.
 - Run live tests only through `scripts/with-anylist-creds.sh`:
   - `npm run test:integration`: the MCP end to end
   - `npm run test:client`: the client directly
-  - `npm run test:hosted-live`: hosted mode with real, WebSocket-less AnyList clients (read-only, Test List)
+  - `npm run test:hosted-live`: hosted mode with real AnyList clients (read-only, Test List)
   - `npm run test:http` also runs offline, but needs the full `npm ci`
 - **Test List** is the only list tests may write to.
   - It holds exactly the **37 golden fixture items**, which the AnyList app created from White Chicken Chili and Black Bean Chili.

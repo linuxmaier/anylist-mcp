@@ -21,7 +21,6 @@ function fakeList(names, { identifier = LIST_ID, name = 'Groceries' } = {}) {
 
 function makeClient() {
   const fake = {
-    ws: { readyState: 1 }, // WebSocket open
     lists: [fakeList(['milk'])],
     getListsCalls: 0,
     // What the server returns on the next fetch
@@ -46,32 +45,19 @@ describe('AnyListClient target list', () => {
     await client.connect('Groceries');
   });
 
-  it('sees items from a WebSocket refresh that replaced the list objects', async () => {
-    // What anylist-js does on 'refresh-shopping-lists': new List objects
-    fake.lists = [fakeList(['milk', 'eggs'])];
+  it('sees items from a refresh that replaced the list objects', async () => {
+    // anylist-js builds new List objects on every refresh
+    fake.serverLists = [fakeList(['milk', 'eggs'])];
 
     await client.connect('Groceries');
     assert.deepEqual((await client.getItems()).map(i => i.name), ['milk', 'eggs']);
     assert.ok(client.targetList.getItemByName('eggs'));
-    assert.equal(fake.getListsCalls, 0, 'no fetch needed while the WebSocket is open');
   });
 
-  it('fetches lists when the WebSocket is down', async () => {
-    fake.ws.readyState = 3; // CLOSED: anylist-js gave up reconnecting
-    fake.serverLists = [fakeList(['milk', 'bread'])];
-
+  it('asks for lists on every connect (the request guard decides whether that downloads)', async () => {
     await client.connect('Groceries');
-    assert.equal(fake.getListsCalls, 1);
-    assert.deepEqual((await client.getItems()).map(i => i.name), ['milk', 'bread']);
-  });
-
-  it('fetches lists when there is no WebSocket', async () => {
-    delete fake.ws;
-    fake.serverLists = [fakeList(['tea'])];
-
     await client.connect('Groceries');
-    assert.equal(fake.getListsCalls, 1);
-    assert.deepEqual((await client.getItems()).map(i => i.name), ['tea']);
+    assert.equal(fake.getListsCalls, 3); // including beforeEach's
   });
 
   it('looks the list up again by name after it was renamed in the app', async () => {

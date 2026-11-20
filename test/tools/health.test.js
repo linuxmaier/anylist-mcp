@@ -17,6 +17,7 @@ describe('health_check tool', () => {
   it('returns success on connection', async () => {
     const result = await handlers.health_check({});
     assert.ok(result.content[0].text.includes('Successfully connected'));
+    assert.ok(result.content[0].text.includes('AnyList requests since start'));
     assert.equal(result.isError, undefined);
   });
 

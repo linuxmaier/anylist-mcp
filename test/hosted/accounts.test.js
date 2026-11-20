@@ -66,13 +66,13 @@ describe('createAccountRegistry', () => {
     assert.equal(created, 2);
   });
 
-  it('gives each account its own token cache and no WebSocket', () => {
+  it('gives each account its own token cache and request guard', () => {
     const registry = createAccountRegistry(accounts, { tokenDir: '/run/anylist' });
     const andrew = registry.clientFor(registry.accountFor('andrew@example.com'));
     const hanna = registry.clientFor(registry.accountFor('hanna@example.com'));
     assert.equal(andrew._credentialsFile, '/run/anylist/andrew.anylist_credentials');
     assert.equal(hanna._credentialsFile, '/run/anylist/hanna.anylist_credentials');
-    assert.equal(andrew._webSocket, false);
+    assert.notEqual(andrew._guard, hanna._guard);
     assert.equal(andrew.defaultListName, 'Groceries');
   });
 });
