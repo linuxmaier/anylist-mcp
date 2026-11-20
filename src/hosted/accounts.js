@@ -57,12 +57,9 @@ export function parseAccounts(env) {
 
 /**
  * One AnyListClient per account, created on first use and kept for the
- * life of the process.
- *
- * Clients run without anylist-js's WebSocket: it keeps the auth token in a
- * static field, so with two accounts in one process a reconnect could
- * authenticate as the other account. Without it, connect() fetches lists on
- * every call (#19).
+ * life of the process, so each account keeps its own request snapshot and
+ * rate-limit cooldown (#44). AnyListClient never opens anylist-js's
+ * WebSocket, whose static auth token would mix up accounts.
  */
 export function createAccountRegistry(accounts, { tokenDir, createClient } = {}) {
   const byEmail = new Map(accounts.map(a => [a.email, a]));
@@ -72,7 +69,6 @@ export function createAccountRegistry(accounts, { tokenDir, createClient } = {})
     password: account.password,
     defaultListName: account.defaultListName,
     credentialsFile: path.join(tokenDir, `${account.name}.anylist_credentials`),
-    webSocket: false,
   }));
 
   return {

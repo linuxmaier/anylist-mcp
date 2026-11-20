@@ -13,7 +13,7 @@ export function register(server, getClient) {
     try {
       const client = await getClient();
       await client.connect(list_name);
-      return textResponse(`Successfully connected to AnyList and found list: "${client.targetList.name}"`);
+      return textResponse(`Successfully connected to AnyList and found list: "${client.targetList.name}"\n${client.requestSummary()}`);
     } catch (error) {
       return errorResponse(`Failed to connect to AnyList: ${error.message}`);
     }

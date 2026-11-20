@@ -61,6 +61,10 @@ export class MockAnyListClient {
     this._stores = [];
   }
 
+  requestSummary() {
+    return 'AnyList requests since start: 0';
+  }
+
   async connect(listName = null) {
     const name = listName || process.env.ANYLIST_LIST_NAME || 'Test List';
     this._connected = true;

@@ -5,6 +5,7 @@ import { normalizeRecipe } from './recipe-normalizer.js';
 import { excludeMatcher, findSavedItem, itemIdentifier, newListItem, sameItemIngredient, toItemIngredient } from './recipe-to-list/index.js';
 import { categorizeNewItem, classifyItemName } from './recipe-to-list/categorize.js';
 import { getTagData } from './tag-data.js';
+import { RequestGuard, FRESH_MAX_AGE_MS } from './request-guard.js';
 
 /**
  * Pick exactly one item (anything with `identifier` and `name`) by id or name.
@@ -117,13 +118,18 @@ function describeCollection(recipes) {
 
 class AnyListClient {
   /**
-   * @param {{ username?: string, password?: string, defaultListName?: string, credentialsFile?: string, webSocket?: boolean }} [credentials]
+   * @param {{ username?: string, password?: string, defaultListName?: string, credentialsFile?: string }} [credentials]
    *   Optional credentials. Falls back to ANYLIST_USERNAME / ANYLIST_PASSWORD / ANYLIST_LIST_NAME
    *   environment variables when not provided (stdio mode). `credentialsFile` is where anylist-js
-   *   caches tokens (default `~/.anylist_credentials`). `webSocket: false` skips the push
-   *   connection; lists are then fetched on every connect().
+   *   caches tokens (default `~/.anylist_credentials`).
+   *
+   * anylist-js's WebSocket isn't used: every change pushed from the app made it
+   * download the whole account again (#44), and in hosted mode it keeps its
+   * auth token in a static field shared by all accounts. connect() asks for
+   * lists each time instead; the request guard serves them from a recent
+   * snapshot when it can.
    */
-  constructor({ username, password, defaultListName, credentialsFile, webSocket = true } = {}) {
+  constructor({ username, password, defaultListName, credentialsFile } = {}) {
     this.client = null;
     this._targetListId = null;
     this._lastTargetList = null;
@@ -131,8 +137,8 @@ class AnyListClient {
     this._password = password || null;
     this.defaultListName = defaultListName || null;
     this._credentialsFile = credentialsFile || null;
-    this._webSocket = webSocket;
     this._loggingIn = null;
+    this._guard = new RequestGuard();
     this.getTagData = getTagData;
   }
 
@@ -156,14 +162,18 @@ class AnyListClient {
   }
 
   /**
-   * Reload lists unless the WebSocket is open. While it's open, anylist-js
-   * refreshes `client.lists` on every change pushed from the app. It gives up
-   * after two failed reconnects, and changes made while it's down are never
-   * pushed, so fall back to fetching.
+   * The full account data for a read whose result decides what gets written:
+   * downloaded unless the snapshot is only seconds old (e.g. from this tool
+   * call's connect()).
    */
-  async _refreshListsIfStale() {
-    if (this.client.ws?.readyState === 1) return;
-    await this.client.getLists();
+  async _freshUserData() {
+    if (!this._guard.guards(this.client)) return this.client._getUserData(true);
+    return this._guard.userData(FRESH_MAX_AGE_MS);
+  }
+
+  /** Request counts and any rate-limit cooldown, for health_check. */
+  requestSummary() {
+    return this._guard.summary();
   }
 
   async connect(listName = null) {
@@ -187,7 +197,8 @@ class AnyListClient {
       if (this.client) {
         // A login started by a concurrent call (hosted sessions share a client)
         await this._loggingIn;
-        await this._refreshListsIfStale();
+        // Served from the request guard's snapshot when it's recent
+        await this.client.getLists();
         // Already connected to the same list: nothing else to do
         if (this.targetList && this.targetList.name === targetListName) {
           return true;
@@ -199,10 +210,11 @@ class AnyListClient {
           password: password,
           ...(this._credentialsFile ? { credentialsFile: this._credentialsFile } : {}),
         });
+        this._guard.install(client);
         this.client = client;
         this._loggingIn = (async () => {
           console.error('Connecting to AnyList...');
-          await client.login(this._webSocket);
+          await client.login(false);
           console.error('Successfully authenticated with AnyList');
           await client.getLists();
         })();
@@ -774,7 +786,9 @@ class AnyListClient {
       throw new Error('Not connected. Call connect() first.');
     }
     try {
-      const recipes = await this.client.getRecipes();
+      // save() writes back every field below, so start from current data
+      await this._freshUserData();
+      const recipes = await this.client.getRecipes(false);
       const existing = resolveOne(recipes, ref, 'Recipe', describeRecipe);
 
       // Start from every existing field so nothing is lost on save, then
@@ -883,7 +897,7 @@ class AnyListClient {
       throw new Error('Not connected. Call connect() first.');
     }
     try {
-      const { events } = (await this.client._getUserData(true)).mealPlanningCalendarResponse;
+      const { events } = (await this._freshUserData()).mealPlanningCalendarResponse;
       const sort = { date, labelId };
       refreshEventSortIndex(sort, null, events);
       const eventObj = { date: new Date(`${date}T12:00:00`), orderAddedSortIndex: sort.orderAddedSortIndex };
@@ -914,7 +928,7 @@ class AnyListClient {
       // _encode() drops fields such as icon, isLeftover and eventListItems, and
       // it re-parses the date as UTC midnight but sends the local date. Its
       // save() also sends 'set-event-details', which only updates details.
-      const userData = await this.client._getUserData(true);
+      const userData = await this._freshUserData();
       const { calendarId, events } = userData.mealPlanningCalendarResponse;
       const stored = events.find(e => e.identifier === eventId);
       if (!stored) {
@@ -1027,7 +1041,7 @@ class AnyListClient {
     }
     try {
       // Fresh state, so merge/revive decisions see the list as it is now.
-      const userData = await this.client._getUserData(true);
+      const userData = await this._freshUserData();
       await this.client.getLists(false);
       const list = this.client.lists.find(l => l.identifier === this.targetList.identifier);
       if (!list) throw new Error(`List "${this.targetList.name}" no longer exists`);
@@ -1150,9 +1164,8 @@ class AnyListClient {
         opList.setOperations(ops);
         const form = new FormData();
         form.append('operations', opList.toBuffer());
+        // The guard marks the snapshot stale; the next read fetches the result.
         await this.client.client.post('data/shopping-lists/update', { body: form });
-        await this.client.getLists();
-        this.targetList = this.client.lists.find(l => l.identifier === list.identifier) || list;
       }
       console.error(`Added recipe "${recipe.name}" to list "${list.name}" (${ops.length} operations)`);
       return {
@@ -1263,9 +1276,9 @@ class AnyListClient {
     }
     try {
       if (recipeRefs.length === 0) throw new Error('At least one recipe id or name is required');
-      const userData = await this.client._getUserData(true);
+      const userData = await this._freshUserData();
       const collections = userData.recipeDataResponse.recipeCollections || [];
-      const recipes = await this.client.getRecipes();
+      const recipes = await this.client.getRecipes(false);
       const raw = resolveOne(collections, collectionRef, 'Recipe collection', describeCollection(recipes));
       const resolved = [];
       for (const ref of recipeRefs) {
