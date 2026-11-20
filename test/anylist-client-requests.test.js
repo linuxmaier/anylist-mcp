@@ -1,7 +1,8 @@
 /**
- * How many requests AnyListClient makes (#44). A real anylist-js instance
- * talks to a local HTTP server standing in for AnyList, so the request guard's
- * got hooks, the snapshot and the protobuf decoding all run for real.
+ * How many requests AnyListClient makes (#44), and conditional sync (#45). A
+ * real anylist-js instance talks to a local HTTP server standing in for
+ * AnyList, so the request guard's got hooks, the snapshot, the multipart
+ * request and the protobuf decoding all run for real.
  */
 import { describe, it, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,11 +13,31 @@ import { RequestGuard, DOWNLOAD_LIMIT, DOWNLOAD_WINDOW_MS } from '../src/request
 
 const LIST_ID = '11111111111141118111111111111111';
 
+/** The named parts of a multipart/form-data body. */
+function parseMultipart(contentType, body) {
+  const boundary = /boundary=(.+)$/.exec(contentType || '')?.[1];
+  const parts = {};
+  if (!boundary) return parts;
+  const delimiter = Buffer.from(`--${boundary}`);
+  let start = body.indexOf(delimiter);
+  while (start !== -1) {
+    const next = body.indexOf(delimiter, start + delimiter.length);
+    if (next === -1) break;
+    const part = body.subarray(start + delimiter.length + 2, next - 2);
+    const headerEnd = part.indexOf('\r\n\r\n');
+    const name = /name="([^"]+)"/.exec(part.subarray(0, headerEnd).toString())?.[1];
+    if (name) parts[name] = part.subarray(headerEnd + 4);
+    start = next;
+  }
+  return parts;
+}
+
 describe('AnyListClient request volume', () => {
   let server;
   let base;
   let hits; // request paths, in order
-  let respond; // (path) => { status, headers, body } | null for the default
+  let syncs; // multipart parts of each user-data/get request
+  let respond; // (path, parts) => { status, headers, body } | null for the default
   let clock;
   let anylist;
   let client;
@@ -43,6 +64,9 @@ describe('AnyListClient request volume', () => {
       },
       mealPlanningCalendarResponse: {
         calendarId: 'cal-1',
+        isFullSync: true,
+        logicalTimestamp: 7,
+        responseVersion: 1,
         events: [{ identifier: 'e-1', calendarId: 'cal-1', date: '2099-01-01', title: 'zz-mcp-test', recipeId: 'r-chili' }],
         labels: [],
       },
@@ -51,10 +75,13 @@ describe('AnyListClient request volume', () => {
 
   before(async () => {
     server = http.createServer((req, res) => {
-      req.resume();
+      const chunks = [];
+      req.on('data', chunk => chunks.push(chunk));
       req.on('end', () => {
         hits.push(req.url);
-        const custom = respond(req.url);
+        const parts = parseMultipart(req.headers['content-type'], Buffer.concat(chunks));
+        if (req.url === '/data/user-data/get') syncs.push(parts);
+        const custom = respond(req.url, parts);
         if (custom) {
           res.writeHead(custom.status, custom.headers || {});
           return res.end(custom.body || '');
@@ -76,6 +103,7 @@ describe('AnyListClient request volume', () => {
 
   beforeEach(async () => {
     hits = [];
+    syncs = [];
     respond = () => null;
     clock = Date.parse('2026-11-20T12:00:00Z');
     anylist = new AnyList({ email: 'test', password: 'test', credentialsFile: '/nonexistent' });
@@ -176,8 +204,83 @@ describe('AnyListClient request volume', () => {
   it('reports request counts without account contents', async () => {
     await client.addItem('eggs');
     const summary = client.requestSummary();
-    assert.match(summary, /requests since start: 2 \(full-account downloads: 1, /);
+    assert.match(summary, /requests since start: 2\. Account syncs: 1 full, 0 changes only, 0 unchanged \(304\)/);
     assert.match(summary, /in the last 10 min: 1 of 20/);
     assert.doesNotMatch(summary, /milk|eggs|Chili/);
+  });
+
+  describe('conditional sync (#45)', () => {
+    const pb = () => anylist.protobuf;
+    const delta = fields => ({ status: 200, body: new (pb().PBUserDataResponse)(fields).toBuffer() });
+    const nextSync = async () => { clock += 61_000; await client.connect(); };
+
+    it('sends only client_info first, then the cursors of what it holds', async () => {
+      assert.deepEqual(Object.keys(syncs[0]), ['client_info']);
+      const info = pb().PBUserDataClientInfo.decode(syncs[0].client_info);
+      assert.equal(info.mealPlanningCalendarClientInfo.supportedResponseVersion, 1);
+      assert.equal(info.mealPlanningCalendarClientInfo.processedResponseVersion, 0);
+
+      respond = url => (url === '/data/user-data/get' ? { status: 304 } : null);
+      await nextSync();
+      assert.deepEqual(Object.keys(syncs[1]).sort(), ['client_info', 'timestamps']);
+      const ts = pb().PBUserDataClientTimestamps.decode(syncs[1].timestamps);
+      assert.deepEqual(ts.shoppingListTimestamps.timestamps.map(t => t.identifier), [LIST_ID]);
+      assert.equal(ts.userRecipeDataTimestamp.identifier, 'rd-1');
+      assert.equal(ts.mealPlanningCalendarTimestamp.identifier, 'cal-1');
+      assert.equal(ts.mealPlanningCalendarTimestamp.logicalTimestamp.toNumber(), 7);
+      assert.equal(pb().PBUserDataClientInfo.decode(syncs[1].client_info).mealPlanningCalendarClientInfo.processedResponseVersion, 1);
+    });
+
+    it('keeps the snapshot on 304', async () => {
+      respond = url => (url === '/data/user-data/get' ? { status: 304 } : null);
+      await nextSync();
+      assert.deepEqual((await client.getItems()).map(i => i.name), ['milk']);
+      assert.equal((await client.getMealPlanEvents()).length, 1);
+      assert.match(client.requestSummary(), /1 full, 0 changes only, 1 unchanged \(304\)/);
+    });
+
+    it('merges a delta: a modified list, a deleted recipe and a deleted event', async () => {
+      respond = url => (url === '/data/user-data/get' ? delta({
+        shoppingListsResponse: {
+          modifiedLists: [{ identifier: LIST_ID, name: 'Groceries', timestamp: 2, items: [
+            { identifier: 'item-milk', listId: LIST_ID, name: 'milk' },
+            { identifier: 'item-eggs', listId: LIST_ID, name: 'eggs' },
+          ] }],
+          orderedIds: [LIST_ID],
+        },
+        recipeDataResponse: { recipeDataId: 'rd-1', timestamp: 3, allRecipesCollection: { identifier: 'all', recipeIds: [] } },
+        mealPlanningCalendarResponse: { calendarId: 'cal-1', logicalTimestamp: 8, responseVersion: 1, deletedEventIds: ['e-1'] },
+      }) : null);
+      await nextSync();
+      assert.deepEqual((await client.getItems()).map(i => i.name), ['milk', 'eggs']);
+      assert.deepEqual(await client.getRecipes(), []);
+      assert.equal((await client.getMealPlanEvents()).length, 0);
+      assert.match(client.requestSummary(), /1 full, 1 changes only, 0 unchanged/);
+    });
+
+    it('syncs changes only after a write', async () => {
+      respond = url => (url === '/data/user-data/get' && syncs.length > 1 ? { status: 304 } : null);
+      await client.addItem('eggs');
+      await client.connect();
+      assert.equal(syncs.length, 2);
+      assert.ok(syncs[1].timestamps, 'the sync after a write is conditional');
+    });
+
+    it('replaces a response it cannot merge with one full fetch', async () => {
+      respond = (url, parts) => (url === '/data/user-data/get' && parts.timestamps ? { status: 200, body: 'not protobuf' } : null);
+      await nextSync();
+      assert.equal(syncs.length, 3);
+      assert.ok(syncs[1].timestamps);
+      assert.equal(syncs[2].timestamps, undefined, 'the recovery fetch sends no cursors');
+      assert.deepEqual((await client.getItems()).map(i => i.name), ['milk']);
+      assert.match(client.requestSummary(), /1 recoveries/);
+    });
+
+    it('fails rather than loop when the recovery fetch fails too', async () => {
+      respond = url => (url === '/data/user-data/get' ? { status: 200, body: 'not protobuf' } : null);
+      clock += 61_000;
+      await assert.rejects(client.connect(), /undecodable/);
+      assert.equal(syncs.length, 3);
+    });
   });
 });
