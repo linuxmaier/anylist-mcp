@@ -1,16 +1,22 @@
-// Keeps this server's load on AnyList low (#44). AnyList suspended the owner's
-// account for heavy use: every read went through `data/user-data/get`, which
-// downloads the whole account (all lists, recipes and the meal plan), several
-// times per tool call. The guard sits between anylist-js and the network:
+// Keeps this server's load on AnyList low (#44, #45). AnyList suspended the
+// owner's account for heavy use: every read went through `data/user-data/get`,
+// which downloaded the whole account (all lists, recipes and the meal plan),
+// several times per tool call. The guard sits between anylist-js and the network:
 //
-// - Snapshot: full-account reads reuse the last download for up to
-//   READ_MAX_AGE_MS, unless anything was written since. Overlapping reads
-//   share one fetch.
-// - Download limit: at most DOWNLOAD_LIMIT full downloads per DOWNLOAD_WINDOW_MS.
+// - Conditional sync (#45): after the first full fetch, `user-data/get` sends
+//   the cursors of what we hold, the way AnyList's web client does, and gets
+//   back 304 or only what changed (src/user-data-sync.js). A response that
+//   can't be merged is replaced by one full fetch.
+// - Snapshot: account reads reuse the last sync for up to READ_MAX_AGE_MS,
+//   unless anything was written since. Overlapping reads share one sync.
+// - Sync limit: at most DOWNLOAD_LIMIT account syncs per DOWNLOAD_WINDOW_MS.
 // - Cooldown: after an HTTP 429, every request (login and token refresh too)
 //   is refused locally until AnyList's Retry-After has passed. Nothing is
 //   retried automatically.
 // - Stats for health_check. They never include account contents or tokens.
+
+import FormData from 'form-data';
+import { SyncResponseError, createSyncState, mergeUserData, clientTimestamps, clientInfo, toUserDataResponse } from './user-data-sync.js';
 
 export const READ_MAX_AGE_MS = 60_000;
 // For reads whose result decides what gets written (e.g. merging onto an
@@ -69,7 +75,7 @@ export class RequestGuard {
     this._now = now;
     this._cooldownUntil = 0;
     this._downloads = []; // start times within the window
-    this.stats = { requests: 0, downloads: 0, downloadBytes: 0, snapshotReuses: 0, rateLimited: 0 };
+    this.stats = { requests: 0, fullSyncs: 0, changedSyncs: 0, unchangedSyncs: 0, syncBytes: 0, recoveries: 0, snapshotReuses: 0, rateLimited: 0 };
     this._anylist = null;
   }
 
@@ -83,9 +89,8 @@ export class RequestGuard {
     anylist.authClient = this._gate(anylist.authClient.extend({ hooks }));
     anylist.client = this._gate(anylist.client.extend({ hooks }));
 
-    const fetchUserData = anylist._getUserData.bind(anylist);
     this._anylist = anylist;
-    this._fetchUserData = () => fetchUserData(true);
+    this._state = createSyncState();
     this._fetchedAt = null;
     this._stale = false;
     this._inFlight = null;
@@ -98,7 +103,7 @@ export class RequestGuard {
     return this._anylist === anylist;
   }
 
-  /** The full account data, downloaded only if no snapshot is recent enough. */
+  /** The full account data, synced only if no snapshot is recent enough. */
   async userData(maxAgeMs = READ_MAX_AGE_MS) {
     const snapshot = this._anylist._userData;
     if (this._inFlight) return this._inFlight;
@@ -110,10 +115,64 @@ export class RequestGuard {
     const startedAt = this._now();
     // A write while this is in flight sets _stale again, so the next read refetches.
     this._stale = false;
-    this._inFlight = this._fetchUserData()
+    this._inFlight = this._sync()
       .then(data => { this._fetchedAt = startedAt; return data; })
       .finally(() => { this._inFlight = null; });
     return this._inFlight;
+  }
+
+  /** Bring the sync state up to date and hand anylist-js a full-shaped response. */
+  async _sync() {
+    try {
+      await this._syncOnce(this._state.loaded);
+    } catch (error) {
+      if (!(error instanceof SyncResponseError)) throw error;
+      // The state may be half-merged: start over from one full fetch, once.
+      const wasConditional = this._state.loaded;
+      this._state = createSyncState();
+      if (!wasConditional) throw error;
+      console.error(`Rejected an AnyList sync response (${error.message}); fetching everything once`);
+      this.stats.recoveries++;
+      this._takeDownload();
+      try {
+        await this._syncOnce(false);
+      } catch (retryError) {
+        this._state = createSyncState();
+        throw retryError;
+      }
+    }
+    const anylist = this._anylist;
+    anylist._userData = toUserDataResponse(this._state);
+    anylist.calendarId = this._state.calendar?.calendarId ?? null;
+    return anylist._userData;
+  }
+
+  async _syncOnce(conditional) {
+    const anylist = this._anylist;
+    const pb = anylist.protobuf;
+    const form = new FormData();
+    if (conditional) form.append('timestamps', clientTimestamps(this._state, pb, anylist.uid).toBuffer());
+    form.append('client_info', clientInfo(this._state, pb).toBuffer());
+    // A Buffer body (not a stream) can be resent by anylist-js's 401 retry
+    const response = await anylist.client.post(USER_DATA_PATH, { body: form.getBuffer(), headers: form.getHeaders() });
+    if (response.statusCode === 304) {
+      if (!conditional) throw new SyncResponseError('304 without a snapshot');
+      this.stats.unchangedSyncs++;
+      return;
+    }
+    let decoded;
+    try {
+      decoded = pb.PBUserDataResponse.decode(response.body);
+    } catch (error) {
+      throw new SyncResponseError(`undecodable response: ${error.message}`);
+    }
+    if (conditional) this.stats.changedSyncs++;
+    else this.stats.fullSyncs++;
+    try {
+      mergeUserData(this._state, decoded, pb);
+    } catch (error) {
+      throw error instanceof SyncResponseError ? error : new SyncResponseError(error.message);
+    }
   }
 
   /** Throws instead of sending anything while AnyList has asked us to back off. */
@@ -127,10 +186,11 @@ export class RequestGuard {
   summary() {
     const now = this._now();
     const recent = this._recentDownloads(now).length;
-    const mb = (this.stats.downloadBytes / 1e6).toFixed(1);
+    const { requests, fullSyncs, changedSyncs, unchangedSyncs, recoveries, snapshotReuses, rateLimited } = this.stats;
+    const mb = (this.stats.syncBytes / 1e6).toFixed(2);
     const lines = [
-      `AnyList requests since start: ${this.stats.requests} (full-account downloads: ${this.stats.downloads}, ${mb} MB; snapshot reuses: ${this.stats.snapshotReuses}; rate-limited responses: ${this.stats.rateLimited}).`,
-      `Full-account downloads in the last ${DOWNLOAD_WINDOW_MS / 60_000} min: ${recent} of ${DOWNLOAD_LIMIT}.`,
+      `AnyList requests since start: ${requests}. Account syncs: ${fullSyncs} full, ${changedSyncs} changes only, ${unchangedSyncs} unchanged (304); ${mb} MB received; ${recoveries} recoveries. Snapshot reuses: ${snapshotReuses}. Rate-limited responses: ${rateLimited}.`,
+      `Account syncs in the last ${DOWNLOAD_WINDOW_MS / 60_000} min: ${recent} of ${DOWNLOAD_LIMIT}.`,
     ];
     if (now < this._cooldownUntil) lines.push(`Rate-limit cooldown: ${untilText(this._cooldownUntil, now)}.`);
     return lines.join('\n');
@@ -146,7 +206,7 @@ export class RequestGuard {
     const now = this._now();
     const recent = this._recentDownloads(now);
     if (recent.length >= DOWNLOAD_LIMIT) {
-      throw new AnyListBackoffError(`Paused AnyList downloads to avoid overloading AnyList: ${recent.length} full-account downloads in the last ${DOWNLOAD_WINDOW_MS / 60_000} min (limit ${DOWNLOAD_LIMIT}). Try again in ${untilText(recent[0] + DOWNLOAD_WINDOW_MS, now)}.`);
+      throw new AnyListBackoffError(`Paused AnyList syncs to avoid overloading AnyList: ${recent.length} account syncs in the last ${DOWNLOAD_WINDOW_MS / 60_000} min (limit ${DOWNLOAD_LIMIT}). Try again in ${untilText(recent[0] + DOWNLOAD_WINDOW_MS, now)}.`);
     }
     recent.push(now);
   }
@@ -158,10 +218,9 @@ export class RequestGuard {
       this.checkCooldown();
       this.stats.requests++;
       const path = relativePath(url);
-      if (path === USER_DATA_PATH) this.stats.downloads++;
-      // Any other data/ request may change the account: mark the snapshot stale
-      // before sending, since even a failed request may have been applied.
-      else if (path.startsWith('data/')) this._stale = true;
+      // Any data/ request other than a sync may change the account: mark the
+      // snapshot stale before sending, since even a failed request may have been applied.
+      if (path !== USER_DATA_PATH && path.startsWith('data/')) this._stale = true;
       return post(url, options);
     };
     return instance;
@@ -174,7 +233,7 @@ export class RequestGuard {
       this._cooldownUntil = Math.max(this._cooldownUntil, until);
       console.error(`AnyList returned 429; backing off for ${untilText(this._cooldownUntil, this._now())}`);
     } else if (relativePath(response.request?.options?.url?.pathname ?? '') === USER_DATA_PATH) {
-      this.stats.downloadBytes += response.rawBody?.length ?? 0;
+      this.stats.syncBytes += response.rawBody?.length ?? 0;
     }
     return response;
   }
