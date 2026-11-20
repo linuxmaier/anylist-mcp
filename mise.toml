@@ -4,6 +4,7 @@ gitleaks = "8"
 node = "24"
 osv-scanner = "2"
 semgrep = "1"
+shellcheck = "0.11"
 uv = "0"
 zizmor = "1"
 
